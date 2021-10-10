@@ -11,14 +11,12 @@ body{
 #eslogan{
     padding-top: 6rem;
     padding-bottom: 1rem;
-    background-color: black;
 }
 h1{
-    color: rgb(141, 0, 0);
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 #pregunta{
-    background-color: black;
     padding-top: .5rem;
     padding-bottom: 1rem;
 }
@@ -44,4 +42,16 @@ h1{
 }
 #nav-text:hover{
     color: #06C5CF;
+}
+#img{
+    width: 10%;
+    height: 10%;
+}
+.card{
+    background-color: transparent;
+    border: 0;
+    color: white;
+    margin: 0;
+    padding-top: 1rem;
+    padding-right: 2rem;
 }
