@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos Compuestos</title>
+</head>
+<body>
+    <h1>FUNDAMENTOS COMPUESTOS</h1>
+    <script>
+        /*
+        //FUNCIONES
+        //bloque de codigo auto contenido independiente el ambito global, se define una sola vez y que se puede ejecutr en cualquier momento y se puede eutiizar tantas veces como sea necesario. una funcion puede o no recibir parametros y tambien puede devolver o no valores. las funciones en JS son un objeto. existen funciones declaradas y funciones expresadas
+
+        //Funcion Declarada
+        function estoEsUnaFuncion(){
+            console.log("UNO");
+            console.log("DOS");
+            console.log("TRES");
+        }
+            //invocacion de funciones
+        estoEsUnaFuncion();
+
+        //Funcion con parametros que devuelve valor
+        function operadores(a, b){
+            let suma = a + b;
+            let resta = a - b;
+            let multiplicacion = a * b;
+            let divivion = a / b;
+            console.log(
+                "la suma es: " + suma, 
+                "\n la resta es: " + resta,
+                "\n la multiplicacion es: " + multiplicacion,
+                "\n la division es: " + divivion
+             );
+
+             console.log(
+                "la suma es: " + (a+b), 
+                "\n la resta es: " + (a-b),
+                "\n la multiplicacion es: " + (a*b),
+                "\n la division es: " + (a/b)
+            );
+        }
+
+        operadores(4, 1);
+
+
+        //funciones que retornan
+        function retornar(){
+            return "Esta saliendo este mensaje";
+        }
+        let salida = retornar();
+         console.log(salida);
+
+
+
+        //Funciones declaradas VS Funciones expresadas
+        //funcion declarada
+        declarada();
+        function declarada(){
+            console.log("Esto es una funcion declarada JS la lee en cualquier lado")
+        }
+        declarada();
+
+
+        //funcion anomina dado que no tiene nombre
+        //funcion con expresiones
+        const funcionExpresada = function(){
+            console.log("Esto es una funcion expresada, es decir, una funcion que se le ha asignado como valor a una variable, si invocamos esta funcion antes de su definicion JS nos dira:  ")
+        }
+            //se debe de inicializar despues de crear la funcion no antes de crearla
+        funcionExpresada();
+        */
+
+
+        //arreglo es una coleccion de elementos
+        const a = [];
+        const b = [1, "Hola", true, 1.23, ["a", "e", "i", "o", "u", [1, 2, 3, 4, 5]]];
+        console.log(a);
+        console.log(b);
+        console.log(b.length);
+        console.log(b[1]);
+        console.log(b[4][4]);
+        console.log(b[4][5][2]);
+
+        //otra forma
+        //Array.of permite llenar elementos
+        const c = Array.of("x", "y", "z", 1 ,2 ,3 ,4);
+        console.log(c);
+
+        const d = Array(100).fill(false);
+        console.log(d);
+
+        //creando un nuevo arreglo con el constructor
+        const e = new Array(1,2,3,4,5);
+        console.log(e);
+
+        //usando elementos para insertar, eliminar
+        const colores = ["Rojo", "Verde", "Azul", "Amarillo", "Violeta"];
+        console.log(colores);
+
+        /*colores.push("Negro"); //agg un elemento al final
+        console.log(colores);
+
+        colores.pop();//elimina un elemento al final
+        console.log(colores);
+        colores.unshift("Naranja");//inserta al inicicio 
+        console.log(colores);
+        colores.shift();
+        console.log(colores);
+        */
+        let posicion = colores.indexOf("Verde");
+        console.log(posicion);
+
+        colores.splice(posicion, 1);
+        console.log(colores);
+
+
+
+    </script>
+    <h2>Hola manuel como estas?</h2>
+
+    <a class="btn btn-primary" href="#" role="button">Inicio</a>
+    <button class="btn btn-primary" type="submit">atras</button>
+    <input class="btn btn-primary" type="button" value="Salir">
+    <input class="btn btn-primary" type="submit" value="Eliminar">
+    <input class="btn btn-primary" type="reset" value="Reset">
+
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button class="dropdown-item" type="button">Action</button>
+          <button class="dropdown-item" type="button">Another action</button>
+          <button class="dropdown-item" type="button">Something else here</button>
+        </div>
+      </div>
+</body>
+</html>
