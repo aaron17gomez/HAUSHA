@@ -2,7 +2,11 @@
     border-radius: 40px;  
 }
 body{
-    background-color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url(../img/wallpaper1.jpg)repeat;
+    background-size: cover;
 }
 #eslogan{
     padding-top: 6rem;
@@ -17,4 +21,11 @@ h1{
     background-color: black;
     padding-top: .5rem;
     padding-bottom: 1rem;
+}
+#carouselExampleIndicators{
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 0);
 }
