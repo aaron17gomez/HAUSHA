@@ -90,7 +90,8 @@ body{
     font-size: 15px;
     color: rgb(0, 0, 0);
     text-align: center;
-    width: 265px;
+    width: 100%;
+    max-width: 265px;
     margin-bottom: 30px;
     padding: 15px;
     box-sizing: border-box;
@@ -101,11 +102,13 @@ body{
 }
 
 .form input:hover{
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 .form input:focus{
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 .form button{
@@ -114,7 +117,8 @@ body{
     color: rgb(0, 0, 0);
     font-size: 14px;
     text-transform: uppercase;
-    width: 150px;
+    width: 100%;
+    max-width: 150px;
     padding: 15px;
     border: 2.5px solid #10AC84;
     border-radius: 25px;
