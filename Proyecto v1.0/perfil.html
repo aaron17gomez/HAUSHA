@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HAUSHA</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/all.css"><!--FontAwesome-->
+    <link rel="stylesheet" href="css/main3.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">HAUSHA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <input id="search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Habitaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Contáctanos</a>
+                </li>
+                <li class="nav-item">
+                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Perfil <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                      </svg></a>
+                </li>
+            </ul>
+            </form>
+        </div>
+        </nav>
+
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Sube una foto de perfil</label>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4 ml-auto">
+                         <img id="izquierda" src="img/perfil.png" alt="">
+                    </div>
+                    <div id="derecha" class="col-lg-8">
+                         <p id="tex" class="card-title">Puedes subir una imagen para generar más confianza en la comunidad HAUSHA.</p>
+                         <label><input name="opciones[]" type="checkbox" value="2"> Imagen Publica </label><br>
+                         <p id="tex" class="card-text">estoy de acuerdo si mi foto es visible en el perfil publico de HAUSHA y chat solo por usuarios registrados.</p>
+                    </div>
+                </div>
+                <div id="cont-buton" class="form-group">
+                    <button type="submit" class="btn btn-primary">Subir Archivo</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Tu perfil publico</label>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descripcion publica aparece en HAUSHA para usuarios registrados. Saber con quien vives es muy importante, entonces, explica a tus posibles compañeros de piso quien eres y que haces para generar un mejor ambiente</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Datos Personales</label>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Nombre</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+                    <label for="formGroupExampleInput">Apellido</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+                    <label for="inputState">Genero</label>
+                    <select id="inputState" class="form-control">
+                      <option selected></option>
+                      <option>Masculino</option>
+                      <option>Femenino</option>
+                    </select>
+                    <label for="formGroupExampleInput">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="formGroupExampleInput" placeholder="">
+                    <label for="inputState">Nacionalidad</label>
+                    <select id="inputState" class="form-control">
+                      <option selected></option>
+                      <option>Honduras</option>
+                      <option>Nicaragua</option>
+                      <option>El Salvador</option>
+                      <option>Costa Rica</option>
+                      <option>Guatemala</option>
+                    </select>
+                    <label for="exampleInputEmail1">Correo</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                    <label for="exampleInputEmail1">Numero de celular</label>
+                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Seguridad</label>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Para cambiar tu contraseña ingresa tu contraseña actual</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña actual">
+                  <label for="exampleInputPassword1">Nueva contraseña</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nueva contraseña">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Cambiar a perfil de anfitrion</label>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Ten en cuenta que, si tienes solicitudes en tu cuenta de invitado, no podras verlas como anfitrion HAUSHA. Si tienes inquietudes en el cambio de rol en tu cuenta, no dudes en contactarnos.</label>
+                  <label><input name="opcion" type="radio" value="1"> Anfitrion </label>
+                  <label><input name="opcion" type="radio" value="1"> Invitado</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Verificacion de tu correo electronico</label>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">En la comunidad HAUSHA queremos que estes siempre actualizado con lo ultimo, confirma tu correo electronico para nuestro mensajes.</label>
+                  <label for="exampleInputPassword1">En tu bandeja de entrada recibiras un mensaje con un enlace que debes seguir para confirmar tu correo electronico.</label>
+                  <label for="exampleInputPassword1">email@email.com</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar codigo de verificacion</button>
+              </form>
+        </div>
+        <div id="perfil">
+            <form class="form">
+                <div id="titulo" class="form-group">
+                    <label style="color: white;" for="exampleInputEmail1">Verificacion de tu numero de telefono movil</label>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Para nosotros, es muy importante que estes actualizado lo mas pronto posible, asi puedes estar mas pendiente de todas nuestras actualizaciones.</label>
+                  <label for="exampleInputPassword1">Para verificar tu numero de celular tendras que leer el proximo mensaje de texto, en el encontraras un codigo unico.</label>
+                  <label for="exampleInputPassword1">+504 33334444</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar codigo de verificacion</button>
+              </form>
+        </div>
+        
+    <!-- Footer -->
+<footer id="pie-de-pagina" class="page-footer font-small blue-grey lighten-5">
+
+  <div style="background-color: #d8d8d8;">
+    <div class="container">
+
+      <!-- Grid row-->
+      <div class="row py-4 d-flex align-items-center">
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+          <!-- Facebook -->
+          <a class="icons">
+            <i class="fab fa-facebook-f white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="icons">
+            <i class="fab fa-twitter white-text mr-4"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="icons">
+            <i class="fab fa-google-plus-g white-text mr-4"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="icons">
+            <i class="fab fa-linkedin-in white-text mr-4"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="icons">
+            <i class="fab fa-instagram white-text"> </i>
+          </a>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row-->
+
+    </div>
+  </div>
+
+  <!-- Footer Links -->
+  <div id="todo" class="container text-center text-md-left mt-5">
+
+    <!-- Grid row -->
+    <div class="row mt-3 dark-grey-text">
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+        <!-- Content -->
+        <h6 class="text-uppercase font-weight-bold">Dirección</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>Blv. Suyapa <br>
+          UNAH edificio B2</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+          <!-- Content -->
+          <h6 class="text-uppercase font-weight-bold">Contáctanos</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>info@hausha.com <br>
+            Tel. 123-456-7890</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+          <!-- Content -->
+          <h6 class="text-uppercase font-weight-bold">HAUSHA</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>@2021 by Hausha</p>
+        </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+          <!-- Content -->
+          <h6 class="text-uppercase font-weight-bold">Aceptamos</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div id="todo" class="footer-copyright text-center text-black-50 py-3">© 2021 Copyright:
+    <a class="dark-grey-text" href="#"> HAUSHA</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/controlador.js"></script>
+</body>
+
+</html>
