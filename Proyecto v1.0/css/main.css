@@ -61,6 +61,12 @@ body{
     margin: 0;
     padding-top: 1rem;
     padding-right: 2rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 #img-carrusel{
     width: 300px;

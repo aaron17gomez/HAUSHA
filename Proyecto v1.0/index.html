@@ -10,40 +10,44 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#">HAUSHA</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <input id="search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">HAUSHA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          </li>
+        </ul>
+        <form class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-current="page" href="index.html">Inicio</a>
             </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a id="nav-text" class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a id="nav-text" class="nav-link active" href="inicio_sesion.html" tabindex="-1" aria-disabled="false">Iniciar Sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a id="nav-text" class="nav-link active" href="habitaciones.html" tabindex="-1" aria-disabled="false">Habitaciones</a>
-                </li>
-                <li class="nav-item">
-                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a id="nav-text" class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Contáctanos</a>
-                </li>
-            </ul>
-            <button class="btn btn-secondary my-2 my-sm-0" type="">Reservar Ahora</button>
-            </form>
-        </div>
-        </nav>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="registro.html">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="habitaciones.html">Habitaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-success" type="submit">Reservar</button>
+            </li>
+          </ul>
+          
+        </form>
+      </div>
+    </div>
+  </nav>
         <div id="eslogan">
             <h1>No Hay Nada Mejor Que El Hogar</h1>
         </div>
@@ -195,113 +199,115 @@
 
         </div>
         
-    <!-- Footer -->
-<footer id="pie-de-pagina" class="page-footer font-small blue-grey lighten-5">
+<!-- Footer -->
+<footer class="bg-light text-center text-black">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
 
-  <div style="background-color: #d8d8d8;">
-    <div class="container">
+      <!-- Twitter -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
 
-      <!-- Grid row-->
-      <div class="row py-4 d-flex align-items-center">
+      <!-- Google -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
 
-        <!-- Grid column -->
-        <div class="col-md-6 col-lg-7 text-center text-md-right">
+      <!-- Instagram -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
 
-          <!-- Facebook -->
-          <a class="icons">
-            <i class="fab fa-facebook-f white-text mr-4"> </i>
-          </a>
-          <!-- Twitter -->
-          <a class="icons">
-            <i class="fab fa-twitter white-text mr-4"> </i>
-          </a>
-          <!-- Google +-->
-          <a class="icons">
-            <i class="fab fa-google-plus-g white-text mr-4"> </i>
-          </a>
-          <!--Linkedin -->
-          <a class="icons">
-            <i class="fab fa-linkedin-in white-text mr-4"> </i>
-          </a>
-          <!--Instagram-->
-          <a class="icons">
-            <i class="fab fa-instagram white-text"> </i>
-          </a>
+      <!-- Linkedin -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
 
-        </div>
-        <!-- Grid column -->
+      <!-- Github -->
+      <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
 
-      </div>
-      <!-- Grid row-->
+    <!-- Section: Text -->
+    <section class="mb-4">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
+        repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
+        eum harum corrupti dicta, aliquam sequi voluptate quas.
+      </p>
+    </section>
+    <!-- Section: Text -->
 
-    </div>
-  </div>
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <!-- Content -->
+          <h6 class="text-uppercase font-weight-bold">Dirección</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Blv. Suyapa <br>
+            UNAH edificio B2</p>
+          </div>
+          <!--Grid column-->
 
-  <!-- Footer Links -->
-  <div id="todo" class="container text-center text-md-left mt-5">
-
-    <!-- Grid row -->
-    <div class="row mt-3 dark-grey-text">
-
-      <!-- Grid column -->
-      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-
-        <!-- Content -->
-        <h6 class="text-uppercase font-weight-bold">Dirección</h6>
-        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-        <p>Blv. Suyapa <br>
-          UNAH edificio B2</p>
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <!-- Content -->
           <h6 class="text-uppercase font-weight-bold">Contáctanos</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>info@hausha.com <br>
-            Tel. 123-456-7890</p>
-      </div>
-      <!-- Grid column -->
+          Tel. 123-456-7890</p>
+        </div>
+        <!--Grid column-->
 
-      <!-- Grid column -->
-      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <!-- Content -->
           <h6 class="text-uppercase font-weight-bold">HAUSHA</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>@2021 by Hausha</p>
         </div>
-      <!-- Grid column -->
+        <!--Grid column-->
 
-      <!-- Grid column -->
-      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <!-- Content -->
           <h6 class="text-uppercase font-weight-bold">Aceptamos</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         </div>
-      <!-- Grid column -->
-
-    </div>
-    <!-- Grid row -->
-
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
   </div>
-  <!-- Footer Links -->
+  <!-- Grid container -->
 
   <!-- Copyright -->
-  <div id="todo" class="footer-copyright text-center text-black-50 py-3">© 2021 Copyright:
-    <a class="dark-grey-text" href="#"> HAUSHA</a>
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-black" href="#">HAUSHA</a>
   </div>
   <!-- Copyright -->
-
 </footer>
 <!-- Footer -->
 
+    <script src="js/all.js"></script>
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/controlador.js"></script>
 </body>
 

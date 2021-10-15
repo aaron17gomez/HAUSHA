@@ -26,16 +26,30 @@ body{
 }
 
 #eslogan{
-    margin-top: 8rem;
-    margin-bottom: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
     text-align: center;
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: rgba(255, 255, 255, 0.8);
 }
 #contenedor{
-    padding-left: 12rem;
-    padding-right: 12rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0;
+    font-family: "Candara", sans-serif;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0.9;
 }
 #cont-date{
     width: 100%;
@@ -45,11 +59,12 @@ body{
 }
 #izquierda{
     width: 100%;
+    height: auto;
     max-width: 600px;
     max-height: 400px;
-    height: auto;
+    
 }
-#derecha img{
+#derecha img, #img-hab2{
     width: 16px;
     height: 16px;
     align-items: center;
