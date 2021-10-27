@@ -1,5 +1,6 @@
 if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     llenarNavBarUsuario();
+    window.location.href = 'habitaciones.html';
 }else{
     llenarNavBar();
 }
@@ -85,10 +86,15 @@ function validarRegistro(){
 }
 
 function crearUsuarioCliente(){
-    let estado = false;
     let usuarios = JSON.parse(localStorage.getItem('usuarios'));
-    estado = validarRegistro();
-    if(estado == true){
+    let mail = document.getElementById('correo').value;
+    const resultado = usuarios.filter(usuarios => usuarios.correo == mail);
+    if(resultado.length == 1){
+        window.alert("El correo que escribio ya existe");
+    }else{
+        let estado = false;
+        estado = validarRegistro();
+        if(estado == true){
         const cliente = {
             id: usuarios.length,
             nombre:document.getElementById('nombre').value,
@@ -104,8 +110,9 @@ function crearUsuarioCliente(){
     
         usuarios.push(cliente);
         localStorage.setItem('usuarios', JSON.stringify(usuarios));
-        $('#modalRegistro').modal('hide');
-        
+        $("#modalRegistro .close").click()
+        window.alert("Usuario registrado con exito");
+        }
     }
 }
 
