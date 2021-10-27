@@ -83,7 +83,7 @@ function generarCategorias()
           <div class="row form-group">
                   <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
                   <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
-                  <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" onchange="SeleccionarCategoria()">
+                  <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" placeholder="Seleccione Categoria" onchange="SeleccionarCategoria()">
                   </select>
                   <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
           </div>
@@ -133,7 +133,7 @@ function generarSelect(){
               `<option value="${i}">${categorias[i].nombreCategoria}</option> 
               `;
   }
-  document.getElementById("SeleccionarCategoria").value = null;
+  /*document.getElementById("SeleccionarCategoria").value = null;*/
 }
 generarSelect();
 
