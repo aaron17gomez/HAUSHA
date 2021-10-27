@@ -83,18 +83,19 @@ function generarCategorias()
           <div class="row form-group">
                   <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
                   <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
-                  <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" placeholder="Seleccione Categoria" onchange="SeleccionarCategoria()">
+                  <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" onchange="SeleccionarCategoria()">
                   </select>
                   <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
           </div>
         </div>
     </div>
     `;
+    document.getElementById("propuestas").innerHTML = '';
     for(let i=0; i<categorias.length;i++){
         let cate = categorias[i];
         for(let j=0;j<cate.propuestas.length;j++){
             let pro = cate.propuestas[j];
-            document.getElementById("contenedor").innerHTML +=
+            document.getElementById("propuestas").innerHTML +=
             `
                 <div class="card">
                     <div class="card-body">
@@ -103,7 +104,7 @@ function generarCategorias()
                                  <img id="izquierda" src="${pro.imagen}" alt="">
                             </div>
                             <div id="derecha" class="col-lg-4">
-                                 <h3>HAUSHA Col. ${pro.nombre}</h3>
+                                 <h3>HAUSHA ${pro.nombre}</h3>
                                  <p id="tex" class="card-title">${pro.descripcion}</p>
                                  <img src="img/icons-habitaciones/wifi.png" alt="">
                                  <img src="img/icons-habitaciones/tv.png" alt="">
@@ -133,7 +134,7 @@ function generarSelect(){
               `<option value="${i}">${categorias[i].nombreCategoria}</option> 
               `;
   }
-  /*document.getElementById("SeleccionarCategoria").value = null;*/
+  document.getElementById("SeleccionarCategoria").value = null;
 }
 generarSelect();
 
@@ -147,26 +148,10 @@ function SeleccionarCategoria(){
   console.log(select);
   posicion = usu;
 
-  document.getElementById('contenedor').innerHTML = '';
-  document.getElementById("contenedor").innerHTML +=
-    `
-    <div class="card">
-        <div  class="card-header" style="background-color: white;">
-          <h3>Nuestras Propuestas</h3><hr>
-          <div class="row form-group">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
-                  <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" onchange="SeleccionarCategoria()">
-                  </select>
-                  <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
-          </div>
-        </div>
-    </div>
-    `;
-  generarSelect();
+  document.getElementById('propuestas').innerHTML = '';
   for(let j=0; j<local[usu].propuestas.length; j++){
       let propu = local[usu].propuestas[j];
-      document.getElementById("contenedor").innerHTML +=
+      document.getElementById("propuestas").innerHTML +=
       `
           <div class="card">
               <div class="card-body">
@@ -175,7 +160,7 @@ function SeleccionarCategoria(){
                            <img id="izquierda" src="${propu.imagen}" alt="">
                       </div>
                       <div id="derecha" class="col-lg-4">
-                           <h3>HAUSHA Col. ${propu.nombre}</h3>
+                           <h3>HAUSHA ${propu.nombre}</h3>
                            <p id="tex" class="card-title">${propu.descripcion}</p>
                            <img src="img/icons-habitaciones/wifi.png" alt="">
                            <img src="img/icons-habitaciones/tv.png" alt="">
@@ -205,8 +190,10 @@ function informacion(id1,id2){
     <h1>Información</h1>
     <h6>En este espacio encontraras los detalles sobre nuestras HAUSHAS</h6>
     `;
+    
     document.getElementById("contenedor").innerHTML = '';
-    document.getElementById("contenedor").innerHTML +=
+    document.getElementById("propuestas").innerHTML = '';
+    document.getElementById("propuestas").innerHTML +=
     `
     <div class="card">
         <div style="display: flex; align-items: start; align-content: start;"  class="card-header" style="background-color: white;">

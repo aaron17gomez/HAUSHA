@@ -25,31 +25,50 @@ body{
     background-color: rgba(255, 255, 255, 0.8);
 }
 #perfil{
-    padding-top: 8rem;
-    padding-right: 16rem;
-    padding-left: 16rem;
-    padding-bottom: .5rem;
+    width: 100%;
+    max-width: 1200px;
     margin: 0;
+    font-family: "Candara", sans-serif;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0.9;
 }
 .form{
-    margin: 0;
-    background-color: rgb(255, 255, 255);
-    padding: 10px;
-    border-radius: 20px;
+    background: rgb(255, 255, 255);
+    font-family: "Candara", sans-serif;
+    width: 100%;
+    max-width: 700px;
+    margin: 20px 45px 30px 45px;
+    padding: 20px 45px 30px 45px;
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0.9;
 }
 #izquierda{
-    width: 50%;
+    width: 120px;
     border-radius: 50%;
     margin: 0;
-    padding: 0;
+    padding-right: 1rem;
 }
-#derecha, #tex {
+#derecha{
     padding: 0;
     margin: 0;
 }
+#tex{
+    text-align: left;
+}
 #cont-buton{
-    padding-top: 1rem;
-    padding-left: 9rem;
+    align-content: center;
+    align-items: center;
+    text-align: center;
 }
 #titulo{
     background-color: rgb(5, 146, 0);

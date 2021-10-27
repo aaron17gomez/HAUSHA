@@ -35,6 +35,8 @@ function iniciarSesion(){
     
     if(bAcceso == true){
         window.location.href = 'habitaciones.html';
+    }else{
+        window.alert("El usuario || contraseña no coinciden");
     }
 }
 
