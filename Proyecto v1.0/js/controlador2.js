@@ -1,0 +1,272 @@
+var localStorage = window.localStorage;
+//Codigo para generar información de categorias y almacenarlas en un arreglo.
+
+var catego = 
+  [
+      {nombre:"Casa"},{nombre:"Departamento"},{nombre:"Oficina"},{nombre:"Negocio"},
+      {nombre:"Industria"},{nombre:"Cuarto"}
+  ];
+
+var categorias = [];
+(()=>{
+  //Este arreglo es para generar textos de prueba
+  let textosDePrueba=[
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore, modi!",
+      "Quos numquam neque animi ex facilis nesciunt enim id molestiae.",
+      "Quaerat quod qui molestiae sequi, sint aliquam omnis quos voluptas?",
+      "Non impedit illum eligendi voluptas. Delectus nisi neque aspernatur asperiores.",
+      "Ducimus, repellendus voluptate quo veritatis tempora recusandae dolorem optio illum."
+  ]
+  
+  //Genera dinamicamente los JSON de prueba para esta evaluacion,
+  //Primer ciclo para las categorias y segundo ciclo para las apps de cada categoria
+
+  
+  let contador;
+  for (let i=0;i<catego.length;i++){//Generar 5 categorias
+      contador = 1;
+      let categoria = {
+          nombreCategoria:catego[i].nombre,
+          descripcion:textosDePrueba[Math.floor(Math.random() * (5 - 1))],
+          propuestas:[]
+      };
+      for (let j=0;j<5;j++){//Generar 10 apps por categoria
+          let pre = (Math.random() * (500 - 1) + 1).toFixed(2);
+          let propuesta = {
+              codigo:contador,
+              nombre: catego[i].nombre + ' ' + contador,
+              descripcion:textosDePrueba[Math.floor(Math.random() * (5 - 1))],
+              calificacion:Math.floor(Math.random() * (5 - 1)) + 1,
+              precio: pre,
+              imagen:`img/propuestas/${catego[i].nombre}/${contador}.jpg`,
+              comentarios:[
+                  {comentario:textosDePrueba[Math.floor(Math.random() * (5 - 1))],calificacion:Math.floor(Math.random() * (5 - 1)) + 1,fecha:"12/12/2012",usuario:"Juan"},
+                  {comentario:textosDePrueba[Math.floor(Math.random() * (5 - 1))],calificacion:Math.floor(Math.random() * (5 - 1)) + 1,fecha:"12/12/2012",usuario:"Pedro"},
+                  {comentario:textosDePrueba[Math.floor(Math.random() * (5 - 1))],calificacion:Math.floor(Math.random() * (5 - 1)) + 1,fecha:"12/12/2012",usuario:"Maria"},
+              ]
+          };
+          contador++;
+          categoria.propuestas.push(propuesta);
+      }
+      categorias.push(categoria);
+  }
+  
+  console.log(categorias);
+})();
+
+if(localStorage.getItem("categorias")==null){
+    localStorage.setItem("categorias",JSON.stringify(categorias));
+}else{
+    usuarios = JSON.parse(localStorage.getItem('categorias'));
+}
+
+function generarCategorias()
+{
+    document.getElementById("eslogan").innerHTML = '';
+    document.getElementById("eslogan").innerHTML += 
+    `
+    <h1>Propuestas</h1>
+    <h6>En este espacio encontraras todas nuestras HAUSHAS disponibles</h6>
+    `;
+    document.getElementById("contenedor").innerHTML = '';
+    document.getElementById("contenedor").innerHTML +=
+    `
+    <div class="card">
+        <div  class="card-header" style="background-color: white;">
+          <h3>Nuestras Propuestas</h3><hr>
+          <div class="row form-group">
+                  <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
+                  <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
+                  <input class="col-lg-3 ml-auto" type="number" placeholder="Adultos">
+                  <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
+          </div>
+        </div>
+    </div>
+    `;
+    for(let i=0; i<categorias.length;i++){
+        let cate = categorias[i];
+        for(let j=0;j<cate.propuestas.length;j++){
+            let pro = cate.propuestas[j];
+            document.getElementById("contenedor").innerHTML +=
+            `
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row form-group">
+                            <div class="col-lg-8 ml-auto">
+                                 <img id="izquierda" src="${pro.imagen}" alt="">
+                            </div>
+                            <div id="derecha" class="col-lg-4">
+                                 <h3>HAUSHA Col. ${pro.nombre}</h3>
+                                 <p id="tex" class="card-title">${pro.descripcion}</p>
+                                 <img src="img/icons-habitaciones/wifi.png" alt="">
+                                 <img src="img/icons-habitaciones/tv.png" alt="">
+                                 <img src="img/icons-habitaciones/bañera.png" alt="">
+                                 <img src="img/icons-habitaciones/comida.jpg" alt="">
+                                 <img src="img/icons-habitaciones/aprobado.png" alt="">
+                                 <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
+                                 <div>
+                                    <p>Desde</p>
+                                    <h4>$${pro.precio}</h4>
+                                    <button type="submit" onclick="informacion(${i},${j});" class="btn btn-primary">Mas informacion</button>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+generarCategorias();
+
+function informacion(id1,id2){
+    let cateActual = categorias[id1].propuestas[id2];
+    document.getElementById("eslogan").innerHTML = '';
+    document.getElementById("eslogan").innerHTML += 
+    `
+    <h1>Información</h1>
+    <h6>En este espacio encontraras los detalles sobre nuestras HAUSHAS</h6>
+    `;
+    document.getElementById("contenedor").innerHTML = '';
+    document.getElementById("contenedor").innerHTML +=
+    `
+    <div class="card">
+        <div style="display: flex; align-items: start; align-content: start;"  class="card-header" style="background-color: white;">
+          <h3><button onclick="generarCategorias();" type="submit" class="btn btn-primary">Atras</button> | HAUSHA ${cateActual.nombre}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row form-group">
+                <div class="col-lg-8 ml-auto">
+                      <div id="contenedor-carrusel">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                      </ol>
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img id="izquierda" class="d-block w-100" src="${cateActual.imagen}" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                          <img id="izquierda" class="d-block w-100" src="${cateActual.imagen}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                          <img id="izquierda" class="d-block w-100" src="${cateActual.imagen}" alt="Third slide">
+                        </div>
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                     </div>
+                    </div>
+                  </div>
+            <div id="derecha" class="col-lg-4">
+                    <div>
+                     <p>Desde</p>
+                     <h4>$${cateActual.precio}</h4>
+                     <p>Por noche</p>
+                     <input id="cont-date" type="date" placeholder="Entrada">
+                     <input id="cont-date" type="date" placeholder="Salida">
+                     <input id="cont-date" type="number" placeholder="Adultos">
+                     <button id="cont-date" onclick="reservar();" type="submit" class="btn btn-primary">Revervar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row form-group">
+        <div class="col-lg-4 ml-auto">
+          <p>${categorias[id1].nombreCategoria}</p>
+        </div>
+        <div class="col-lg-4">
+          <p>Aloja: 1</p>
+        </div>
+        <div class="col-lg-4">
+          <p>Camas: 1 Individual(es)</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row form-group">
+      <div class="col-lg-4 ml-auto">
+        <p>Más información:</p>
+      </div>
+      <div class="col-lg-8">
+        <p>${cateActual.descripcion}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row form-group">
+      <div class="col-lg-4 ml-auto">
+        <p>Servicios y comodidades:</p>
+      </div>
+      <div class="col-lg-4">
+        <p><img id="img-hab2" src="img/icons-habitaciones/wifi.png" alt=""> Wifi</p><br>
+        <p><img id="img-hab2" src="img/icons-habitaciones/tv.png" alt=""> Baño</p><br>
+        <p><img id="img-hab2" src="img/icons-habitaciones/bañera.png" alt=""> Espacio de trabajo</p><br>
+        <p><img id="img-hab2" src="img/icons-habitaciones/aprobado.png" alt=""> Luz</p>
+      </div>
+      <div class="col-lg-4">
+        <p><img id="img-hab2" src="img/icons-habitaciones/tv.png" alt=""> TV</p><br>
+        <p><img id="img-hab2" src="img/icons-habitaciones/comida.jpg" alt=""> Cocina</p><br>
+        <p><img id="img-hab2" src="img/icons-habitaciones/aprobado.png" alt=""> Agua</p><br>
+      </div>
+    </div>
+    <hr><div class="row form-group">
+      <div class="col-lg-4 ml-auto">
+        <p>Entrada y salida:</p>
+      </div>
+      <div class="col-lg-4">
+        <p>Entrada: 12:00 PM</p>
+      </div>
+      <div class="col-lg-4">
+        <p>Salida: 02:00 PM</p>
+      </div>
+  </div>
+  <hr>
+  <div class="row form-group">
+      <div class="col-lg-4 ml-auto">
+        <p>Tarifas:</p>
+      </div>
+      <div class="col-lg-4">
+        <p>Diario: desde $625 <br>
+        Mensual: desde $3500 </p>
+      </div>
+      <div class="col-lg-4">
+        <p>Semanal: desde $875</p>
+      </div>
+  </div>
+  <hr>
+  <div class="row form-group">
+    <div class="col-lg-4 ml-auto">
+      <p>Terminos:</p>
+    </div>
+    <div class="col-lg-4">
+      <a href="">Lee nuestros terminos</a>
+    </div>
+    <div class="col-lg-4">
+    </div>
+  </div>
+  <hr>
+  <div id="maps">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61521.126963597715!2d-86.62179072400676!3d15
+    .480643065906934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f696ca951e8fff9%3A0x99fba16f3251f51c!2sOl
+    anchito!5e0!3m2!1ses!2shn!4v1634084123258!5m2!1ses!2shn" width="400" height="300" style="border:0;" 
+    allowfullscreen="" loading="lazy"></iframe>
+  </div>
+    </div>
+  </div>
+    `;
+}
+
+function reservar(){
+    console.log("Condicion para reservar");
+}
