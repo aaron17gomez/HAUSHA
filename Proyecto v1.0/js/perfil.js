@@ -1,54 +1,8 @@
-var usuarios = [
-    {
-        id:0,
-        nombre:"Pedro",
-        apellido:"Martinez",
-        correo:"pedro.martinez@gmail.com",
-        telefono:"98124158",
-        nombreUsuario:"Pedrito",
-        contrasena:"pedro123",
-        fecha:"1996-07-21",
-        imagen:"img/perfil/lufi.jpg",
-        reservacion:[]
-    },
-    {
-        id:1,
-        nombre:"Mario",
-        apellido:"Cruz",
-        correo:"mario.cruz@gmail.com",
-        telefono:"33548569",
-        nombreUsuario:"Marito",
-        contrasena:"mario123",
-        fecha:"1995-01-21",
-        imagen:"img/perfil/goku.jpg",
-        reservacion:[]
-    },
-    {
-        id:2,
-        nombre:"Luisa",
-        apellido:"Lopez",
-        correo:"luisa.lopez@gmail.com",
-        telefono:"96857420",
-        nombreUsuario:"Lulu",
-        contrasena:"lulu123",
-        fecha:"1997-07-21",
-        imagen:"img/perfil/naruto.jpg",
-        reservacion:[]
-    }
-];
-
-var localStorage = window.localStorage;
-
-if(localStorage.getItem("usuarios")==null){
-    localStorage.setItem("usuarios",JSON.stringify(usuarios));
-}else{
-    usuarios = JSON.parse(localStorage.getItem('usuarios'));
-}
-
 if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
-    llenarNavBarUsuario();
+  llenarNavBarUsuario();
 }else{
-    llenarNavBar();
+  llenarNavBar();
+  window.location.href = 'registro.html';
 }
 
 function llenarNavBar(){
@@ -98,7 +52,7 @@ function llenarNavBarUsuario(){
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img id="perfil" src="img/perfil.png" alt="">Perfil
+                <img id="perfil1" src="img/perfil.png" alt="">Perfil
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
@@ -113,6 +67,6 @@ function llenarNavBarUsuario(){
 
 function cerrarSesion(){
     sessionStorage.clear();
-    llenarNavBar();
+    window.location.href = 'registro.html';
 }
 

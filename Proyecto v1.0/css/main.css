@@ -82,3 +82,9 @@ body{
 #card-cont{
     align-content: center;
 }
+#perfil{
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 5px;
+    padding-bottom: 1px;
+}

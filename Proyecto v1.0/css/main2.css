@@ -142,3 +142,9 @@ body{
     text-decoration: none;
     color: #06C5CF;
 }
+#perfil{
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 5px;
+    padding-bottom: 1px;
+}

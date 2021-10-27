@@ -60,3 +60,9 @@ body{
 .row{
     padding-top: 1rem;
 }
+#perfil1{
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 5px;
+    padding-bottom: 1px;
+}

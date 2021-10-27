@@ -1,54 +1,8 @@
-var usuarios = [
-    {
-        id:0,
-        nombre:"Pedro",
-        apellido:"Martinez",
-        correo:"pedro.martinez@gmail.com",
-        telefono:"98124158",
-        nombreUsuario:"Pedrito",
-        contrasena:"pedro123",
-        fecha:"1996-07-21",
-        imagen:"img/perfil/lufi.jpg",
-        reservacion:[]
-    },
-    {
-        id:1,
-        nombre:"Mario",
-        apellido:"Cruz",
-        correo:"mario.cruz@gmail.com",
-        telefono:"33548569",
-        nombreUsuario:"Marito",
-        contrasena:"mario123",
-        fecha:"1995-01-21",
-        imagen:"img/perfil/goku.jpg",
-        reservacion:[]
-    },
-    {
-        id:2,
-        nombre:"Luisa",
-        apellido:"Lopez",
-        correo:"luisa.lopez@gmail.com",
-        telefono:"96857420",
-        nombreUsuario:"Lulu",
-        contrasena:"lulu123",
-        fecha:"1997-07-21",
-        imagen:"img/perfil/naruto.jpg",
-        reservacion:[]
-    }
-];
-
-var localStorage = window.localStorage;
-
-if(localStorage.getItem("usuarios")==null){
-    localStorage.setItem("usuarios",JSON.stringify(usuarios));
-}else{
-    usuarios = JSON.parse(localStorage.getItem('usuarios'));
-}
-
 if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     llenarNavBarUsuario();
 }else{
     llenarNavBar();
+    window.location.href = 'registro.html';
 }
 
 function llenarNavBar(){
@@ -98,7 +52,7 @@ function llenarNavBarUsuario(){
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img id="perfil" src="img/perfil.png" alt="">Perfil
+                <img id="perfil1" src="img/perfil.png" alt="">Perfil
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
@@ -113,6 +67,50 @@ function llenarNavBarUsuario(){
 
 function cerrarSesion(){
     sessionStorage.clear();
-    llenarNavBar();
+    window.location.href = 'registro.html';
 }
 
+function generarReservaciones(){
+  let usuarios = JSON.parse(localStorage.getItem('usuarios'));
+  let usuActual = JSON.parse(sessionStorage.getItem('idUsuarioActivo'));
+  document.getElementById("eslogan").innerHTML = '';
+  document.getElementById("eslogan").innerHTML += 
+  `
+  <h1>Reservaciones</h1>
+  <h6>En este espacio encontraras todas tus reservaciones disponibles</h6>
+  `;
+  document.getElementById("contenedor").innerHTML = '';
+  for(let i=0;i<usuarios[usuActual].reservacion.length;i++){
+    let reser = usuarios[usuActual].reservacion[i];
+    document.getElementById("contenedor").innerHTML +=
+    `
+        <div class="card">
+        <div style="display: flex; align-items: start; align-content: start;"  class="card-header" style="background-color: white;">
+            <h3>HAUSHA ${reser.nombre}</h3>
+        </div>
+            <div class="card-body">
+                <div class="row form-group">
+                    <div class="col-lg-8 ml-auto">
+                         <img id="izquierda" src="${reser.imagen}" alt="">
+                    </div>
+                    <div id="derecha" class="col-lg-4">
+                         <h3>HAUSHA Col. ${reser.nombre}</h3>
+                         <p id="tex" class="card-title">${reser.descripcion}</p>
+                         <img src="img/icons-habitaciones/wifi.png" alt="">
+                         <img src="img/icons-habitaciones/tv.png" alt="">
+                         <img src="img/icons-habitaciones/bañera.png" alt="">
+                         <img src="img/icons-habitaciones/comida.jpg" alt="">
+                         <img src="img/icons-habitaciones/aprobado.png" alt="">
+                         <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
+                         <div>
+                            <p>Desde</p>
+                            <h4>$${reser.precio}</h4>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+  }
+}
+generarReservaciones();

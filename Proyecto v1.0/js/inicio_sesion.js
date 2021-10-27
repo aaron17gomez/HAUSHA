@@ -1,3 +1,8 @@
+if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
+    llenarNavBarUsuario();
+}else{
+    llenarNavBar();
+}
 
 function validarCredenciales(pCorreo, pContraseña){
     var listaUsuarios = JSON.parse(localStorage.getItem('usuarios'));
@@ -7,8 +12,10 @@ function validarCredenciales(pCorreo, pContraseña){
             bAcceso = true;
             let nom = listaUsuarios[i].nombre + ' ' + listaUsuarios[i].apellido;
             let ident = true;
+            let idUsu = listaUsuarios[i].id;
             sessionStorage.setItem('usuarioActivo', nom);
             sessionStorage.setItem('rolUsuarioActivo', ident);
+            sessionStorage.setItem('idUsuarioActivo', idUsu);
             console.log(listaUsuarios[i]);
         }
     }
@@ -101,3 +108,66 @@ function crearUsuarioCliente(){
         
     }
 }
+
+
+function llenarNavBar(){
+    document.getElementById("navbar-form").innerHTML = '';
+    document.getElementById("navbar-form").innerHTML +=
+    `
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="nosotros.html">Nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-outline-success disabled" type="button" onclick="">Iniciar Sesión</button>
+        </li>
+    </ul>
+    `;
+}
+
+function llenarNavBarUsuario(){
+    document.getElementById("navbar-form").innerHTML = '';
+    document.getElementById("navbar-form").innerHTML +=
+    `
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="nosotros.html">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img id="perfil" src="img/perfil.png" alt="">Perfil
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
+                <li><a class="dropdown-item" href="reservaciones.html">Reservaciones</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
+              </ul>
+            </li>
+        </ul>
+    `;
+}
+
+function cerrarSesion(){
+    sessionStorage.clear();
+    llenarNavBar();
+}
+

@@ -73,3 +73,9 @@ body{
     height: 20px;
     align-items: center;
 }
+#perfil1{
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 5px;
+    padding-bottom: 1px;
+}

@@ -22,23 +22,31 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           </li>
         </ul>
-        <form class="d-flex">
+        <form id="navbar-form" class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
+              <a class="nav-link active" aria-current="page" href="nosotros.html">Nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Nosotros</a>
+              <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success" type="submit">Reservar</button>
-            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img id="perfil" src="img/perfil.png" alt="">Perfil
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Reservaciones</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+              </ul>
+            </li>         
           </ul>
           
         </form>
@@ -49,12 +57,7 @@
             <div class="form">
                 <!--login form start-->
                 <form class="login-form form-group" action="" method="POST">
-                    <h2>Iniciar Sesión</h2>
-                    <div class="icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-google"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
+                    <h2>Iniciar Sesión</h2><br>
                     <input id="txtcorreo" type='email'class='input-field'placeholder='Email' required >
                     <input id="txtcontrasena" type='password'class='input-field'placeholder='Password' required>
                     <button onclick="iniciarSesion();" type='submit'class='submit-btn'>Iniciar</button>
@@ -204,9 +207,11 @@
       </div>
     <div>
 
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+      <script src="js/all.js"></script>
+      <script src="js/jquery-3.4.1.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/inicio_sesion.js"></script>
 </body>
 
