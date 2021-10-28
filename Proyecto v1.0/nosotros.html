@@ -7,38 +7,28 @@
     <title>HAUSHA</title>
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/all.css"><!--FontAwesome-->
-    <link rel="stylesheet" href="css/main5.css">
-     <meta name="description" content="DEFINIR HAUSHA">
-  <meta name="keywords" content="HAUSHA Alquileres, Misión, Visión, Historia">
-   <!-- <meta http-equiv="Content-Type"content="text/html; charset=windows-1252">
-  <META NAME="revisit-after" content="8 days">
-  <META NAME="robots" content="index,follow">
-  <META NAME="distribution" content="global">-->
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" fill="currentColor" type="button" class="bi bi-house-fill" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-      </svg>
-      <a class="navbar-brand fw-bold fs-2 fst-italic" href="#">HAUSHA</a>
-      <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#MenuNavegacion"> 
-          <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand" href="#">HAUSHA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           </li>
         </ul>
         <form id="navbar-form" class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+              <a class="nav-link disabled" aria-current="page" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" aria-current="page" href="#">Nosotros</a>
+              <a class="nav-link active" aria-current="page" href="#">Nosotros</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
@@ -46,131 +36,106 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>
-            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img id="perfil" src="img/perfil.png" alt="">Perfil
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Reservaciones</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
+              </ul>
+            </li>         
           </ul>
-          </li>
-
-        <li id="ctc">
-          <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';">Contacto</a>
-          <div id="light" class="white_content">
-            <section id="formulario">
-   <form id="formSend">
-     <label>Envíanos un mensaje a nuestro correo</label>
-     <br>
-     <input type='text' name='nombre' placeholder='Nombre'  required=""  class="co-input"/>
-     <br>
-     <input type='text' name='mail' placeholder='correo@tucorreo.com'  required="" class="co-input"/>
-     <br>
-     <input type='tel' name='usrtel' placeholder='Teléfono' class="co-input"/>
-     <br>
-     <input type='text' name='asunto' placeholder='Asunto' class="co-input"/>
-     <br>
-     <textarea name="mensaje" rows="3" cols="35" placeholder='Escribe aquí tu mensaje' required="" class="co-input-area" /></textarea>
-     <br>
-     <input type="submit" value="Enviar" class="co-boton"/><div id="sendM"><img src="img/loading.gif"></div>
- </form>
-</section>
-<a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">CERRAR</a>
-          </div>
-      </section>
-    </section>
-    </li>
-
-      </ul>
         </form>
       </div>
     </div>
   </nav>
-  
-<!--<div id="contenedor-cuerpo">-->
-    
- 
-    <div id="contenedor-cuerpo">
-      <div id="eslogan">
-        <h1>HAUSHA</h1>
-      </div>
-     <div id="contenedor-info">
-     <div class="container-fluid" id="contenedor-apps">
-         <div class="container text-center text-md-center mt-5">
-             <!-- Grid row -->
-            <!-- <div class="row mt-3 dark-grey-text">-->
-     
-              <div class="col-md-80 col-lg-50 col-xl-50 mx-auto mb-40">
-                     <div class="card" style="width: 80rem;">
-                         <h5 class="card-title">¿QUIENES SOMOS?</h5>
-                         <div class="card-body">
-                           <p class="card-text">HAUSHA un lugar de alquileres en el cual se busca ayudar al arrendatario a encontrar un lugar accesible.</p>
-                           <a href="#" style="color: white;">Leer más</a>
-                         </div>
-                       </div>
-                   </div>
-                   <!-- Grid column -->
-     
-                   <div class="col-md-80 col-lg-50 col-xl-50 mx-auto mb-40">
-                     <div class="card" style="width: 80rem;">
-                         <h5 class="card-title">MISION</h5>
-                         <div class="card-body">
-                           <p class="card-text">DEFINIR MISION</p>
-                           <a href="#" style="color: white;">Leer más</a>
-                         </div>
-                       </div>
-                   </div>
-                   <!-- Grid column -->
-     
-                   <div class="col-md-80 col-lg-50 col-xl-50 mx-auto mb-40">
-                     <div class="card" style="width: 80rem;">
-                         <h5 class="card-title">VISION</h5>
-                         <div class="card-body">
-                           <p class="card-text">DEFINIR VISION</p>
-                           <a href="#" style="color: white;">Leer más</a>
-                         </div>
-                       </div>
-                   </div>
-                   <!-- Grid column -->
-                   <div class="col-md-80 col-lg-50 col-xl-50 mx-auto mb-40">
-                     <div class="card" style="width: 80rem;">
-                         <h5 class="card-title">HISTORIA</h5>
-                         <div class="card-body">
-                           <p class="card-text">DEFINIR HISTORIA</p>
-                           <a href="#" style="color: white;">Leer más</a>
-                         </div>
-                       </div>
-                   </div>
-                   <!-- Grid column -->
-             </div>
-         </div>      
-     </div>
-    <!--<section id="HAUSHA Alquileres">
-     <dt>HAUSHA Alquileres</dt>
-      <dd>AGREGAR DEFINICION </dd>
-      <div id="light" class="white_content">
-    <section id="Mision">
-      <dt>Misión</dt>
-      <dd>AGREGAR MISION</dd>
-      <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-    </section>
-    <section id="Vision">
-      <FONT COLOR="white">Vision </FONT>
-<br>
-      <dt>Visión</dt>
-      <dd>AGREGAR VISION </dd>
-      
-    </section>
-    <section id="Historia">
-      <FONT COLOR="white"> </FONT>
-<br>
-       <dt>Historia</dt>
-      <dd>AGREGAR HISTORIA </dd>
-      </FONT>
-    </section>    
-  </section>
-  
-</div> -->
+
+<div id="contenedor-cuerpo">
+  <!--
+    <div id="eslogan">
+        <h1>No Hay Nada Mejor Que El Hogar Conocenos</h1>
+    </div>
+  -->
+    <div id="contenedor-info">
+        <div class="container-fluid" id="contenedor-apps2">
+            <div class="container text-center text-md-left mt-5">
+                <div class="row mt-3 dark-grey-text">
+
+                  <h1>Misión, visión, valores</h1>
+
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 ">
+                    <div class="card" style="width: 18rem;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="70" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
+                        <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
+                      </svg>
+                        <div class="card-body">
+                          <hr>
+                          <h5 class="card-title">Nuestra Misión</h5>
+                          <p class="card-text">
+                            Proporcionar un asesoramiento integral, a personas y empresas, que permita solucionar todas sus necesidades relacionadas con el mercado inmobiliario. Aportándoles una mayor rentabilidad basada en la responsabilidad y la trasparencia.
+                          </p>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <div class="card" style="width: 18rem;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="70" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" class=""/>
+                      </svg>
+                        <div class="card-body">
+                          <hr>
+                          <h5 class="card-title">Nuestra Visión</h5>
+                          <p class="card-text">
+                            Convertirnos en la empresa de referencia del sector inmobiliario en la país, con objeto de que las personas que intervienen en este mercado piensen en nosotros como primera opción en el momento de vender, comprar o alquilar una vivienda.
+                          </p>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 text-justify">
+                    <div class="card" style="width: 18rem;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="70" fill="currentColor" class="bi bi-gem" viewBox="0 0 16 16">
+                        <path d="M3.1.7a.5.5 0 0 1 .4-.2h9a.5.5 0 0 1 .4.2l2.976 3.974c.149.185.156.45.01.644L8.4 15.3a.5.5 0 0 1-.8 0L.1 5.3a.5.5 0 0 1 0-.6l3-4zm11.386 3.785-1.806-2.41-.776 2.413 2.582-.003zm-3.633.004.961-2.989H4.186l.963 2.995 5.704-.006zM5.47 5.495 8 13.366l2.532-7.876-5.062.005zm-1.371-.999-.78-2.422-1.818 2.425 2.598-.003zM1.499 5.5l5.113 6.817-2.192-6.82L1.5 5.5zm7.889 6.817 5.123-6.83-2.928.002-2.195 6.828z"/>
+                      </svg>
+                        <div class="card-body">
+                          <hr>
+                          <h5 class="card-title">Nuestroa Valores</h5>
+                          <p class="card-text">
+                            - Transparencia <br>
+                            - Ética  <br>
+                            - Honestidad <br>
+                            - Profesionalidad <br>
+                            – Eficienci <br>
+                            - Responsabilidad <br>
+                            - Social Cercanía
+                          </p>
+                        </div>
+                      </div>
+                  </div>
+                  <hr>
+                    <h3>Nuestros Compromiso</h3>
+                    <p class="text-justify">
+                      Como Agentes Inmobiliarios, nos comprometemos a representar en exclusiva los intereses del vendedor o comprador, que previamente nos haya otorgado un mandato en firme para la venta o adquisición de una propiedad. <br>
+
+                      Asesoramos y vendemos inmuebles con profesionalidad, trasparencia y responsabilidad. Ahorramos tiempo a nuestros Clientes y les garantizamos el mejor precio de mercado. Trabajamos de forma personalizada y nos encargamos de TODO el proceso, con objeto de lograr la máxima rentabilidad para cada propietario. <br>
+
+                      Ponemos todos nuestros recursos, tanto materiales como técnicos y humanos, al servicio de nuestros Clientes, a los que informamos con diligencia y trasparencia de todas nuestras actividades, así como de las respuestas que vayamos obteniendo en el desempeño de dichas acciones y de cualquier circunstancia que pueda afectar a la operación inmobiliaria en la que se encuentran inmersos.  
+                    </p>
+                  
+                </div>
+            </div>      
+        </div> 
+    </div>
+</div>
         
 <!-- Footer -->
-<footer id="pie-de-pagina" class="bg-light text-center text-black">
+<footer class="bg-light text-center text-black">
   <!-- Grid container -->
   <div class="container p-4">
     <!-- Section: Social media -->
@@ -265,7 +230,7 @@
   <!-- Grid container -->
 
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color:  rgba(0, 0, 0, 0.2);">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2021 Copyright:
     <a class="text-black" href="#">HAUSHA</a>
   </div>
@@ -278,6 +243,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/controlador.js"></script>
 </body>
 
 </html>
