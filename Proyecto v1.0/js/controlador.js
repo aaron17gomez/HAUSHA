@@ -68,9 +68,26 @@ function llenarNavBar(){
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
         </li>
-        <li class="nav-item">
-          <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>
-        </li>
+
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img id="perfil1" src="#" alt="">iniciar sesion
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="administrador.html">iniciar sesion Administrador</a></li>
+          <li><a class="dropdown-item" href="registro.html">inicio sesion usuario</a></li>
+          <li><hr class="dropdown-divider"></li>
+         
+        </ul>
+      </li>
+
+
+
+
+
+
+
+        
     </ul>
     `;
 }
@@ -115,4 +132,3 @@ function cerrarSesion(){
     sessionStorage.clear();
     llenarNavBar();
 }
-
