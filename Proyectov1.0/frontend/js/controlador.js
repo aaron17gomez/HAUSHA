@@ -3,7 +3,6 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
 }else{
   llenarNavBar();
 }
-
 /*
 var usuarios2 = [
     {
@@ -15,7 +14,9 @@ var usuarios2 = [
         nombreUsuario:"Pedrito",
         contrasena:"pedro123",
         fecha:"1996-07-21",
+        identificador:"1",
         imagen:"img/perfil/lufi.jpg",
+        propuestas:[],
         reservacion:[
           {
             nombreCategoria:"Casa",
@@ -35,7 +36,9 @@ var usuarios2 = [
         nombreUsuario:"Marito",
         contrasena:"mario123",
         fecha:"1995-01-21",
+        identificador:"1",
         imagen:"img/perfil/goku.jpg",
+        propuestas:[],
         reservacion:[
           {
             nombreCategoria:"Casa",
@@ -55,7 +58,9 @@ var usuarios2 = [
         nombreUsuario:"Lulu",
         contrasena:"lulu123",
         fecha:"1997-07-21",
+        identificador:"1",
         imagen:"img/perfil/naruto.jpg",
+        propuestas:[],
         reservacion:[
           {
             nombreCategoria:"Casa",
@@ -65,9 +70,22 @@ var usuarios2 = [
             precio:"124.32"
           }
         ]
-    }
+    },
+    {
+      id:2,
+      nombre:"Luis",
+      apellido:"Lopez",
+      correo:"luis.lopez@gmail.com",
+      telefono:"96857420",
+      nombreUsuario:"luis",
+      contrasena:"luis123",
+      fecha:"1997-07-21",
+      identificador:"2",
+      imagen:"img/perfil/naruto.jpg",
+      reservacion:[],
+      propuestas:[]
+  }
 ];
-
 
 function guardar(){
   for(let i=0;i<usuarios2.length;i++){
@@ -154,7 +172,13 @@ function llenarNavBarUsuario(){
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img id="perfil" src="img/perfil.png" alt="">Perfil
               </a>
-                <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
+                <li><a class="dropdown-item" href="reservaciones.html">Reservaciones</a></li>
+                <li><a class="dropdown-item" type="button" onclick="llenarSelectPropuesta();" data-toggle="modal" data-target="#modalCrearPropuestas">Crear propuestas</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
+              </ul>
             </li>
         </ul>
     `;

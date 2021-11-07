@@ -11,6 +11,8 @@
         private $fecha;
         private $imagen;
         private $reservacion;
+        private $identificador;
+        private $propuestas;
 
         public function __construct(
             $id,
@@ -22,7 +24,9 @@
             $contrasena,
             $fecha,
             $imagen,
-            $reservacion
+            $reservacion,
+            $identificador,
+            $propuestas
         ){
             $this->id = $id;
             $this->nombre = $nombre;
@@ -34,6 +38,8 @@
             $this->fecha = $fecha;
             $this->imagen = $imagen;
             $this->reservacion = $reservacion;
+            $this->identificador = $identificador;
+            $this->propuestas = $propuestas;
         }
 
         /**
@@ -217,7 +223,7 @@
        }
 
        /**
-        * Get the value of reservacion
+        * Get the value of imagen
         */ 
         public function getreservacion()
        {
@@ -225,13 +231,52 @@
        }
 
        /**
-        * Set the value of reservacion
+        * Set the value of imagen
         *
         * @return  self
         */ 
        public function setreservacion($reservacion)
        {
               $this->reservacion = $reservacion;
+
+              return $this;
+       }
+
+       /**
+        * Get the value of identificador
+        */ 
+        public function getidentificador()
+       {
+              return $this->identificador;
+       }
+
+       /**
+        * Set the value of identificador
+        *
+        * @return  self
+        */ 
+       public function setidentificador($identificador)
+       {
+              $this->identificador = $identificador;
+
+              return $this;
+       }
+       /**
+        * Get the value of propuestas
+        */ 
+        public function getpropuestas()
+       {
+              return $this->propuestas;
+       }
+
+       /**
+        * Set the value of propuestas
+        *
+        * @return  self
+        */ 
+       public function setpropuestas($propuestas)
+       {
+              $this->propuestas = $propuestas;
 
               return $this;
        }
@@ -254,7 +299,9 @@
                      'contrasena'=>$this->contrasena,
                      'fecha'=>$this->fecha,
                      'imagen'=>$this->imagen,
-                     'reservacion'=>$this->reservacion
+                     'reservacion'=>$this->reservacion,
+                     'identificador'=>$this->identificador,
+                     'propuestas'=>$this->propuestas
               ];
               $result = $db
                  ->push($usuarios);
@@ -290,7 +337,9 @@
                      'contrasena'=>$this->contrasena,
                      'fecha'=>$this->fecha,
                      'imagen'=>$this->imagen,
-                     'reservacion'=>$this->reservacion
+                     'reservacion'=>$this->reservacion,
+                     'identificador'=>$this->identificador,
+                     'propuestas'=>$this->propuestas
                ];
                $result = $db
                   ->getChild($indice)

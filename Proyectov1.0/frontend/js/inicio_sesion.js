@@ -1,10 +1,15 @@
-if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
+if(sessionStorage.getItem('identificadorUsuario') == 1){
     llenarNavBarUsuario();
     window.location.href = 'habitaciones.html';
-}else{
+}else if(sessionStorage.getItem('identificadorUsuario') == 2){
+    llenarNavBarUsuario();
+    window.location.href = 'nosotros.html';
+}
+else{
     llenarNavBar();
 }
 
+var identificador;
 var usuarios = [];
 const url = '../../Proyectov1.0/backend/api/usuarios.php';
 function obtenerUsuarios(){
@@ -14,7 +19,6 @@ function obtenerUsuarios(){
         responseType:'json'
     }).then(res=>{
         this.usuarios = res.data;
-        console.log(usuarios);
     }).catch(error=>{
         console.error(error);
     });
@@ -26,13 +30,14 @@ function validarCredenciales(pCorreo, pContraseña){
     for(const usu in usuarios){
         if(usuarios[usu].correo == pCorreo && usuarios[usu].contrasena == pContraseña){
             bAcceso = true;
+            identificador = usu;
             let nom = usuarios[usu].nombre + ' ' + usuarios[usu].apellido;
             let ident = true;
             let idUsu = usu;
             sessionStorage.setItem('usuarioActivo', nom);
             sessionStorage.setItem('rolUsuarioActivo', ident);
             sessionStorage.setItem('idUsuarioActivo', idUsu);
-            console.log(usuarios[usu]);
+            sessionStorage.setItem('identificadorUsuario', usuarios[usu].identificador);
         }
     }
 
@@ -49,7 +54,11 @@ function iniciarSesion(){
     bAcceso = validarCredenciales(sCorreo, sContraseña);
     
     if(bAcceso == true){
-        window.location.href = 'habitaciones.html';
+        if(usuarios[identificador].identificador == 1){
+            window.location.href = 'habitaciones.html';
+        }else if(usuarios[identificador].identificador == 2){
+            window.location.href = 'nosotros.html';
+        }
     }else{
         window.alert("El usuario || contraseña no coinciden");
     }
@@ -58,7 +67,6 @@ function iniciarSesion(){
 
 function validarRegistro(){
     var nombre,apellido,correo,contrasena,fecha,imagen,nombreUsuario,telefono;
-
         nombre=document.getElementById('nombre').value,
         apellido=document.getElementById('apellido').value,
         correo=document.getElementById('correo').value,
@@ -129,7 +137,9 @@ function crearUsuarioCliente(){
             contrasena:document.getElementById('contrasena').value,
             fecha:document.getElementById('fecha').value,
             imagen:document.getElementById('lista-imagenes').value,
-            reservacion:[]
+            reservacion:[],
+            propuestas:[],
+            identificador:1
         }
             axios({
             method:'POST',

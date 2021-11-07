@@ -432,6 +432,7 @@ function llenarNavBarUsuario(){
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
                 <li><a class="dropdown-item" href="reservaciones.html">Reservaciones</a></li>
+                <li><a class="dropdown-item" type="button" onclick="llenarSelectPropuesta();" data-toggle="modal" data-target="#modalCrearPropuestas">Crear propuestas</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
               </ul>
@@ -450,50 +451,46 @@ function crearReservacion(id1, id2){
     let reservaActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
     let usuActualizado;
-    console.log(usuActual);
+    let reser;
+    let pro;
+
     const reserva = {
         nombreCategoria:categorias[categoriaSeleccionada[id1]].nombreCategoria,
+        keyCategotia:categoriaSeleccionada[id1],
         nombre:reservaActual.nombre,
         descripcion:reservaActual.descripcion,
         imagen:reservaActual.imagen,
         precio:reservaActual.precio
     };
+
     if(usuarios[usuActual].reservacion){
-         usuActualizado = {
-           id:usuarios[usuActual].id,
-           nombre:usuarios[usuActual].nombre,
-           apellido:usuarios[usuActual].apellido,
-           correo:usuarios[usuActual].correo,
-           telefono:usuarios[usuActual].telefono,
-           nombreUsuario:usuarios[usuActual].nombreUsuario,
-           contrasena:usuarios[usuActual].contrasena,
-           fecha:usuarios[usuActual].fecha,
-           imagen:usuarios[usuActual].imagen,
-           reservacion:usuarios[usuActual].reservacion
-         };
-         usuActualizado.reservacion.push(reserva);
+      reser = usuarios[usuActual].reservacion;
+      reser.push(reserva);
     }else{
-         usuActualizado = {
-           id:usuarios[usuActual].id,
-           nombre:usuarios[usuActual].nombre,
-           apellido:usuarios[usuActual].apellido,
-           correo:usuarios[usuActual].correo,
-           telefono:usuarios[usuActual].telefono,
-           nombreUsuario:usuarios[usuActual].nombreUsuario,
-           contrasena:usuarios[usuActual].contrasena,
-           fecha:usuarios[usuActual].fecha,
-           imagen:usuarios[usuActual].imagen,
-           reservacion:[
-            {
-              nombreCategoria:categorias[categoriaSeleccionada[id1]].nombreCategoria,
-              nombre:reservaActual.nombre,
-              descripcion:reservaActual.descripcion,
-              imagen:reservaActual.imagen,
-              precio:reservaActual.precio
-            }
-           ]
-         };
+      reser = [reserva];   
     }
+
+    if(usuarios[usuActual].propuestas){
+      pro = usuarios[usuActual].propuestas;
+    }else{
+      pro = [];
+    }
+    
+    usuActualizado = {
+      id:usuarios[usuActual].id,
+      nombre:usuarios[usuActual].nombre,
+      apellido:usuarios[usuActual].apellido,
+      correo:usuarios[usuActual].correo,
+      telefono:usuarios[usuActual].telefono,
+      nombreUsuario:usuarios[usuActual].nombreUsuario,
+      contrasena:usuarios[usuActual].contrasena,
+      fecha:usuarios[usuActual].fecha,
+      imagen:usuarios[usuActual].imagen,
+      identificador:usuarios[usuActual].identificador,
+      propuestas:pro,
+      reservacion:reser
+    };
+    
       axios({
         method:'PUT',
         url:url1 + `?id=${usuActual}`,
@@ -511,4 +508,108 @@ function crearReservacion(id1, id2){
     window.alert("Inicie sesion primero");
   }
        
+}
+
+function llenarSelectPropuesta(){
+  document.getElementById("selectPropuesta").innerHTML = '';
+  for(const key in categorias){
+    document.getElementById("selectPropuesta").innerHTML += 
+    `
+    <option value="${key}">${categorias[key].nombreCategoria}</option>
+    `;
+  }
+  document.getElementById("selectPropuesta").value = null;
+}
+
+function crearPropuesta(){
+  if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
+    let key = document.getElementById("selectPropuesta").value;
+    let cateActual = categorias[key].propuestas;
+    let usuActual = sessionStorage.getItem('idUsuarioActivo');
+    let usuActualizado;
+    let reser;
+    let pro;
+
+    const propuesta = {
+      codigo:cateActual.length+1,
+      nombre:document.getElementById("nombrePro").value,
+      descripcion:document.getElementById("descripPro").value,
+      calificacio:[],
+      precio:document.getElementById("precioPro").value,
+      imagen:document.getElementById("lista-imagenes").value,
+      comentarios:[],
+      categoria:document.getElementById("selectPropuesta").value,
+      codigoUsuario:usuActual
+    };
+
+    if(usuarios[usuActual].reservacion){
+      reser = usuarios[usuActual].reservacion;
+    }else{
+      reser = [];   
+    }
+
+    if(usuarios[usuActual].propuestas){
+      pro = usuarios[usuActual].propuestas;
+      pro.push(propuesta);
+    }else{
+      pro = [propuesta];
+    }
+
+    usuActualizado = {
+      id:usuarios[usuActual].id,
+      nombre:usuarios[usuActual].nombre,
+      apellido:usuarios[usuActual].apellido,
+      correo:usuarios[usuActual].correo,
+      telefono:usuarios[usuActual].telefono,
+      nombreUsuario:usuarios[usuActual].nombreUsuario,
+      contrasena:usuarios[usuActual].contrasena,
+      fecha:usuarios[usuActual].fecha,
+      imagen:usuarios[usuActual].imagen,
+      reservacion:reser,
+      identificador:usuarios[usuActual].identificador,
+      propuestas:pro
+    };
+    
+      axios({
+        method:'PUT',
+        url:url1 + `?id=${usuActual}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        agregarPropuesta(propuesta);
+        window.alert("Su propuesta ha sido agregada con exito.");
+        obtenerCategorias();
+        obtenerUsuarios();
+        limpiarModal();
+        $("#modalCrearPropuestas .close").click()
+    }).catch(error=>{
+        console.error(error);
+    });
+  }else{
+    window.alert("Inicie sesion primero");
+  }
+}
+
+function agregarPropuesta(propuesta){
+
+  categorias[propuesta.categoria].propuestas.push(propuesta);
+
+  axios({
+    method:'PUT',
+    url:url + `?id=${propuesta.categoria}`,
+    responseType:'json',
+    data:categorias[propuesta.categoria]
+}).then(res=>{
+    console.log(res.data);
+}).catch(error=>{
+    console.error(error);
+});
+}
+
+function limpiarModal(){
+      document.getElementById("nombrePro").value = '';
+      document.getElementById("descripPro").value = '';
+      document.getElementById("precioPro").value = '';
+      document.getElementById("lista-imagenes").value = null;
 }
