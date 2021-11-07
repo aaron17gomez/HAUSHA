@@ -1,22 +1,35 @@
-var consulta = $("#searchTable").DataTable();
+//hasta aqui
 
-$("#inputBusqueda").keyup(function(){
-	consulta.search($(this).val()).draw();
+function autocompletado () {
+    document.getElementById("demo").innerHTML = '';
 
-	$("header").css({
-		"height": "100vh",
-		"background": "rgba(0,0,0,0.5)"
-	})
+    var preguntas = [
+      "Casa",
+      "departamento",
+      "habitacion",
+      "local"
+    ];
 
-	if ($("#inputBusqueda").val() == ""){
-		$("header").css({
-			"height": "auto",
-			"background": "none"
-		})
+    var pal = document.getElementById("buscar-pal").value;
+    var tam = pal.length;
+    for(indice in preguntas){
+      var nombre = preguntas[indice];
+      var str = nombre.substring(0,tam);
+      if(pal.length <= nombre.length && pal.length != 0 && nombre.length != 0){
+        if(pal.toLowerCase() == str.toLowerCase()){
+          var node = document.createElement("LI");
+          var textnode = document.createTextNode(preguntas[indice]);
+          node.appendChild(textnode);
+          document.getElementById("demo").appendChild(node);
+          mostrarBusqueda(nombre);
+        }
 
-		$("#search").hide()
+      }
+    }
 
-	} else {
-		$("#search").fadeIn("fast");
-	}
-})
+  }
+
+  function mostrarBusqueda(nombre){
+console.log(nombre);
+
+  }

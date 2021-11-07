@@ -23,7 +23,7 @@
 
 <!--EMPIEZA LO DE BUSQUEDA-->
 
-          <input type="search" placeholder="Buscar" id="inputBusqueda">
+     <!--    <input type="search" placeholder="Buscar" id="inputBusqueda">
         </div>
       </div>
       <div class="search" id="search">
@@ -35,15 +35,8 @@
           </thead>
           <tbody>
             <tr>
-              <td><a href="#">Inicio</a></td>
-            </tr>
-            <tr>
-              <td><a href="#">Contactanos</a></td></a>
-            </tr>
-            <tr>
-              <td><a href="#">propuestas disponibles</a></td>
-            </tr>
-            <tr>
+            
+              
               <td><a href="#">Casas</a></td>
             </tr>
             <tr>
@@ -55,9 +48,17 @@
             
           </tbody>
         </table>
-      </div>
+      </div> -->>
 
    <!-- aqui termina lo de busqueda-->
+
+
+
+   
+   <input type="text" id="buscar-pal" onkeyup="autocompletado()" style="border: solid 2px">
+  <div>
+      <ul id="demo"></ul>
+  </div>
   
 
 
@@ -358,6 +359,7 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/controlador.js"></script>
+   <script src="js/botonBusqueda.js"></script>
 </body>
 
 </html>
