@@ -1,6 +1,6 @@
 if(sessionStorage.getItem('identificadorUsuario') == 1){
     llenarNavBarUsuario();
-    window.location.href = 'habitaciones.html';
+    window.location.href = 'usuario.html';
 }else if(sessionStorage.getItem('identificadorUsuario') == 2){
     llenarNavBarUsuario();
     window.location.href = 'nosotros.html';
@@ -55,7 +55,7 @@ function iniciarSesion(){
     
     if(bAcceso == true){
         if(usuarios[identificador].identificador == 1){
-            window.location.href = 'habitaciones.html';
+            window.location.href = 'usuario.html';
         }else if(usuarios[identificador].identificador == 2){
             window.location.href = 'nosotros.html';
         }
@@ -136,10 +136,13 @@ function crearUsuarioCliente(){
             nombreUsuario:document.getElementById('nombreUsuario').value,
             contrasena:document.getElementById('contrasena').value,
             fecha:document.getElementById('fecha').value,
+            nacionalidad:document.getElementById('lista-nacionalidad').value,
+            genero:document.getElementById('lista-genero').value,
             imagen:document.getElementById('lista-imagenes').value,
             reservacion:[],
             propuestas:[],
-            identificador:1
+            identificador:1,
+            descripcion:"Ninguna"
         }
             axios({
             method:'POST',

@@ -17,9 +17,12 @@
                 $_POST["contrasena"], 
                 $_POST["fecha"], 
                 $_POST["imagen"],
+                $_POST["nacionalidad"],
+                $_POST["genero"],
                 $_POST["reservacion"],
                 $_POST["identificador"],
-                $_POST["propuestas"]
+                $_POST["propuestas"],
+                $_POST["descripcion"]
             );
             echo $usuario->crearUsuario($database->getDBUsuarios());
         break;
@@ -42,9 +45,12 @@
                 $_PUT["contrasena"], 
                 $_PUT["fecha"], 
                 $_PUT["imagen"],
+                $_PUT["nacionalidad"],
+                $_PUT["genero"],
                 $_PUT["reservacion"],
                 $_PUT["identificador"],
-                $_PUT["propuestas"]
+                $_PUT["propuestas"],
+                $_PUT["descripcion"]
             );
             echo $usuario->actualizarUsuario($database->getDBUsuarios(),$_GET['id']);
         break;

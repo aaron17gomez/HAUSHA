@@ -10,9 +10,12 @@
         private $contrasena;
         private $fecha;
         private $imagen;
+        private $nacionalidad;
+        private $genero;
         private $reservacion;
         private $identificador;
         private $propuestas;
+        private $descripcion;
 
         public function __construct(
             $id,
@@ -24,9 +27,12 @@
             $contrasena,
             $fecha,
             $imagen,
+            $nacionalidad,
+            $genero,
             $reservacion,
             $identificador,
-            $propuestas
+            $propuestas,
+            $descripcion
         ){
             $this->id = $id;
             $this->nombre = $nombre;
@@ -37,9 +43,12 @@
             $this->contrasena = $contrasena;
             $this->fecha = $fecha;
             $this->imagen = $imagen;
+            $this->nacionalidad = $nacionalidad;
+            $this->genero = $genero;
             $this->reservacion = $reservacion;
             $this->identificador = $identificador;
             $this->propuestas = $propuestas;
+            $this->descripcion = $descripcion;
         }
 
         /**
@@ -223,6 +232,46 @@
        }
 
        /**
+        * Get the value of nacionalidad
+        */ 
+        public function getnacionalidad()
+       {
+              return $this->nacionalidad;
+       }
+
+       /**
+        * Set the value of nacionalidad
+        *
+        * @return  self
+        */ 
+       public function setnacionalidad($nacionalidad)
+       {
+              $this->nacionalidad = $nacionalidad;
+
+              return $this;
+       }
+
+       /**
+        * Get the value of genero
+        */ 
+        public function getgenero()
+       {
+              return $this->genero;
+       }
+
+       /**
+        * Set the value of genero
+        *
+        * @return  self
+        */ 
+       public function setgenero($genero)
+       {
+              $this->genero = $genero;
+
+              return $this;
+       }
+
+       /**
         * Get the value of imagen
         */ 
         public function getreservacion()
@@ -280,6 +329,25 @@
 
               return $this;
        }
+       /**
+        * Get the value of descripcion
+        */ 
+        public function getdescripcion()
+       {
+              return $this->descripcion;
+       }
+
+       /**
+        * Set the value of descripcion
+        *
+        * @return  self
+        */ 
+       public function setdescripcion($prodescripcionpuestas)
+       {
+              $this->descripcion = $descripcion;
+
+              return $this;
+       }
 
        public function __toString()
        {
@@ -299,9 +367,12 @@
                      'contrasena'=>$this->contrasena,
                      'fecha'=>$this->fecha,
                      'imagen'=>$this->imagen,
+                     'nacionalidad'=>$this->nacionalidad,
+                     'genero'=>$this->genero,
                      'reservacion'=>$this->reservacion,
                      'identificador'=>$this->identificador,
-                     'propuestas'=>$this->propuestas
+                     'propuestas'=>$this->propuestas,
+                     'descripcion'=>$this->descripcion
               ];
               $result = $db
                  ->push($usuarios);
@@ -337,9 +408,13 @@
                      'contrasena'=>$this->contrasena,
                      'fecha'=>$this->fecha,
                      'imagen'=>$this->imagen,
+                     'nacionalidad'=>$this->nacionalidad,
+                     'genero'=>$this->genero,
                      'reservacion'=>$this->reservacion,
                      'identificador'=>$this->identificador,
-                     'propuestas'=>$this->propuestas
+                     'propuestas'=>$this->propuestas,
+                     'descripcion'=>$this->descripcion
+                     
                ];
                $result = $db
                   ->getChild($indice)

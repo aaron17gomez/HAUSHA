@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HAUSHA</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/all.css"><!--FontAwesome-->
     <link rel="stylesheet" href="css/main4.css">
@@ -60,69 +63,9 @@
         <h6>En este espacio se podra crear nuevos administradores, bloquear cuentas, dar permiso a administradores</h6>
     </div>
     <div id="contenedor">
-        <div class="card">
-            <div  class="card-header" style="background-color: white;">
-              <h3>Cuentas mejores calificadas</h3><hr>
-              <div class="row form-group">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
-                  <input class="col-lg-3 ml-auto" type="number" placeholder="Adultos">
-                  <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
-              </div>
-            </div>
+        <div id="map">
+          
         </div>
-        <div class="card">
-          <div class="card-body">
-              <div class="row form-group">
-                  <div class="col-lg-8 ml-auto">
-                       <img id="izquierda" src="img/gamer.jpg" alt="">
-                  </div>
-                  <div id="derecha" class="col-lg-12">
-                       <h3></h3>
-                       <p id="tex" class="card-title">Sweet Home te bringa la mejor estadia para tu visita.</p>
-
-                       <p id="tex" class="card-title">${pro.descripcion}</p>
-                                 <img src="img/1.jpg" alt="">
-                                 <img src="img/2.jpg" alt="">
-                                 <img src="img/3.jpg" alt="">
-                                 <img src="img/5.jpg" alt="">
-                                 <img src="img/6.jpg" alt=""><br>
-                                 <div>
-<!-- agregar imagenes-->
-                          <p>Desde</p>
-                          <h4>$620</h4>
-                          <button type="submit" class="btn btn-primary">Mas informacion</button>
-                       </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-              <div class="row form-group">
-                  <div class="col-lg-8 ml-auto">
-                       <img id="izquierda" src="img/wallpaper1.jpg" alt="">
-                  </div>
-                  <div id="derecha" class="col-lg-4">
-                       <h3>HAUSHA Col. Centro</h3>
-                       <p id="tex" class="card-title">Sweet Home te bringa la mejor estadia para tu visita.</p>
-                                 <img src="img/1.jpg" alt="">
-                                 <img src="img/2.jpg" alt="">
-                                 <img src="img/3.jpg" alt="">
-                                 <img src="img/5.jpg" alt="">
-                                 <img src="img/6.jpg" alt=""><br>
-                                 <div>
-                          <p>Desde</p>
-                          <h4>$620</h4>
-                          <button type="submit" class="btn btn-primary">Mas informacion</button>
-                       </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-    </div>
-    <div id="usuarios">
-
     </div>
     <!-- Footer -->
     <footer class="bg-light text-center text-black">
@@ -233,7 +176,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/controlador2.js"></script>
+    <script src="js/mapa.js"></script>
 </body>
 
 </html>

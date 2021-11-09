@@ -4,8 +4,14 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     llenarNavBar();
 }
 /*
-var localStorage = window.localStorage;
-//Codigo para generar información de categorias y almacenarlas en un arreglo.
+var basedatos = [
+  { "ciudad": "Olanchito", "lng": -86.56916, "lat": 15.48231 },
+  { "ciudad": "La Ceiba", "lng": -86.791031, "lat": 15.78371 },
+  { "ciudad": "Saba", "lng": -86.223953, "lat": 15.52137 },
+  { "ciudad": "San Pedro Sula", "lng": -88.024971, "lat": 15.50523 },
+  { "ciudad": "Tegucigalpa", "lng": -87.192139, "lat": 14.072275 },
+  { "ciudad": "Comayagua", "lng": -87.643066, "lat": 14.46023 }
+];
 
 var catego = 
   [
@@ -44,6 +50,8 @@ var categorias = [];
               descripcion:textosDePrueba[Math.floor(Math.random() * (5 - 1))],
               calificacion:Math.floor(Math.random() * (5 - 1)) + 1,
               precio: pre,
+              longitud:basedatos[i].lng,
+              latitud:basedatos[i].lat,
               imagen:`img/propuestas/${catego[i].nombre}/${contador}.jpg`,
               comentarios:[
                   {comentario:textosDePrueba[Math.floor(Math.random() * (5 - 1))],calificacion:Math.floor(Math.random() * (5 - 1)) + 1,fecha:"12/12/2012",usuario:"Juan"},
@@ -64,7 +72,7 @@ function guardar(){
   for(let i=0;i<categorias.length;i++){
         axios({
           method:'POST',
-          url:url,
+          url:'../../Proyectov1.0/backend/api/categorias.php',
           responseType:'json',
           data:categorias[i]
       }).then(res=>{
@@ -76,12 +84,6 @@ function guardar(){
   }
 }
 guardar();
-
-if(localStorage.getItem("categorias")==null){
-  localStorage.setItem("categorias",JSON.stringify(categorias));
-}else{
-  usuarios = JSON.parse(localStorage.getItem('categorias'));
-}
 */
 
 var categorias = [];
@@ -111,12 +113,78 @@ function obtenerUsuarios(){
         responseType:'json'
     }).then(res=>{
         this.usuarios = res.data;
+        if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
+          botonesPerfil();
+        }
         console.log(usuarios);
     }).catch(error=>{
         console.error(error);
     });
 }
 obtenerUsuarios();
+
+let boton = false;
+
+//Llave para MapBox incluir siempre
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFub3Jvc2FsZXMwNyIsImEiOiJja3ZiNnAzYXQydXpmMm5ubmE4YXB4MWpuIn0.xC8gjRpwVh1KjjDwOKTc4g';
+
+function autocompletado () {
+  document.getElementById("demo").innerHTML = '';
+
+  var pal = document.getElementById("buscar-pal").value;
+  var tam = pal.length;
+  for(indice in categorias){
+    var contenido = categorias[indice];
+    var nombre = categorias[indice].nombreCategoria;
+    var str = nombre.substring(0,tam);
+    console.log(str);
+    if(pal.length <= nombre.length && pal.length != 0 && nombre.length != 0){
+      if(pal.toLowerCase() == str.toLowerCase()){
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode(categorias[indice].nombreCategoria);
+        node.appendChild(textnode);
+        document.getElementById("demo").appendChild(node);
+        mostrarBusqueda(contenido);
+      }
+    }else{
+      generarCategorias();
+    }
+  }
+}
+
+function mostrarBusqueda(contenido){
+  document.getElementById("propuestas").innerHTML = '';
+  for(let j=0; j<contenido.propuestas.length; j++){
+      let propu = contenido.propuestas[j];
+      document.getElementById("propuestas").innerHTML +=
+      `
+          <div class="card">
+              <div class="card-body">
+                  <div class="row form-group">
+                      <div class="col-lg-8 ml-auto">
+                           <img id="izquierda" src="${propu.imagen}" alt="">
+                      </div>
+                      <div id="derecha" class="col-lg-4">
+                           <h3>HAUSHA ${propu.nombre}</h3>
+                           <p id="tex" class="card-title">${propu.descripcion}</p>
+                           <img src="img/icons-habitaciones/wifi.png" alt="">
+                           <img src="img/icons-habitaciones/tv.png" alt="">
+                           <img src="img/icons-habitaciones/bañera.png" alt="">
+                           <img src="img/icons-habitaciones/comida.jpg" alt="">
+                           <img src="img/icons-habitaciones/aprobado.png" alt="">
+                           <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
+                           <div>
+                              <p>Desde</p>
+                              <h4>$${propu.precio}</h4>
+                              <button type="submit" onclick="informacion(${0},${j});" class="btn btn-primary">Mas informacion</button>
+                           </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+  }
+}
 
 function generarCategorias()
 {
@@ -284,9 +352,11 @@ function informacion(id1,id2){
                      <p>Desde</p>
                      <h4>$${cateActual.precio}</h4>
                      <p>Por noche</p>
+                     <p id="meGusta">(${cateActual.calificacion})</p>
+                     <button class="megusta" id="megusta" type="button" onclick="meGusta(${id1},${id2});"><p><i class="far fa-thumbs-up"></i> Me gusta </p></button><br>
                      <input id="cont-date" type="date" placeholder="Entrada">
                      <input id="cont-date" type="date" placeholder="Salida">
-                     <input id="cont-date" type="number" placeholder="Adultos">
+                     <input id="cont-date" type="number" placeholder="Adultos"><br><br>
                      <button id="cont-date" onclick="crearReservacion(${id1},${id2});" type="submit" class="btn btn-primary">Revervar Ahora</button>
                     </div>
                 </div>
@@ -301,7 +371,7 @@ function informacion(id1,id2){
           <p>${categorias[categoriaSeleccionada[id1]].nombreCategoria}</p>
         </div>
         <div class="col-lg-4">
-          <p>Aloja: 1</p>
+          <p>Aloja: 1 Persona</p>
         </div>
         <div class="col-lg-4">
           <p>Camas: 1 Individual(es)</p>
@@ -369,15 +439,152 @@ function informacion(id1,id2){
     </div>
   </div>
   <hr>
-  <div id="maps">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61521.126963597715!2d-86.62179072400676!3d15
-    .480643065906934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f696ca951e8fff9%3A0x99fba16f3251f51c!2sOl
-    anchito!5e0!3m2!1ses!2shn!4v1634084123258!5m2!1ses!2shn" width="400" height="300" style="border:0;" 
-    allowfullscreen="" loading="lazy"></iframe>
+  <div id="map">
+    
   </div>
-    </div>
+  <hr>
+  <div id="ContenedorCliente">
+
+  </div>
+  </div>
   </div>
     `;
+    let map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [cateActual.longitud, cateActual.latitud],
+      zoom: 18
+    })
+    var scale = new mapboxgl.ScaleControl({
+      maxWidth: 80,
+      unit: 'imperial'
+    });
+    map.addControl(scale);
+    
+    scale.setUnit('metric');
+
+    map.addControl(new mapboxgl.FullscreenControl({container: document.querySelector('map')}));
+
+    map.boxZoom.enable();
+
+    var nav = new mapboxgl.NavigationControl();
+
+    map.addControl(nav, 'top-left');
+    var marker = new mapboxgl.Marker({
+      color: 'green',
+      draggable: false
+    })
+    .setLngLat([cateActual.longitud, cateActual.latitud])
+    .addTo(map);
+
+    Comentarios(id1,id2);
+}
+
+/*-------------------Boton me gusta---------------------------*/
+function meGusta(id1,id2){
+  let cateActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
+  if(boton == false){
+    boton = true;
+    document.getElementById("meGusta").innerHTML = `(${cateActual.calificacion+1})`;
+    document.getElementById("megusta").style.color = 'rgb(69, 69, 248)';
+  }else if(boton == true){
+    boton = false;
+    document.getElementById("meGusta").innerHTML = `(${cateActual.calificacion})`;
+    document.getElementById("megusta").style.color = '#383838';
+  }
+}
+
+/*------------------- Esta funcion sirve para los comentarios --------------------*/
+function Comentarios(id1,id2){
+  let cateActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
+  document.getElementById("ContenedorCliente").innerHTML = '';
+  document.getElementById("ContenedorCliente").innerHTML += 
+  `<div id="comments-container" class="comments-container">
+      <h1>Comentarios<a href="#"> HAUSHA</a></h1>
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Comenta" id="comentario">
+          <div class="input-group-append">
+              <button type="button" onclick="comentar(${id1},${id2});" class="btn btn-outline-danger"><i class="far fa-paper-plane"></i></button>
+          </div>
+      </div>
+      </p>
+      <ul id="comments-list" class="comments-list">
+      </ul>
+  </div>`;
+          document.getElementById("comments-list").innerHTML = '';
+          for(let i=0;i<cateActual.comentarios.length;i++){
+            const comment = cateActual.comentarios[i];
+            let img;
+            if(comment.imagen){
+              img = comment.imagen;
+            }else{
+              img = 'img/perfil.png';
+            }
+            document.getElementById("comments-list").innerHTML += 
+            `<li id="lista_comentarios">
+                <div class="comment-main-level">
+                  <!-- Avatar -->
+                  <div class="comment-avatar"><img src="${img}" alt=""></div>
+                  <!-- Contenedor Comentario -->
+                  <div class="comment-box">
+                    <div class="comment-head">
+                      <h6 class="comment-name by-author"><a href="#">${comment.usuario}</a></h6>
+                      <span>hace 12min</span>
+                      <div>
+                        <i class="fas fa-reply"></i>
+                      </div>
+                      <div>
+                        <i class="fas fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="comment-content">
+                    ${comment.comentario}
+                    </div>
+                  </div>
+                </div>
+            </li>
+            `;
+          }
+}
+
+function comentar(id1,id2){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let cateActual = categorias[categoriaSeleccionada[id1]];
+  if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
+    const comentar = {
+      calificacion:4,
+      comentario:document.getElementById("comentario").value,
+      fecha:"09/12/2021",
+      usuario:usuarios[usuActual].nombreUsuario,
+      imagen:usuarios[usuActual].imagen
+    };
+    console.log(cateActual);
+    console.log(categoriaSeleccionada[id1]);
+    cateActual.propuestas[id2].comentarios.push(comentar);
+    console.log(cateActual.propuestas[id2].comentarios);
+    axios({
+      url:url + `?id=${categoriaSeleccionada[id1]}`,
+      method:'PUT',
+      responseType: 'json',
+      data:cateActual
+      }).then(res=>{
+          console.log(res);
+          axios({
+            method:'GET',
+            url:url,
+            responseType:'json'
+        }).then(res=>{
+            this.categorias = res.data;
+            Comentarios(id1,id2);
+        }).catch(error=>{
+            console.error(error);
+        });
+      }).catch(error=>{
+          console.error(error);
+      });
+  }else{
+    window.alert("Inicie sesion primero");
+  } 
 }
 
 function llenarNavBar(){
@@ -425,20 +632,28 @@ function llenarNavBarUsuario(){
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img id="perfil1" src="img/perfil.png" alt="">Perfil
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="perfil.html">Editar Perfil</a></li>
-                <li><a class="dropdown-item" href="reservaciones.html">Reservaciones</a></li>
-                <li><a class="dropdown-item" type="button" onclick="llenarSelectPropuesta();" data-toggle="modal" data-target="#modalCrearPropuestas">Crear propuestas</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
-              </ul>
+            <li id="sesionIniciada" class="nav-item dropdown">
+              
             </li>
         </ul>
     `;
+}
+
+function botonesPerfil(){
+  let usuar = sessionStorage.getItem('idUsuarioActivo');
+  document.getElementById("sesionIniciada").innerHTML = '';
+  document.getElementById("sesionIniciada").innerHTML += 
+  `
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <img id="perfil1" src="${usuarios[usuar].imagen}" alt="">${usuarios[usuar].nombre} ${usuarios[usuar].apellido}
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <li><a class="dropdown-item" href="usuario.html">Ver perfil</a></li>
+      <li><a class="dropdown-item" href="#">Ver reservaciones</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
+    </ul>
+  `;
 }
 
 function cerrarSesion(){
@@ -447,67 +662,65 @@ function cerrarSesion(){
 }
 
 function crearReservacion(id1, id2){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
-    let reservaActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
-    let usuActual = sessionStorage.getItem('idUsuarioActivo');
-    let usuActualizado;
-    let reser;
-    let pro;
+    if(!usuarios[usuActual].reservacion){
+      let reservaActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
+      let usuActualizado;
+      let pro;
 
-    const reserva = {
-        nombreCategoria:categorias[categoriaSeleccionada[id1]].nombreCategoria,
-        keyCategotia:categoriaSeleccionada[id1],
-        nombre:reservaActual.nombre,
-        descripcion:reservaActual.descripcion,
-        imagen:reservaActual.imagen,
-        precio:reservaActual.precio
-    };
-
-    if(usuarios[usuActual].reservacion){
-      reser = usuarios[usuActual].reservacion;
-      reser.push(reserva);
+      if(usuarios[usuActual].propuestas){
+        pro = usuarios[usuActual].propuestas;
+      }else{
+        pro = [];
+      }
+  
+      const reserva = {
+          nombreCategoria:categorias[categoriaSeleccionada[id1]].nombreCategoria,
+          keyCategotia:categoriaSeleccionada[id1],
+          nombre:reservaActual.nombre,
+          descripcion:reservaActual.descripcion,
+          imagen:reservaActual.imagen,
+          precio:reservaActual.precio
+      };
+      
+      usuActualizado = {
+        id:usuarios[usuActual].id,
+        nombre:usuarios[usuActual].nombre,
+        apellido:usuarios[usuActual].apellido,
+        correo:usuarios[usuActual].correo,
+        telefono:usuarios[usuActual].telefono,
+        nombreUsuario:usuarios[usuActual].nombreUsuario,
+        contrasena:usuarios[usuActual].contrasena,
+        fecha:usuarios[usuActual].fecha,
+        imagen:usuarios[usuActual].imagen,
+        identificador:usuarios[usuActual].identificador,
+        propuestas:pro,
+        reservacion:[reserva],
+        genero:usuarios[usuActual].genero,
+        descripcion:usuarios[usuActual].descripcion,
+        nacionalidad:usuarios[usuActual].nacionalidad
+      };
+      
+        axios({
+          method:'PUT',
+          url:url1 + `?id=${usuActual}`,
+          responseType:'json',
+          data:usuActualizado
+      }).then(res=>{
+          console.log(res.data);
+          window.alert("Su reservación ha sido exitosa.");
+          obtenerCategorias();
+          obtenerUsuarios();
+      }).catch(error=>{
+          console.error(error);
+      });
     }else{
-      reser = [reserva];   
+      window.alert("Ya tiene una reservación");
     }
-
-    if(usuarios[usuActual].propuestas){
-      pro = usuarios[usuActual].propuestas;
-    }else{
-      pro = [];
-    }
-    
-    usuActualizado = {
-      id:usuarios[usuActual].id,
-      nombre:usuarios[usuActual].nombre,
-      apellido:usuarios[usuActual].apellido,
-      correo:usuarios[usuActual].correo,
-      telefono:usuarios[usuActual].telefono,
-      nombreUsuario:usuarios[usuActual].nombreUsuario,
-      contrasena:usuarios[usuActual].contrasena,
-      fecha:usuarios[usuActual].fecha,
-      imagen:usuarios[usuActual].imagen,
-      identificador:usuarios[usuActual].identificador,
-      propuestas:pro,
-      reservacion:reser
-    };
-    
-      axios({
-        method:'PUT',
-        url:url1 + `?id=${usuActual}`,
-        responseType:'json',
-        data:usuActualizado
-    }).then(res=>{
-        console.log(res.data);
-        window.alert("Su reservación a sido exitosa.");
-        obtenerCategorias();
-        obtenerUsuarios();
-    }).catch(error=>{
-        console.error(error);
-    });
   }else{
     window.alert("Inicie sesion primero");
   }
-       
 }
 
 function llenarSelectPropuesta(){
@@ -600,16 +813,9 @@ function agregarPropuesta(propuesta){
     url:url + `?id=${propuesta.categoria}`,
     responseType:'json',
     data:categorias[propuesta.categoria]
-}).then(res=>{
-    console.log(res.data);
-}).catch(error=>{
-    console.error(error);
-});
-}
-
-function limpiarModal(){
-      document.getElementById("nombrePro").value = '';
-      document.getElementById("descripPro").value = '';
-      document.getElementById("precioPro").value = '';
-      document.getElementById("lista-imagenes").value = null;
+  }).then(res=>{
+      console.log(res.data);
+  }).catch(error=>{
+      console.error(error);
+  });
 }
