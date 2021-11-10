@@ -414,7 +414,7 @@ function Propuesta(){
       codigo:cateActual.length+1,
       nombre:document.getElementById("nombrePro").value,
       descripcion:document.getElementById("descripPro").value,
-      calificacio:[],
+      calificacion:0,
       precio:document.getElementById("precioPro").value,
       imagen:document.getElementById("lista-imagenes").value,
       comentarios:[],
@@ -671,6 +671,7 @@ function masInformacion(){
 
 function misPropuestas(){
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  if(usuarios[usuActual].propuestas){
     document.getElementById("contenedor-acciones").innerHTML = '';
     for(let i=0;i<usuarios[usuActual].propuestas.length;i++){
       let usu = usuarios[usuActual].propuestas[i];
@@ -704,6 +705,9 @@ function misPropuestas(){
         </div>
         `;
     }
+  }else{
+    alert("No tienes propuestas");
+  }
 }
 
 function reCanceladas(){

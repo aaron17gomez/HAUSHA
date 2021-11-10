@@ -511,6 +511,7 @@ function Comentarios(id1,id2){
       <ul id="comments-list" class="comments-list">
       </ul>
   </div>`;
+        if(cateActual.comentarios){
           document.getElementById("comments-list").innerHTML = '';
           for(let i=0;i<cateActual.comentarios.length;i++){
             const comment = cateActual.comentarios[i];
@@ -545,6 +546,7 @@ function Comentarios(id1,id2){
             </li>
             `;
           }
+      }    
 }
 
 function comentar(id1,id2){
@@ -558,10 +560,28 @@ function comentar(id1,id2){
       usuario:usuarios[usuActual].nombreUsuario,
       imagen:usuarios[usuActual].imagen
     };
-    console.log(cateActual);
-    console.log(categoriaSeleccionada[id1]);
-    cateActual.propuestas[id2].comentarios.push(comentar);
-    console.log(cateActual.propuestas[id2].comentarios);
+
+    let com;
+    if(cateActual.propuestas[id2].comentarios){
+      com = cateActual.propuestas[id2].comentarios;
+      com.push(comentar);
+    }else{
+      com = [comentar];
+    }
+
+    let pro = {
+      calificacion:cateActual.propuestas[id2].calificacion, 
+      codigo:cateActual.propuestas[id2].codigo,
+      comentarios:com,
+      descripcion:cateActual.propuestas[id2].descripcion,
+      imagen:cateActual.propuestas[id2].imagen, 
+      latitud:cateActual.propuestas[id2].latitud,
+      longitud:cateActual.propuestas[id2].longitud,
+      nombre:cateActual.propuestas[id2].nombre, 
+      precio:cateActual.propuestas[id2].precio
+    };
+
+    cateActual.propuestas[id2] = pro;
     axios({
       url:url + `?id=${categoriaSeleccionada[id1]}`,
       method:'PUT',
@@ -649,7 +669,7 @@ function botonesPerfil(){
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
       <li><a class="dropdown-item" href="usuario.html">Ver perfil</a></li>
-      <li><a class="dropdown-item" href="#">Ver reservaciones</a></li>
+      <li><a type="button" onclick="verReservacion();" class="dropdown-item" data-toggle="modal" data-target="#modalReservacion">Ver reservaciones</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
     </ul>
@@ -818,4 +838,48 @@ function agregarPropuesta(propuesta){
   }).catch(error=>{
       console.error(error);
   });
+}
+
+function verReservacion(){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  if(usuarios[usuActual].reservacion){
+    let reser = usuarios[usuActual].reservacion[0];
+    document.getElementById("modalRegistroLabel").innerHTML = '';
+    document.getElementById("modalRegistroLabel").innerHTML = 'Reservacion Actual';
+    document.getElementById("verReservacion").innerHTML = '';
+    document.getElementById("verReservacion").innerHTML +=
+    `
+    <div class="card">
+       <div class="card-body">
+           <div class="row form-group">
+               <div class="col-lg-8 ml-auto">
+                    <img id="izquierda" src="${reser.imagen}" alt="">
+               </div>
+               <div id="derecha" class="col-lg-4">
+                    <h3>HAUSHA ${reser.nombre}</h3>
+                    <p id="tex" class="card-title">${reser.descripcion}</p>
+                    <img src="img/icons-habitaciones/wifi.png" alt="">
+                    <img src="img/icons-habitaciones/tv.png" alt="">
+                    <img src="img/icons-habitaciones/bañera.png" alt="">
+                    <img src="img/icons-habitaciones/comida.jpg" alt="">
+                    <img src="img/icons-habitaciones/aprobado.png" alt="">
+                    <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
+                    <div>
+                       <p>Desde</p>
+                       <h4>$${reser.precio}</h4>
+                    </div>
+               </div>
+           </div>
+       </div>
+    </div>
+    `;
+  }else{
+    document.getElementById("modalRegistroLabel").innerHTML = '';
+    document.getElementById("modalRegistroLabel").innerHTML = 'No tienes reservación';
+    document.getElementById("verReservacion").innerHTML = '';
+    document.getElementById("verReservacion").innerHTML +=
+    `
+    <h3>Realiza una reservacion</h3>
+    `;
+  }
 }

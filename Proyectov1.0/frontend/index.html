@@ -349,6 +349,42 @@
 </footer>
 <!-- Footer -->
 
+<!-- Modal Registro-->
+<div class="modal fade" id="modalReservacion" tabindex="-1" role="dialog" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRegistroLabel">Reservacion Actual</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" id="verReservacion">
+            <div class="row col-12">
+                <input class="form-control my-2" type="email" id="nombrePro" placeholder="Nombre">
+                <input class="form-control my-2" type="number" id="precioPro" placeholder="Precio">
+                <input class="form-control my-2" type="text" id="descripPro" placeholder="Descripcion">
+                <p>Seleccione el tipo de categoria:</p>
+                <select class="form-control my-2" id="selectPropuesta">
+
+                </select>
+                <p>Seleccione una imagen:</p>
+                <select class="form-control my-2" id="lista-imagenes">
+                  <option value="img/perfil/goku.jpg">Imagen 1</option>
+                  <option value="img/perfil/lufi.jpg">Imagen 2</option>
+                  <option value="img/perfil/naruto.jpg">Imagen 3</option>
+                </select>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+      </div>
+    </div>
+  </div>
+<div>
+
     <script src="js/all.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/popper.min.js"></script>
