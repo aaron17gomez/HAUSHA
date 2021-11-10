@@ -228,10 +228,8 @@ function editarPerfil(){
     document.getElementById("fecha").value = usuarios[usuActual].fecha;
     document.getElementById("correo").value = usuarios[usuActual].correo;
     document.getElementById("celular").value = usuarios[usuActual].telefono;
-    document.getElementById("descripcion").value = usuarios[usuActual].descripcion;
     document.getElementById("genero").value = usuarios[usuActual].genero;
     document.getElementById("nacionalidad").value = usuarios[usuActual].nacionalidad;
-    document.getElementById("contraseñaNueva").value = usuarios[usuActual].contrasena;
 }
 
 function actualizarPerfil(){
@@ -264,7 +262,7 @@ function actualizarPerfil(){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:document.getElementById("descripcion").value
+    descripcion:0
   };
   
     axios({
@@ -275,82 +273,11 @@ function actualizarPerfil(){
   }).then(res=>{
       console.log(res.data);
       window.alert("Datos actualizados");
+
       obtenerUsuarios();
-      mandarNotificacionPerfil();
   }).catch(error=>{
       console.error(error);
   });
-}
-
-function mandarNotificacionPerfil(){
-  let usuActual = sessionStorage.getItem('idUsuarioActivo');
-
-  let notificacion = {
-    asunto:"Modificacion de perfil",
-    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" ha modificado su perfil.",
-    key:usuActual,
-    leido:false
-  }
-  let contador = 0;
-  let filtro = [];
-  let key = [];
-    for(const usu in usuarios){
-        filtro.push(usuarios[usu]);
-        contador++;
-        if(usuarios[usu].identificador == 2){
-          key.push(usu); 
-        }
-    }
-  const resultado = filtro.filter(usuarios => usuarios.identificador == 2);
-  console.log(resultado);
-  console.log(key);
-
-  for(let i=0;i<resultado.length;i++){
-    let pro;
-      if(resultado[i].propuestas){
-        pro = resultado[i].propuestas;
-      }else{
-        pro = [];
-      }
-    let reser;
-      if(resultado[i].reservacion){
-        reser = resultado[i].reservacion;
-      }else{
-        reser = [];
-      }
-      if(resultado[i].descripcion == 0){
-        resultado[i].descripcion = [notificacion];
-      }else{
-        resultado[i].descripcion.push(notificacion);
-      }
-    usuActualizado = {
-      id:resultado[i].id,
-      nombre:resultado[i].nombre,
-      apellido:resultado[i].apellido,
-      correo:resultado[i].correo,
-      telefono:resultado[i].telefono,
-      nombreUsuario:resultado[i].nombreUsuario,
-      contrasena:resultado[i].contrasena,
-      fecha:resultado[i].fecha,
-      imagen:resultado[i].imagen,
-      nacionalidad:resultado[i].nacionalidad,
-      genero:resultado[i].genero,
-      identificador:resultado[i].identificador,
-      propuestas:pro,
-      reservacion:reser,
-      descripcion:resultado[i].descripcion
-    };
-      axios({
-        method:'PUT',
-        url:url + `?id=${key[i]}`,
-        responseType:'json',
-        data:usuActualizado
-    }).then(res=>{
-        console.log(res.data);
-    }).catch(error=>{
-        console.error(error);
-    });
-  }
 }
 
 function crearPropuesta(){
@@ -555,81 +482,9 @@ function agregarPropuesta(propuesta){
     data:categorias[propuesta.categoria]
   }).then(res=>{
       console.log(res.data);
-      mandarNotificacionPropuesta();
   }).catch(error=>{
       console.error(error);
   });
-}
-
-function mandarNotificacionPropuesta(){
-  let usuActual = sessionStorage.getItem('idUsuarioActivo');
-
-  let notificacion = {
-    asunto:"Se agrego una propuesta",
-    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" ha creado una propuesta.",
-    key:usuActual,
-    leido:false
-  }
-  let contador = 0;
-  let filtro = [];
-  let key = [];
-    for(const usu in usuarios){
-        filtro.push(usuarios[usu]);
-        contador++;
-        if(usuarios[usu].identificador == 2){
-          key.push(usu); 
-        }
-    }
-  const resultado = filtro.filter(usuarios => usuarios.identificador == 2);
-  console.log(resultado);
-  console.log(key);
-
-  for(let i=0;i<resultado.length;i++){
-    let pro;
-      if(resultado[i].propuestas){
-        pro = resultado[i].propuestas;
-      }else{
-        pro = [];
-      }
-    let reser;
-      if(resultado[i].reservacion){
-        reser = resultado[i].reservacion;
-      }else{
-        reser = [];
-      }
-      if(resultado[i].descripcion == 0){
-        resultado[i].descripcion = [notificacion];
-      }else{
-        resultado[i].descripcion.push(notificacion);
-      }
-    usuActualizado = {
-      id:resultado[i].id,
-      nombre:resultado[i].nombre,
-      apellido:resultado[i].apellido,
-      correo:resultado[i].correo,
-      telefono:resultado[i].telefono,
-      nombreUsuario:resultado[i].nombreUsuario,
-      contrasena:resultado[i].contrasena,
-      fecha:resultado[i].fecha,
-      imagen:resultado[i].imagen,
-      nacionalidad:resultado[i].nacionalidad,
-      genero:resultado[i].genero,
-      identificador:resultado[i].identificador,
-      propuestas:pro,
-      reservacion:reser,
-      descripcion:resultado[i].descripcion
-    };
-      axios({
-        method:'PUT',
-        url:url + `?id=${key[i]}`,
-        responseType:'json',
-        data:usuActualizado
-    }).then(res=>{
-        console.log(res.data);
-    }).catch(error=>{
-        console.error(error);
-    });
-  }
 }
 
 function reservacion(){
@@ -854,35 +709,272 @@ function misPropuestas(){
   }
 }
 
-function reCanceladas(){
-    document.getElementById("contenedor-acciones").innerHTML = '';
-    document.getElementById("contenedor-acciones").innerHTML +=
-    `
-    <div id="propuestas">
-      <div class="card">
-          <div class="card-body">
-              <div class="row form-group">
-                  <div class="col-lg-8 ml-auto">
-                       <img id="izquierda" src="" alt="">
-                  </div>
-                  <div id="derecha" class="col-lg-4">
-                       <h3>HAUSHA</h3>
-                       <p id="tex" class="card-title"></p>
-                       <img src="img/icons-habitaciones/wifi.png" alt="">
-                       <img src="img/icons-habitaciones/tv.png" alt="">
-                       <img src="img/icons-habitaciones/bañera.png" alt="">
-                       <img src="img/icons-habitaciones/comida.jpg" alt="">
-                       <img src="img/icons-habitaciones/aprobado.png" alt="">
-                       <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
-                       <div>
-                          <p>Desde</p>
-                          <h4></h4>
-                          <button type="submit" onclick="masInformacion();" class="btn btn-primary btn-form">Mas informacion</button>
-                       </div>
-                  </div>
-              </div>
-          </div>
+
+function verNotificaciones(){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML +=
+  `
+  <div id="perfil">
+           <form id="form" class="form">
+           </div>
+  </div>
+  `;
+  document.getElementById("form").innerHTML = '';
+  for(let i=0;i<usuarios[usuActual].descripcion.length;i++){
+    let usu = usuarios[usuActual].descripcion[i];
+    let leido;
+    if(usu.leido == false){
+      leido = `<i class="fas fa-envelope"></i>`;
+    }else{
+      leido = `<i class="fas fa-envelope-open-text"></i>`;
+    }
+    document.getElementById("form").innerHTML += 
+     `
+             <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
+              <p id="iconos">
+                  ${leido}
+              </p>
+              <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
+              <p style="margin-left: auto;">22:05</p>
+              <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
+             </div><hr>
+     `;
+  }
+}
+
+function verMensaje(i){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let datos = usuarios[usuActual].descripcion[i];
+  let key = usuarios[usuActual].descripcion[i].key;
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML +=
+  `
+  <div id="perfil">
+           <form id="form" class="form">
+           </div>
+  </div>
+  `;
+  document.getElementById("form").innerHTML = '';
+  document.getElementById("form").innerHTML += 
+  `
+    <div class="form-inline" style="padding: 5px 5px">
+     <p><b>El usuario ${usuarios[key].nombre} ${usuarios[key].apellido} hizo una ${datos.asunto}, tiene como nombre de
+      de usuario: ${usuarios[key].nombreUsuario}, contraseña: ${usuarios[key].contrasena} y nacionalidad:${usuarios[key].nacionalidad}</b></p>
+     <p style="margin-left: auto;">22:05</p>
+    </div><hr>
+  `;
+
+  usuarios[usuActual].descripcion[i].leido = true;
+
+  let pro;
+      if(usuarios[usuActual].propuestas){
+        pro = usuarios[usuActual].propuestas;
+      }else{
+        pro = [];
+      }
+  let reser;
+    if(usuarios[usuActual].reservacion){
+      reser = usuarios[usuActual].reservacion;
+    }else{
+      reser = [];
+    }
+
+  usuActualizado = {
+    id:usuarios[usuActual].id,
+    nombre:usuarios[usuActual].nombre,
+    apellido:usuarios[usuActual].apellido,
+    correo:usuarios[usuActual].correo,
+    telefono:usuarios[usuActual].telefono,
+    nombreUsuario:usuarios[usuActual].nombreUsuario,
+    contrasena:usuarios[usuActual].contrasena,
+    fecha:usuarios[usuActual].fecha,
+    imagen:usuarios[usuActual].imagen,
+    nacionalidad:usuarios[usuActual].nacionalidad,
+    genero:usuarios[usuActual].genero,
+    identificador:usuarios[usuActual].identificador,
+    propuestas:pro,
+    reservacion:reser,
+    descripcion:usuarios[usuActual].descripcion
+  };
+  
+    axios({
+      method:'PUT',
+      url:url + `?id=${usuActual}`,
+      responseType:'json',
+      data:usuActualizado
+  }).then(res=>{
+      console.log(res.data);
+      axios({
+          method:'GET',
+          url:url,
+          responseType:'json'
+      }).then(res=>{
+          this.usuarios = res.data;
+          console.log(usuarios);
+      }).catch(error=>{
+          console.error(error);
+      });
+  }).catch(error=>{
+      console.error(error);
+  });
+}
+
+/*--------------------------Inicio Crear Administrador-------------------------------------------- */
+
+function validarCredenciales(pCorreo, pContraseña){
+  var bAcceso = false;
+  for(const usu in usuarios){
+      if(usuarios[usu].correo == pCorreo && usuarios[usu].contrasena == pContraseña){
+          bAcceso = true;
+          identificador = usu;
+          let nom = usuarios[usu].nombre + ' ' + usuarios[usu].apellido;
+          let ident = true;
+          let idUsu = usu;
+          sessionStorage.setItem('usuarioActivo', nom);
+          sessionStorage.setItem('rolUsuarioActivo', ident);
+          sessionStorage.setItem('idUsuarioActivo', idUsu);
+          sessionStorage.setItem('identificadorUsuario', usuarios[usu].identificador);
+      }
+  }
+
+  return bAcceso;
+}
+
+function validarRegistro(){
+  var nombre,apellido,correo,contrasena,fecha,imagen,nombreUsuario,telefono;
+      nombre=document.getElementById('nombre').value,
+      apellido=document.getElementById('apellido').value,
+      correo=document.getElementById('correo').value,
+      telefono=document.getElementById('telefono').value,
+      nombreUsuario=document.getElementById('nombreUsuario').value,
+      contrasena=document.getElementById('contrasena').value,
+      fecha=document.getElementById('fecha').value,
+      imagen=document.getElementById('lista-imagenes').value,
+  
+  expresion = /\w+@\w+\.+[a-z]/;
+  
+  if(nombre === "" || apellido === "" || correo==="" || telefono === "" || nombreUsuario == "" || contrasena === "" || fecha === "" || imagen === ""){
+      alert("todos los campo son obligatorios");
+      return false;
+  }
+  else if(nombre.length>20){
+      alert("El nombre es muy largo");
+      return false;
+  }
+  else if(apellido.length>30){
+      alert("El apellido es muy largo");
+      return false;
+  }else if(correo.length>40){
+      alert("El email es muy largo");
+      return false;
+  }
+  else if(!expresion.test(correo)){
+      alert("El email no es válido");
+      return false;
+  }else if(nombreUsuario.length>30 || contrasena.length>20){
+      alert("El nombre es muy largo");
+      return false;
+  }else if(telefono.length>10){
+      alert("El telefono es muy largo");
+      return false;
+  }else if(isNaN(telefono)){
+      alert("El telefono ingresado no es un número");
+      return false;
+  }else{
+      return true
+  }
+}
+
+function crearAdministrador(){
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML += 
+  `
+  <div id="perfil" class="separacion">
+      <h1>Formulario para crear un administrador</h1>
+      <form class="form">
+      <input class="form-control my-2" type="text" id="nombre" placeholder="Nombre">
+      <input class="form-control my-2" type="text" id="apellido" placeholder="Apellido">
+      <input class="form-control my-2" type="email" id="correo" placeholder="Correo">
+      <input class="form-control my-2" type="number" id="telefono" placeholder="Telefono">
+      <input class="form-control my-2" type="text" id="nombreUsuario" placeholder="Nombre Usuario">
+      <input class="form-control my-2" type="password" id="contrasena" placeholder="Contraseña">
+      <input class="form-control my-2" type="date" id="fecha" placeholder="Fecha Nacimiento">
+      <label>Seleccione su nacionalidad:</label>
+      <select class="form-control my-2" id="lista-nacionalidad">
+        <option value="Honduras">Honduras</option>
+        <option value="El Salvador">El Salvador</option>
+        <option value="Costa Rica">Costa Rica</option>
+        <option value="Guatemala">Guatemala</option>
+        <option value="Nicaragua">Nicaragua</option>
+      </select>
+      <label>Seleccione su genero:</label>
+      <select class="form-control my-2" id="lista-genero">
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+      </select>
+      <label>Seleccione una imagen:</label>
+      <select class="form-control my-2" id="lista-imagenes">
+        <option value="img/perfil/goku.jpg">Imagen 1</option>
+        <option value="img/perfil/lufi.jpg">Imagen 2</option>
+        <option value="img/perfil/naruto.jpg">Imagen 3</option>
+      </select>
+      <button onclick="guardarAdministrador();" type="button" class="btn btn-primary btn-form">Guardar</button>
       </div>
     </div>
-    `;
+  `
+  ;
 }
+
+function guardarAdministrador(){
+  let mail = document.getElementById('correo').value;
+    let contador = 0;
+    let filtro = [];
+    for(const usu in usuarios){
+        filtro.push(usuarios[usu]);
+        contador++;
+    }
+    const resultado = filtro.filter(usuarios => usuarios.correo == mail);
+    console.log(resultado);
+    if(resultado.length == 1){
+        window.alert("El correo que escribio ya existe");
+    }else{
+        let estado = false;
+        estado = validarRegistro();
+        if(estado == true){
+        console.log(contador);
+        const cliente = {
+            id: contador,
+            nombre:document.getElementById('nombre').value,
+            apellido:document.getElementById('apellido').value,
+            correo:document.getElementById('correo').value,
+            telefono:document.getElementById('telefono').value,
+            nombreUsuario:document.getElementById('nombreUsuario').value,
+            contrasena:document.getElementById('contrasena').value,
+            fecha:document.getElementById('fecha').value,
+            nacionalidad:document.getElementById('lista-nacionalidad').value,
+            genero:document.getElementById('lista-genero').value,
+            imagen:document.getElementById('lista-imagenes').value,
+            reservacion:[],
+            propuestas:[],
+            identificador:2,
+            descripcion:"Ninguna"
+        }
+            axios({
+            method:'POST',
+            url:url,
+            responseType:'json',
+            data:cliente
+        }).then(res=>{
+            console.log(res.data);
+            obtenerUsuarios();
+            $("#modalRegistro .close").click()
+            window.alert("Administrador registrado con exito");
+        }).catch(error=>{
+            console.error(error);
+        });
+        }
+    }
+}
+
+/*--------------------------Fin Crear Administrador-------------------------------------------- */

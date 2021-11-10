@@ -44,3 +44,20 @@ body{
     align-items: center;
     text-align: center;
 }
+.card
+{
+    width: 100%;
+    max-width: 800px;
+}
+#izquierda{
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 20px;
+}
+#derecha img, #img-hab2{
+    width: 20px;
+    height: 20px;
+    align-items: center;
+}

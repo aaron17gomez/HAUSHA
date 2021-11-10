@@ -161,7 +161,6 @@ function crearUsuarioCliente(){
     }
 }
 
-
 function llenarNavBar(){
     document.getElementById("navbar-form").innerHTML = '';
     document.getElementById("navbar-form").innerHTML +=
