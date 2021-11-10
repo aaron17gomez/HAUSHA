@@ -3,7 +3,7 @@ if(sessionStorage.getItem('identificadorUsuario') == 1){
     window.location.href = 'usuario.html';
 }else if(sessionStorage.getItem('identificadorUsuario') == 2){
     llenarNavBarUsuario();
-    window.location.href = 'nosotros.html';
+    window.location.href = 'administrador.html';
 }
 else{
     llenarNavBar();
@@ -57,7 +57,7 @@ function iniciarSesion(){
         if(usuarios[identificador].identificador == 1){
             window.location.href = 'usuario.html';
         }else if(usuarios[identificador].identificador == 2){
-            window.location.href = 'nosotros.html';
+            window.location.href = 'administrador.html';
         }
     }else{
         window.alert("El usuario || contraseña no coinciden");

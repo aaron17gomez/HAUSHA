@@ -3,6 +3,7 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
 }else{
   llenarNavBar();
 }
+
 /*
 var usuarios2 = [
     {
@@ -16,6 +17,9 @@ var usuarios2 = [
         fecha:"1996-07-21",
         identificador:"1",
         imagen:"img/perfil/lufi.jpg",
+        genero:"Masculino",
+        nacionalidad:"Honduras",
+        descripcion:"Ninguna",
         propuestas:[],
         reservacion:[
           {
@@ -38,6 +42,9 @@ var usuarios2 = [
         fecha:"1995-01-21",
         identificador:"1",
         imagen:"img/perfil/goku.jpg",
+        genero:"Masculino",
+        nacionalidad:"Honduras",
+        descripcion:"Ninguna",
         propuestas:[],
         reservacion:[
           {
@@ -60,6 +67,9 @@ var usuarios2 = [
         fecha:"1997-07-21",
         identificador:"1",
         imagen:"img/perfil/naruto.jpg",
+        genero:"Femenino",
+        nacionalidad:"Honduras",
+        descripcion:"Ninguna",
         propuestas:[],
         reservacion:[
           {
@@ -82,7 +92,18 @@ var usuarios2 = [
       fecha:"1997-07-21",
       identificador:"2",
       imagen:"img/perfil/naruto.jpg",
-      reservacion:[],
+      genero:"Masculino",
+      nacionalidad:"Honduras",
+      descripcion:"Ninguna",
+      reservacion:[
+        {
+          nombreCategoria:"Casa",
+          nombre:"Casa 1",
+          descripcion:"Quos numquam neque animi ex facilis nesciunt enim id molestiae.",
+          imagen:"img/propuestas/Casa/1.jpg",
+          precio:"124.32"
+        }
+      ],
       propuestas:[]
   }
 ];

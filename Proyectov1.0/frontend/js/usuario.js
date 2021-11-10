@@ -1,8 +1,8 @@
 if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     llenarNavBarUsuario();
 }else{
-    llenarNavBar();
     window.location.href = 'registro.html';
+    llenarNavBar();
 }
 
 //Llave para MapBox incluir siempre
@@ -216,7 +216,7 @@ function editarPerfil(){
             </div>
           </form>
     </div>
-    <div id="perfil">
+    <div id="perfil" class="final">
         <form class="form">
            <button onclick="actualizarPerfil();" type="button" class="btn btn-primary btn-form">Guardar Cambios</button>
         </form>
@@ -490,7 +490,8 @@ function agregarPropuesta(propuesta){
 
 function reservacion(){
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
-  let usu = usuarios[usuActual].reservacion[0];
+  if(usuarios[usuActual].reservacion){
+    let usu = usuarios[usuActual].reservacion[0];
     document.getElementById("contenedor-acciones").innerHTML = '';
     document.getElementById("contenedor-acciones").innerHTML +=
     `
@@ -521,6 +522,9 @@ function reservacion(){
       </div>
     </div>
     `;
+  }else{
+    alert("No tienes reservaciones");
+  }
 }
 
 function masInformacion(){
