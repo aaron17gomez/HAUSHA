@@ -238,3 +238,72 @@ body{
 #iconos {
     padding-right: 20px;
 }
+
+/* --------------------------------------------------------- */
+
+
+
+#menu{
+    overflow-y: auto;
+    justify-content: normal;
+    align-items: normal;
+}
+
+
+.btn-primary{
+    background-color: #fff;
+    color: #000;
+}
+
+/* Tabla usuarios */
+
+
+.estilo-usuarios{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.contenedorTabla{
+    width: 70%;
+    /* height: 90%; */
+    margin-top: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 0 1rem;
+    /* overflow-y: auto; */
+    overflow-x: auto;
+    /* display: none; */
+}
+
+
+.nav-pills .nav-link.active{
+    background-color: #000;
+}
+
+.nav-link{
+    color: #000;
+    margin-top: 1rem;
+}
+
+.nav{
+    justify-content: center;
+}
+
+.fa-trash-alt:hover{
+    color: red;
+}
+
+.fa-trash-alt{
+    font-size: 2rem;
+    height: 20px;
+}
+
+#menu{
+    width: 165px;
+}
+
+
+#bienvenida h1{
+    margin: 0;
+}

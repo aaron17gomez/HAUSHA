@@ -135,6 +135,7 @@ function cerrarSesion(){
 
 function editarPerfil(){
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
+    document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios');
     document.getElementById("contenedor-acciones").innerHTML = '';
     document.getElementById("contenedor-acciones").innerHTML += 
     `
@@ -978,3 +979,104 @@ function guardarAdministrador(){
 }
 
 /*--------------------------Fin Crear Administrador-------------------------------------------- */
+
+// Usuarios
+
+var estadoVerUsuarios = false
+
+function verUsuarios(){
+
+    if(estadoVerUsuarios == false){
+
+    
+    document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
+    document.getElementById("contenedor-acciones").innerHTML = `
+    <div class="contenedorTabla">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-user-tab" data-bs-toggle="pill" data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="true">Usuarios</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-admins-tab" onclick = "verAdministadores()" data-bs-toggle="pill" data-bs-target="#pills-admins" type="button" role="tab" aria-controls="pills-admins" aria-selected="false">Administradores</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  
+                  <div class="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
+                    
+                
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Nombre usuario</th>
+                          <th>Telefono</th>
+                          <th>Correo</th>
+                          <th>fecha cumpleaños</th>
+                          <th>Eliminar</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade" id="pills-admins" role="tabpanel" aria-labelledby="pills-admins-tab">
+                  
+                  <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nombre usuario</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>fecha cumpleaños</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                       
+
+                    </tbody>
+                  </table> 
+                  </div>
+                </div>
+              </div>
+    `;
+    estadoVerUsuarios= true;
+
+    }else{
+
+        document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
+        document.getElementById("contenedor-acciones").innerHTML = ``;
+        estadoVerUsuarios = false;
+    }
+
+}
+
+function verAdministadores(){
+    // procedimientos para llenar la tabla
+
+    console.log(14);
+}
+
+function eliminarUsuario(){
+    console.log(1888);
+
+    // actualizarTabla.
+}
