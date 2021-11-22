@@ -282,6 +282,7 @@ function actualizarPerfil(){
 }
 
 function crearPropuesta(){
+    document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
     document.getElementById("contenedor-acciones").innerHTML = '';
     document.getElementById("contenedor-acciones").innerHTML += 
     `
@@ -489,6 +490,7 @@ function agregarPropuesta(propuesta){
 }
 
 function reservacion(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].reservacion){
     let usu = usuarios[usuActual].reservacion[0];
@@ -670,6 +672,7 @@ function masInformacion(){
 }
 
 function misPropuestas(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].propuestas){
     document.getElementById("contenedor-acciones").innerHTML = '';
@@ -706,12 +709,14 @@ function misPropuestas(){
         `;
     }
   }else{
+    document.getElementById("contenedor-acciones").innerHTML = '';
     alert("No tienes propuestas");
   }
 }
 
 
 function verNotificaciones(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   document.getElementById("contenedor-acciones").innerHTML = '';
   document.getElementById("contenedor-acciones").innerHTML +=
@@ -888,6 +893,7 @@ function validarRegistro(){
 }
 
 function crearAdministrador(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   document.getElementById("contenedor-acciones").innerHTML = '';
   document.getElementById("contenedor-acciones").innerHTML += 
   `
@@ -980,15 +986,11 @@ function guardarAdministrador(){
 
 /*--------------------------Fin Crear Administrador-------------------------------------------- */
 
-// Usuarios
 
-var estadoVerUsuarios = false
+
 
 function verUsuarios(){
 
-    if(estadoVerUsuarios == false){
-
-    
     document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
     document.getElementById("contenedor-acciones").innerHTML = `
     <div class="contenedorTabla">
@@ -1058,14 +1060,7 @@ function verUsuarios(){
                 </div>
               </div>
     `;
-    estadoVerUsuarios= true;
-
-    }else{
-
-        document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
-        document.getElementById("contenedor-acciones").innerHTML = ``;
-        estadoVerUsuarios = false;
-    }
+    
 
 }
 
@@ -1077,6 +1072,6 @@ function verAdministadores(){
 
 function eliminarUsuario(){
     console.log(1888);
-
+    // eliminar usuario, conectar con la API
     // actualizarTabla.
 }
