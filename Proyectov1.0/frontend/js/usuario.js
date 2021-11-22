@@ -77,7 +77,7 @@ function llenarNavBar(){
           <a class="nav-link disabled" aria-current="page" href="habitaciones.html">Propuestas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
         </li>
         <li class="nav-item">
           <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>
@@ -105,7 +105,7 @@ function llenarNavBarUsuario(){
               <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+              <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
             </li>
             <li id="sesionIniciada" class="nav-item dropdown">
               
@@ -318,11 +318,13 @@ function mandarNotificacionPerfil(){
       }else{
         reser = [];
       }
-      if(resultado[i].descripcion == 0){
-        resultado[i].descripcion = [notificacion];
+    let res;
+      if(resultado[i].descripcion == "Ninguna"){
+        res = [notificacion];
       }else{
-        resultado[i].descripcion.push(notificacion);
-      }
+        res = resultado[i].descripcion;
+        res.push(notificacion);
+  }
     usuActualizado = {
       id:resultado[i].id,
       nombre:resultado[i].nombre,
@@ -338,7 +340,7 @@ function mandarNotificacionPerfil(){
       identificador:resultado[i].identificador,
       propuestas:pro,
       reservacion:reser,
-      descripcion:resultado[i].descripcion
+      descripcion:res
     };
       axios({
         method:'PUT',
@@ -597,11 +599,14 @@ function mandarNotificacionPropuesta(){
       }else{
         reser = [];
       }
-      if(resultado[i].descripcion == 0){
-        resultado[i].descripcion = [notificacion];
+    let res;
+      if(resultado[i].descripcion == "Ninguna"){
+        res = [notificacion];
       }else{
-        resultado[i].descripcion.push(notificacion);
+        res = resultado[i].descripcion;
+        res.push(notificacion);
       }
+
     usuActualizado = {
       id:resultado[i].id,
       nombre:resultado[i].nombre,
@@ -617,7 +622,7 @@ function mandarNotificacionPropuesta(){
       identificador:resultado[i].identificador,
       propuestas:pro,
       reservacion:reser,
-      descripcion:resultado[i].descripcion
+      descripcion:res
     };
       axios({
         method:'PUT',

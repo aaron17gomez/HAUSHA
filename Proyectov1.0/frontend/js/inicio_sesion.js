@@ -64,7 +64,6 @@ function iniciarSesion(){
     }
 }
 
-
 function validarRegistro(){
     var nombre,apellido,correo,contrasena,fecha,imagen,nombreUsuario,telefono;
         nombre=document.getElementById('nombre').value,

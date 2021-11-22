@@ -59,6 +59,7 @@ body{
 #contenedor-acciones{
     max-width: 1600px;
     padding-top: 0;
+    padding-bottom: 4rem;
 }
 #contenedor-botones{
     width: 100%;
@@ -265,8 +266,8 @@ body{
 }
 
 .contenedorTabla{
-    width: 70%;
-    /* height: 90%; */
+    width: 100%;
+    /*height: 90%; */
     margin-top: 1rem;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;

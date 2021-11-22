@@ -102,7 +102,7 @@ function obtenerCategorias(){
         console.error(error);
     });
 }
-obtenerCategorias();
+window.onload = obtenerCategorias();
 
 var usuarios = [];
 const url1 = '../../Proyectov1.0/backend/api/usuarios.php';
@@ -121,7 +121,20 @@ function obtenerUsuarios(){
         console.error(error);
     });
 }
-obtenerUsuarios();
+window.onload = obtenerUsuarios();
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAsUlisf5yn5dq8_T99fLEQU1Hbkk0AK-k",
+  authDomain: "fir-php-test-d5d57.firebaseapp.com",
+  databaseURL: "https://fir-php-test-d5d57-default-rtdb.firebaseio.com",
+  projectId: "fir-php-test-d5d57",
+  storageBucket: "fir-php-test-d5d57.appspot.com",
+  messagingSenderId: "486658166814",
+  appId: "1:486658166814:web:ca7a7e3ba7930298095e0f"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 let boton = false;
 
@@ -188,6 +201,8 @@ function mostrarBusqueda(contenido){
 
 function generarCategorias()
 {
+  sessionStorage.setItem('param1', null);
+  sessionStorage.setItem('param2', null);
     document.getElementById("eslogan").innerHTML = '';
     document.getElementById("eslogan").innerHTML += 
     `
@@ -477,7 +492,69 @@ function informacion(id1,id2){
     .setLngLat([cateActual.longitud, cateActual.latitud])
     .addTo(map);
 
-    Comentarios(id1,id2);
+    //Comentarios(id1,id2);
+    firebase.database().ref('categorias')
+    .on('value',function(snapshot){
+      ///${categoriaSeleccionada[id1]}/propuestas/${id2}
+      console.log("Categorias: ", snapshot.val());
+      categorias = snapshot.val();
+      comentariosFirebase(id1, id2);
+    });
+
+}
+
+function comentariosFirebase(id1, id2){
+  let cateActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
+  document.getElementById("ContenedorCliente").innerHTML = '';
+  document.getElementById("ContenedorCliente").innerHTML += 
+  `<div id="comments-container" class="comments-container">
+      <h1>Comentarios<a href="#"> HAUSHA</a></h1>
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Comenta" id="comentario">
+          <div class="input-group-append">
+              <button type="button" onclick="comentar(${id1},${id2});" class="btn btn-outline-danger"><i class="far fa-paper-plane"></i></button>
+          </div>
+      </div>
+      </p>
+      <ul id="comments-list" class="comments-list">
+      </ul>
+  </div>`;
+  if(cateActual.comentarios){
+    document.getElementById("comments-list").innerHTML = '';
+    for(let i=0;i<cateActual.comentarios.length;i++){
+      const comment = cateActual.comentarios[i];
+      let img;
+      if(comment.imagen){
+        img = comment.imagen;
+      }else{
+        img = 'img/perfil.png';
+      }
+      document.getElementById("comments-list").innerHTML += 
+      `<li id="lista_comentarios">
+          <div class="comment-main-level">
+            <!-- Avatar -->
+            <div class="comment-avatar"><img src="${img}" alt=""></div>
+            <!-- Contenedor Comentario -->
+            <div class="comment-box">
+              <div class="comment-head">
+                <h6 class="comment-name by-author"><a href="#">${comment.usuario}</a></h6>
+                <span>hace 12min</span>
+                <div>
+                  <i class="fas fa-reply"></i>
+                </div>
+                <div>
+                  <i class="fas fa-heart"></i>
+                </div>
+              </div>
+              <div class="comment-content">
+              ${comment.comentario}
+              </div>
+            </div>
+          </div>
+      </li>
+      `;
+    }
+  } 
 }
 
 /*-------------------Boton me gusta---------------------------*/
@@ -589,16 +666,6 @@ function comentar(id1,id2){
       data:cateActual
       }).then(res=>{
           console.log(res);
-          axios({
-            method:'GET',
-            url:url,
-            responseType:'json'
-        }).then(res=>{
-            this.categorias = res.data;
-            Comentarios(id1,id2);
-        }).catch(error=>{
-            console.error(error);
-        });
       }).catch(error=>{
           console.error(error);
       });
@@ -622,7 +689,7 @@ function llenarNavBar(){
           <a class="nav-link disabled" aria-current="page" href="habitaciones.html">Propuestas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
         </li>
         <li class="nav-item">
           <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>
@@ -650,7 +717,7 @@ function llenarNavBarUsuario(){
               <a class="nav-link disabled" aria-current="page" href="habitaciones.html">Propuestas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
+              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
             <li id="sesionIniciada" class="nav-item dropdown">
               

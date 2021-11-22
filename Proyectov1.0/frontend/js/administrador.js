@@ -1031,6 +1031,66 @@ function verUsuarios(){
                           <th>cumple</th>
                           <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
                         </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
 
                       </tbody>
                     </table>
