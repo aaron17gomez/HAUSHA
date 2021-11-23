@@ -1,7 +1,11 @@
-if(sessionStorage.getItem('identificadorUsuario') == 1){
+if(sessionStorage.getItem('identificadorUsuario') == 0){
+    llenarNavBarUsuario();
+    window.location.href = 'superAdministrador.html';
+}else if(sessionStorage.getItem('identificadorUsuario') == 1){
     llenarNavBarUsuario();
     window.location.href = 'usuario.html';
-}else if(sessionStorage.getItem('identificadorUsuario') == 2){
+}
+else if(sessionStorage.getItem('identificadorUsuario') == 2){
     llenarNavBarUsuario();
     window.location.href = 'administrador.html';
 }
@@ -54,7 +58,9 @@ function iniciarSesion(){
     bAcceso = validarCredenciales(sCorreo, sContraseña);
     
     if(bAcceso == true){
-        if(usuarios[identificador].identificador == 1){
+        if(usuarios[identificador].identificador == 0){
+            window.location.href = 'superAdmnistrador.html';
+        }else if(usuarios[identificador].identificador == 1){
             window.location.href = 'usuario.html';
         }else if(usuarios[identificador].identificador == 2){
             window.location.href = 'administrador.html';

@@ -105,14 +105,39 @@ var usuarios2 = [
         }
       ],
       propuestas:[]
-  }
+    },
+    {
+      id:3,
+      nombre:"Hugo",
+      apellido:"Lopez",
+      correo:"hugo@gmail.com",
+      telefono:"98565475",
+      nombreUsuario:"hugo",
+      contrasena:"hugo123",
+      fecha:"1997-07-21",
+      identificador:"0",
+      imagen:"img/perfil/naruto.jpg",
+      genero:"Masculino",
+      nacionalidad:"Honduras",
+      descripcion:"Ninguna",
+      reservacion:[
+        {
+          nombreCategoria:"Casa",
+          nombre:"Casa 1",
+          descripcion:"Quos numquam neque animi ex facilis nesciunt enim id molestiae.",
+          imagen:"img/propuestas/Casa/1.jpg",
+          precio:"124.32"
+        }
+      ],
+      propuestas:[]
+    }
 ];
 
 function guardar(){
   for(let i=0;i<usuarios2.length;i++){
         axios({
           method:'POST',
-          url:url,
+          url:'../../Proyectov1.0/backend/api/usuarios.php',
           responseType:'json',
           data:usuarios2[i]
       }).then(res=>{
@@ -223,12 +248,23 @@ document.getElementById("sesionIniciada").innerHTML +=
   <img id="perfil" src="${usuarios[usuar].imagen}" alt="">${usuarios[usuar].nombre} ${usuarios[usuar].apellido}
   </a>
   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" href="usuario.html">Ver perfil</a></li>
+    <li><a class="dropdown-item" href="#" type="button" onclick="redireccionar();">Ver perfil</a></li>
     <li><a type="button" onclick="verReservacion();" class="dropdown-item" data-toggle="modal" data-target="#modalReservacion">Ver reservaciones</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
   </ul>
 `;
+}
+
+function redireccionar(){
+  if(sessionStorage.getItem('identificadorUsuario') == 0){
+    window.location.href = 'superAdministrador.html';
+  }else if(sessionStorage.getItem('identificadorUsuario') == 1){
+      window.location.href = 'usuario.html';
+  }
+  else if(sessionStorage.getItem('identificadorUsuario') == 2){
+      window.location.href = 'administrador.html';
+  }
 }
 
 function cerrarSesion(){

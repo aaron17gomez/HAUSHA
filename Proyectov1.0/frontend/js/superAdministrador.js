@@ -5,19 +5,6 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     llenarNavBar();
 }
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAsUlisf5yn5dq8_T99fLEQU1Hbkk0AK-k",
-  authDomain: "fir-php-test-d5d57.firebaseapp.com",
-  databaseURL: "https://fir-php-test-d5d57-default-rtdb.firebaseio.com",
-  projectId: "fir-php-test-d5d57",
-  storageBucket: "fir-php-test-d5d57.appspot.com",
-  messagingSenderId: "486658166814",
-  appId: "1:486658166814:web:ca7a7e3ba7930298095e0f"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 //Llave para MapBox incluir siempre
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFub3Jvc2FsZXMwNyIsImEiOiJja3ZiNnAzYXQydXpmMm5ubmE4YXB4MWpuIn0.xC8gjRpwVh1KjjDwOKTc4g';
 
@@ -31,7 +18,6 @@ var basedatos = [
 ];
 
 var usuarios = [];
-var listUser = [];
 const url = '../../Proyectov1.0/backend/api/usuarios.php';
 function obtenerUsuarios(){
     axios({
@@ -49,7 +35,6 @@ function obtenerUsuarios(){
         console.error(error);
     });
 }
-
 obtenerUsuarios();
 
 function bienvenida(){
@@ -120,7 +105,7 @@ function llenarNavBarUsuario(){
               <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
+              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
             <li id="sesionIniciada" class="nav-item dropdown">
               
@@ -731,48 +716,37 @@ function misPropuestas(){
 
 
 function verNotificaciones(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
-  firebase.database().ref('usuarios')
-  .on('value',function(snapshot){
-    usuarios = snapshot.val();
-    document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
-    document.getElementById("contenedor-acciones").innerHTML = '';
-    document.getElementById("contenedor-acciones").innerHTML +=
-    `
-    <div id="perfil">
-             <form id="form" class="form">
-             </div>
-    </div>
-    `;
-    document.getElementById("form").innerHTML = '';
-    if(usuarios[usuActual].descripcion != "Ninguna"){
-      for(let i=0;i<usuarios[usuActual].descripcion.length;i++){
-        let usu = usuarios[usuActual].descripcion[i];
-        let leido;
-        if(usu.leido == false){
-          leido = `<i class="fas fa-envelope"></i>`;
-        }else{
-          leido = `<i class="fas fa-envelope-open-text"></i>`;
-        }
-        document.getElementById("form").innerHTML += 
-         `
-                 <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
-                  <p id="iconos">
-                      ${leido}
-                  </p>
-                  <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
-                  <p style="margin-left: auto;">22:05</p>
-                  <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
-                 </div><hr>
-         `;
-      }
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML +=
+  `
+  <div id="perfil">
+           <form id="form" class="form">
+           </div>
+  </div>
+  `;
+  document.getElementById("form").innerHTML = '';
+  for(let i=0;i<usuarios[usuActual].descripcion.length;i++){
+    let usu = usuarios[usuActual].descripcion[i];
+    let leido;
+    if(usu.leido == false){
+      leido = `<i class="fas fa-envelope"></i>`;
     }else{
-        document.getElementById("form").innerHTML += 
-         `
-            <p><b>No tienes notificaciones</b></p>
-         `;
+      leido = `<i class="fas fa-envelope-open-text"></i>`;
     }
-  });
+    document.getElementById("form").innerHTML += 
+     `
+             <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
+              <p id="iconos">
+                  ${leido}
+              </p>
+              <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
+              <p style="margin-left: auto;">22:05</p>
+              <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
+             </div><hr>
+     `;
+  }
 }
 
 function verMensaje(i){
@@ -862,6 +836,170 @@ function verMensaje(i){
   });
 }
 
+
+/*--------------------------Inicio Crear Administrador-------------------------------------------- */
+
+function validarCredenciales(pCorreo, pContraseña){
+  var bAcceso = false;
+  for(const usu in usuarios){
+      if(usuarios[usu].correo == pCorreo && usuarios[usu].contrasena == pContraseña){
+          bAcceso = true;
+          identificador = usu;
+          let nom = usuarios[usu].nombre + ' ' + usuarios[usu].apellido;
+          let ident = true;
+          let idUsu = usu;
+          sessionStorage.setItem('usuarioActivo', nom);
+          sessionStorage.setItem('rolUsuarioActivo', ident);
+          sessionStorage.setItem('idUsuarioActivo', idUsu);
+          sessionStorage.setItem('identificadorUsuario', usuarios[usu].identificador);
+      }
+  }
+
+  return bAcceso;
+}
+
+function validarRegistro(){
+  var nombre,apellido,correo,contrasena,fecha,imagen,nombreUsuario,telefono;
+      nombre=document.getElementById('nombre').value,
+      apellido=document.getElementById('apellido').value,
+      correo=document.getElementById('correo').value,
+      telefono=document.getElementById('telefono').value,
+      nombreUsuario=document.getElementById('nombreUsuario').value,
+      contrasena=document.getElementById('contrasena').value,
+      fecha=document.getElementById('fecha').value,
+      imagen=document.getElementById('lista-imagenes').value,
+  
+  expresion = /\w+@\w+\.+[a-z]/;
+  
+  if(nombre === "" || apellido === "" || correo==="" || telefono === "" || nombreUsuario == "" || contrasena === "" || fecha === "" || imagen === ""){
+      alert("todos los campo son obligatorios");
+      return false;
+  }
+  else if(nombre.length>20){
+      alert("El nombre es muy largo");
+      return false;
+  }
+  else if(apellido.length>30){
+      alert("El apellido es muy largo");
+      return false;
+  }else if(correo.length>40){
+      alert("El email es muy largo");
+      return false;
+  }
+  else if(!expresion.test(correo)){
+      alert("El email no es válido");
+      return false;
+  }else if(nombreUsuario.length>30 || contrasena.length>20){
+      alert("El nombre es muy largo");
+      return false;
+  }else if(telefono.length>10){
+      alert("El telefono es muy largo");
+      return false;
+  }else if(isNaN(telefono)){
+      alert("El telefono ingresado no es un número");
+      return false;
+  }else{
+      return true
+  }
+}
+
+function crearAdministrador(){
+  document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML += 
+  `
+  <div id="perfil" class="separacion">
+      <h1>Formulario para crear un administrador</h1>
+      <form class="form">
+      <input class="form-control my-2" type="text" id="nombre" placeholder="Nombre">
+      <input class="form-control my-2" type="text" id="apellido" placeholder="Apellido">
+      <input class="form-control my-2" type="email" id="correo" placeholder="Correo">
+      <input class="form-control my-2" type="number" id="telefono" placeholder="Telefono">
+      <input class="form-control my-2" type="text" id="nombreUsuario" placeholder="Nombre Usuario">
+      <input class="form-control my-2" type="password" id="contrasena" placeholder="Contraseña">
+      <input class="form-control my-2" type="date" id="fecha" placeholder="Fecha Nacimiento">
+      <label>Seleccione su nacionalidad:</label>
+      <select class="form-control my-2" id="lista-nacionalidad">
+        <option value="Honduras">Honduras</option>
+        <option value="El Salvador">El Salvador</option>
+        <option value="Costa Rica">Costa Rica</option>
+        <option value="Guatemala">Guatemala</option>
+        <option value="Nicaragua">Nicaragua</option>
+      </select>
+      <label>Seleccione su genero:</label>
+      <select class="form-control my-2" id="lista-genero">
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+      </select>
+      <label>Seleccione una imagen:</label>
+      <select class="form-control my-2" id="lista-imagenes">
+        <option value="img/perfil/goku.jpg">Imagen 1</option>
+        <option value="img/perfil/lufi.jpg">Imagen 2</option>
+        <option value="img/perfil/naruto.jpg">Imagen 3</option>
+      </select>
+      <button onclick="guardarAdministrador();" type="button" class="btn btn-primary btn-form">Guardar</button>
+      </div>
+    </div>
+  `
+  ;
+}
+
+function guardarAdministrador(){
+  let mail = document.getElementById('correo').value;
+    let contador = 0;
+    let filtro = [];
+    for(const usu in usuarios){
+        filtro.push(usuarios[usu]);
+        contador++;
+    }
+    const resultado = filtro.filter(usuarios => usuarios.correo == mail);
+    console.log(resultado);
+    if(resultado.length == 1){
+        window.alert("El correo que escribio ya existe");
+    }else{
+        let estado = false;
+        estado = validarRegistro();
+        if(estado == true){
+        console.log(contador);
+        const cliente = {
+            id: contador,
+            nombre:document.getElementById('nombre').value,
+            apellido:document.getElementById('apellido').value,
+            correo:document.getElementById('correo').value,
+            telefono:document.getElementById('telefono').value,
+            nombreUsuario:document.getElementById('nombreUsuario').value,
+            contrasena:document.getElementById('contrasena').value,
+            fecha:document.getElementById('fecha').value,
+            nacionalidad:document.getElementById('lista-nacionalidad').value,
+            genero:document.getElementById('lista-genero').value,
+            imagen:document.getElementById('lista-imagenes').value,
+            reservacion:[],
+            propuestas:[],
+            identificador:2,
+            descripcion:"Ninguna"
+        }
+            axios({
+            method:'POST',
+            url:url,
+            responseType:'json',
+            data:cliente
+        }).then(res=>{
+            console.log(res.data);
+            obtenerUsuarios();
+            $("#modalRegistro .close").click()
+            window.alert("Administrador registrado con exito");
+        }).catch(error=>{
+            console.error(error);
+        });
+        }
+    }
+}
+
+/*--------------------------Fin Crear Administrador-------------------------------------------- */
+
+
+
+
 function verUsuarios(){
 
     document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
@@ -893,7 +1031,77 @@ function verUsuarios(){
                           <th>Eliminar</th>
                         </tr>
                       </thead>
-                      <tbody id="tabla-users">
+                      <tbody>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <th>Lorem</th>
+                          <th>Lorem Apeli</th>
+                          <th>Lorem nombre usuario</th>
+                          <th>Apellido telefono</th>
+                          <th>correo</th>
+                          <th>cumple</th>
+                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
+                        </tr>
 
                       </tbody>
                     </table>
@@ -914,7 +1122,7 @@ function verUsuarios(){
                         </tr>
                     </thead>
 
-                    <tbody id="table-admins">
+                    <tbody>
                        
 
                     </tbody>
@@ -923,95 +1131,18 @@ function verUsuarios(){
                 </div>
               </div>
     `;
-    listarUsuarios();
-}
+    
 
-function listarUsuarios(){
-  let keys = [];
-  let contador = 0;
-  for(const usu in usuarios){
-      const key = {
-        key:usu,
-        id: usuarios[usu].id,
-        nombre: usuarios[usu].nombre,
-        apellido: usuarios[usu].apellido,
-        nombreUsuario: usuarios[usu].nombreUsuario,
-        telefono: usuarios[usu].telefono,
-        correo: usuarios[usu].correo,
-        fecha: usuarios[usu].fecha,
-        identificador: usuarios[usu].identificador
-      }
-      keys.push(key);
-      contador++;
-  }
-  listUser = keys.filter(keys => keys.identificador == 1);
-  document.getElementById('tabla-users').innerHTML = '';
-  for(let i=0; i<listUser.length; i++){
-    let user = listUser[i];
-    document.getElementById('tabla-users').innerHTML +=
-    `
-      <tr>
-        <th>${user.id}</th>
-        <th>${user.nombre}</th>
-        <th>${user.apellido}</th>
-        <th>${user.nombreUsuario}</th>
-        <th>${user.telefono}</th>
-        <th>${user.correo}</th>
-        <th>${user.fecha}</th>
-        <th><i onclick="eliminarUsuario(${i})" class="fas fa-trash-alt"></i></th>
-      </tr>
-    `;
-  }
-}
-
-function eliminarUsuario(id1){
-  console.log("Llave", listUser[id1]);
-    axios({
-      method:'DELETE',
-      url:url + `?id=${listUser[id1].key}`,
-      responseType:'json'
-  }).then(res=>{
-      console.log(res.data);
-      window.alert("Usuario eliminado");
-      axios({
-        method:'GET',
-        url:url,
-        responseType:'json'
-    }).then(res=>{
-        this.usuarios = res.data;
-        listarUsuarios();
-    }).catch(error=>{
-        console.error(error);
-    });
-  }).catch(error=>{
-      console.error(error);
-  });
 }
 
 function verAdministadores(){
-  let filtro = [];
-  let contador = 0;
+    // procedimientos para llenar la tabla
 
-  for(const usu in usuarios){
-      filtro.push(usuarios[usu]);
-      contador++;
-  }
-  const listUser = filtro.filter(usuarios => usuarios.identificador == 2);
+    console.log(14);
+}
 
-  document.getElementById('table-admins').innerHTML = '';
-  for(let i=0; i<listUser.length; i++){
-    const user = listUser[i];
-    document.getElementById('table-admins').innerHTML +=
-    `
-      <tr>
-        <th>${user.id}</th>
-        <th>${user.nombre}</th>
-        <th>${user.apellido}</th>
-        <th>${user.nombreUsuario}</th>
-        <th>${user.telefono}</th>
-        <th>${user.correo}</th>
-        <th>${user.fecha}</th>
-      </tr>
-    `;
-  }
+function eliminarUsuario(){
+    console.log(1888);
+    // eliminar usuario, conectar con la API
+    // actualizarTabla.
 }

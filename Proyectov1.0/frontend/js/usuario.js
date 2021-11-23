@@ -297,11 +297,11 @@ function mandarNotificacionPerfil(){
     for(const usu in usuarios){
         filtro.push(usuarios[usu]);
         contador++;
-        if(usuarios[usu].identificador == 2){
+        if(usuarios[usu].identificador != 1){
           key.push(usu); 
         }
     }
-  const resultado = filtro.filter(usuarios => usuarios.identificador == 2);
+  const resultado = filtro.filter(usuarios => usuarios.identificador != 1);
   console.log(resultado);
   console.log(key);
 

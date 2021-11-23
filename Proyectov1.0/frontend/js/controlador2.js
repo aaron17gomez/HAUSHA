@@ -735,12 +735,23 @@ function botonesPerfil(){
     <img id="perfil1" src="${usuarios[usuar].imagen}" alt="">${usuarios[usuar].nombre} ${usuarios[usuar].apellido}
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <li><a class="dropdown-item" href="usuario.html">Ver perfil</a></li>
+      <li><a class="dropdown-item" type="button" onclick="redireccionar();" href="#">Ver perfil</a></li>
       <li><a type="button" onclick="verReservacion();" class="dropdown-item" data-toggle="modal" data-target="#modalReservacion">Ver reservaciones</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a type="button" class="dropdown-item" onclick="cerrarSesion();">Cerrar Sesion</a></li>
     </ul>
   `;
+}
+
+function redireccionar(){
+  if(sessionStorage.getItem('identificadorUsuario') == 0){
+    window.location.href = 'superAdministrador.html';
+  }else if(sessionStorage.getItem('identificadorUsuario') == 1){
+      window.location.href = 'usuario.html';
+  }
+  else if(sessionStorage.getItem('identificadorUsuario') == 2){
+      window.location.href = 'administrador.html';
+  }
 }
 
 function cerrarSesion(){
