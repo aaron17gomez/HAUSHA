@@ -7,7 +7,7 @@
     <title>HAUSHA</title>
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/all.css"><!--FontAwesome-->
-    <link rel="stylesheet" href="css/main3.css">
+    <link rel="stylesheet" href="css/main8.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,129 +54,36 @@
     </div>
   </nav>
 
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Sube una foto de perfil</label>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 ml-auto">
-                         <img id="izquierda" src="img/perfil.png" alt="">
-                    </div>
-                    <div id="derecha" class="col-lg-8">
-                         <p id="tex" class="card-title">Puedes subir una imagen para generar más confianza en la comunidad HAUSHA.</p>
-                         <label><input name="opciones[]" type="checkbox" value="2"> Imagen Publica </label><br>
-                         <p id="tex" class="card-text">estoy de acuerdo si mi foto es visible en el perfil publico de HAUSHA y chat solo por usuarios registrados.</p>
-                    </div>
-                </div>
-                <div id="cont-buton" class="form-group">
-                    <button type="submit" class="btn btn-primary">Subir Archivo</button>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Tu perfil publico</label>
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Descripcion publica aparece en HAUSHA para usuarios registrados. Saber con quien vives es muy importante, entonces, explica a tus posibles compañeros de piso quien eres y que haces para generar un mejor ambiente</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
-                      </div>
+      <section class="seccion-perfil-usuario">
+          <div class="perfil-usuario-header">
+              <div class="perfil-usuario-portada">
+                  <div id="imgPerfil" class="perfil-usuario-avatar">
+                      
                   </div>
-                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Datos Personales</label>
-                </div>
-                <div class="form-group">
-                    <label for="formGroupExampleInput">Nombre</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
-                    <label for="formGroupExampleInput">Apellido</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
-                    <label for="inputState">Genero</label>
-                    <select id="inputState" class="form-control">
-                      <option selected></option>
-                      <option>Masculino</option>
-                      <option>Femenino</option>
-                    </select>
-                    <label for="formGroupExampleInput">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="formGroupExampleInput" placeholder="">
-                    <label for="inputState">Nacionalidad</label>
-                    <select id="inputState" class="form-control">
-                      <option selected></option>
-                      <option>Honduras</option>
-                      <option>Nicaragua</option>
-                      <option>El Salvador</option>
-                      <option>Costa Rica</option>
-                      <option>Guatemala</option>
-                    </select>
-                    <label for="exampleInputEmail1">Correo</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
-                    <label for="exampleInputEmail1">Numero de celular</label>
-                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Seguridad</label>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Para cambiar tu contraseña ingresa tu contraseña actual</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña actual">
-                  <label for="exampleInputPassword1">Nueva contraseña</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nueva contraseña">
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Cambiar a perfil de anfitrion</label>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Ten en cuenta que, si tienes solicitudes en tu cuenta de invitado, no podras verlas como anfitrion HAUSHA. Si tienes inquietudes en el cambio de rol en tu cuenta, no dudes en contactarnos.</label>
-                  <label><input name="opcion" type="radio" value="1"> Anfitrion </label>
-                  <label><input name="opcion" type="radio" value="1"> Invitado</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Verificacion de tu correo electronico</label>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">En la comunidad HAUSHA queremos que estes siempre actualizado con lo ultimo, confirma tu correo electronico para nuestro mensajes.</label>
-                  <label for="exampleInputPassword1">En tu bandeja de entrada recibiras un mensaje con un enlace que debes seguir para confirmar tu correo electronico.</label>
-                  <label for="exampleInputPassword1">email@email.com</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar codigo de verificacion</button>
-              </form>
-        </div>
-        <div id="perfil">
-            <form class="form">
-                <div id="titulo" class="form-group">
-                    <label style="color: white;" for="exampleInputEmail1">Verificacion de tu numero de telefono movil</label>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Para nosotros, es muy importante que estes actualizado lo mas pronto posible, asi puedes estar mas pendiente de todas nuestras actualizaciones.</label>
-                  <label for="exampleInputPassword1">Para verificar tu numero de celular tendras que leer el proximo mensaje de texto, en el encontraras un codigo unico.</label>
-                  <label for="exampleInputPassword1">+504 33334444</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar codigo de verificacion</button>
-              </form>
-        </div>
+                  <button type="button" class="boton-portada">
+                      <i class="far fa-image"></i> Cambiar fondo
+                  </button>
+              </div>
+          </div>
+          <div class="perfil-usuario-body">
+              <div id="perfilDatos" class="perfil-usuario-bio">
+                  
+              </div>
+              <div class="perfil-usuario-footer">
+                  <ul id="perfilContenedor1" class="lista-datos">
+                      
+                  </ul>
+                  <ul id="perfilContenedor2" class="lista-datos">
+                      
+                  </ul>
+              </div>
+          </div>
+      </section>
+
+      <div class="col" id="contenedor-acciones" style="color: black;">
+              
+      </div>
+  <!--====  End of tarjeta  ====-->
         
     <!-- Footer -->
     <footer class="bg-light text-center text-black">
@@ -282,12 +189,49 @@
     </footer>
 <!-- Footer -->
 
-<script src="js/all.js"></script>
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
+<!-- Modal Registro-->
+<div class="modal fade" id="modalReservacion" tabindex="-1" role="dialog" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRegistroLabel">Reservacion Actual</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" id="verReservacion">
+            <div class="row col-12">
+                <input class="form-control my-2" type="email" id="nombrePro" placeholder="Nombre">
+                <input class="form-control my-2" type="number" id="precioPro" placeholder="Precio">
+                <input class="form-control my-2" type="text" id="descripPro" placeholder="Descripcion">
+                <p>Seleccione el tipo de categoria:</p>
+                <select class="form-control my-2" id="selectPropuesta">
+
+                </select>
+                <p>Seleccione una imagen:</p>
+                <select class="form-control my-2" id="lista-imagenes">
+                  <option value="img/perfil/goku.jpg">Imagen 1</option>
+                  <option value="img/perfil/lufi.jpg">Imagen 2</option>
+                  <option value="img/perfil/naruto.jpg">Imagen 3</option>
+                </select>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+      </div>
+    </div>
+  </div>
+<div>
+
+    <script src="js/all.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/perfil.js"></script>
 </body>
 

@@ -137,6 +137,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 let boton = false;
+let llaves = [];
 
 //Llave para MapBox incluir siempre
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFub3Jvc2FsZXMwNyIsImEiOiJja3ZiNnAzYXQydXpmMm5ubmE4YXB4MWpuIn0.xC8gjRpwVh1KjjDwOKTc4g';
@@ -524,6 +525,14 @@ function comentariosFirebase(id1, id2){
     for(let i=0;i<cateActual.comentarios.length;i++){
       const comment = cateActual.comentarios[i];
       let img;
+      let keys;
+      if(comment.key){
+        keys = comment.key;
+        llaves.push(keys);
+      }else{
+        keys = '';
+        llaves.push(keys);
+      }
       if(comment.imagen){
         img = comment.imagen;
       }else{
@@ -537,7 +546,7 @@ function comentariosFirebase(id1, id2){
             <!-- Contenedor Comentario -->
             <div class="comment-box">
               <div class="comment-head">
-                <h6 class="comment-name by-author"><a href="#">${comment.usuario}</a></h6>
+                <h6 class="comment-name by-author"><a type="button" onclick="verPerfil(${i});">${comment.usuario}</a></h6>
                 <span>hace 12min</span>
                 <div>
                   <i class="fas fa-reply"></i>
@@ -593,6 +602,12 @@ function Comentarios(id1,id2){
           for(let i=0;i<cateActual.comentarios.length;i++){
             const comment = cateActual.comentarios[i];
             let img;
+            let keys;
+            if(comment.key){
+              keys = comment.key;
+            }else{
+              keys = '';
+            }
             if(comment.imagen){
               img = comment.imagen;
             }else{
@@ -606,7 +621,7 @@ function Comentarios(id1,id2){
                   <!-- Contenedor Comentario -->
                   <div class="comment-box">
                     <div class="comment-head">
-                      <h6 class="comment-name by-author"><a href="#">${comment.usuario}</a></h6>
+                      <h6 class="comment-name by-author"><a type="button" onclick="verPerfil(${keys});">${comment.usuario}</a></h6>
                       <span>hace 12min</span>
                       <div>
                         <i class="fas fa-reply"></i>
@@ -626,6 +641,12 @@ function Comentarios(id1,id2){
       }    
 }
 
+function verPerfil(id1){
+  console.log("ID: ", llaves[id1]);
+  sessionStorage.setItem('idPerfilUsuario', llaves[id1]);
+  window.location.href = 'perfil.html';
+}
+
 function comentar(id1,id2){
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   let cateActual = categorias[categoriaSeleccionada[id1]];
@@ -635,7 +656,8 @@ function comentar(id1,id2){
       comentario:document.getElementById("comentario").value,
       fecha:"09/12/2021",
       usuario:usuarios[usuActual].nombreUsuario,
-      imagen:usuarios[usuActual].imagen
+      imagen:usuarios[usuActual].imagen,
+      key:usuActual
     };
 
     let com;
