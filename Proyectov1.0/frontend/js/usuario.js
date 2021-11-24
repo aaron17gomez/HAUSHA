@@ -18,6 +18,7 @@ var basedatos = [
 ];
 
 var usuarios = [];
+var listUser = [];
 const url = '../../Proyectov1.0/backend/api/usuarios.php';
 function obtenerUsuarios(){
     axios({
@@ -46,6 +47,19 @@ function bienvenida(){
     `;
     document.getElementById("contenedor-acciones").innerHTML = '';
 }
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAsUlisf5yn5dq8_T99fLEQU1Hbkk0AK-k",
+  authDomain: "fir-php-test-d5d57.firebaseapp.com",
+  databaseURL: "https://fir-php-test-d5d57-default-rtdb.firebaseio.com",
+  projectId: "fir-php-test-d5d57",
+  storageBucket: "fir-php-test-d5d57.appspot.com",
+  messagingSenderId: "486658166814",
+  appId: "1:486658166814:web:ca7a7e3ba7930298095e0f"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 var categorias = [];
 const url1 = '../../Proyectov1.0/backend/api/categorias.php';
@@ -890,4 +904,217 @@ function reCanceladas(){
       </div>
     </div>
     `;
+}
+
+function chat(){
+  var x = document.getElementById("chatDiv");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    llenarChatUser();
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function llenarChatUser(){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let keys = [];
+  for(const usu in usuarios){
+      const key = {
+        key:usu,
+        nombre: usuarios[usu].nombre,
+        apellido: usuarios[usu].apellido,
+        identificador: usuarios[usu].identificador
+      }
+      keys.push(key);
+  }
+  listUser = keys.filter(keys => keys.identificador == 1 && keys.key != usuActual);
+  document.getElementById('chatListUser').innerHTML = '';
+  for(let i=0; i<listUser.length; i++){
+    let user = listUser[i];
+    document.getElementById('chatListUser').innerHTML +=
+    `
+      <li><button onclick="chatear(${i});" class="btn btn-primary list-button">${user.nombre} ${user.apellido}</button></li>
+    `;
+  }
+}
+
+function chatear(id1){
+  console.log("User: ",listUser[id1]);
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let user = usuarios[listUser[id1].key];
+  document.getElementById('contenedor-acciones').innerHTML = '';
+  document.getElementById('contenedor-acciones').innerHTML += 
+  `
+  <div id="propuestas">
+          <div class="card">
+            <div class="card-body">
+              <div class="seccion-chat">
+                <div class="usuario-seleccionado">
+                    <div class="avatar">
+                        <img id="user-img" src="${user.imagen}">
+                    </div>
+                    <div class="cuerpo">
+                        <span>${user.nombre} ${user.apellido}</span>
+                    </div>
+                </div>
+                <div id="contenedor-comentarios" class="panel-chat overflow-auto">
+                    
+                </div>
+                <div class="panel-escritura">
+                    <form class="textarea">
+                        <div class="opcines">
+                            <button type="button">
+                                <i class="fas fa-file"></i>
+                                <label for="file"></label>
+                                <input type="file" id="file">
+                            </button>
+                            <button type="button">
+                                <i class="far fa-image"></i>
+                                <label for="img"></label>
+                                <input type="file" id="img">
+                            </button>
+                        </div>
+                        <textarea id="coment" placeholder="Escribir mensaje"></textarea>
+                        <button type="button" onclick="comentario(${id1});" class="enviar">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+  </div>
+  `;
+  firebase.database().ref('Chat')
+  .on('value', function(snapshot){
+     snapshot.forEach(function (e) {
+         if(e.val().key1 == usuActual && e.val().key2 == listUser[id1].key || e.val().key2 == usuActual && e.val().key1 == listUser[id1].key){
+          llenarComentarios(e.val());
+         }
+     });
+  });
+}
+
+function llenarComentarios(datos){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  console.log(datos);
+  let comm = [];
+  document.getElementById("contenedor-comentarios").innerHTML = '';
+  for(let llave in datos.comentarios){
+    console.log("comm", datos.comentarios[llave]);
+    comm.push(datos.comentarios[llave]);
+  }
+  for(let i=0;i<comm.length;i++){
+    let comentarios = comm[i];
+    if(comentarios.key == usuActual){
+      document.getElementById("contenedor-comentarios").innerHTML +=
+      `
+        <div class="mensaje left">
+          <div class="cuerpo">
+              <!--<img src="" alt="">-->
+              <div class="texto">
+                  ${comentarios.mensaje}
+                  <span class="tiempo">
+                      <i class="far fa-clock"></i>
+                      Hace 6 min
+                  </span>
+              </div>
+              <ul class="opciones-msj">
+                  <li>
+                      <button type="button">
+                          <i class="fas fa-times"></i>
+                      </button>
+                  </li>
+              </ul>
+          </div>
+          <div class="avatar">
+              <img src="${comentarios.imagen}" alt="img">
+          </div>
+        </div>
+      `;
+    }else{
+      document.getElementById("contenedor-comentarios").innerHTML +=
+      `
+      <div class="mensaje">
+        <div class="avatar">
+            <img src="${comentarios.imagen}" alt="img">
+        </div>
+        <div class="cuerpo">
+            <!--<img src="" alt="">-->
+            <div class="texto">
+                ${comentarios.mensaje}
+                <span class="tiempo">
+                    <i class="far fa-clock"></i>
+                    Hace 5 min
+                </span>
+            </div>
+            <ul class="opciones-msj">
+                <li>
+                    <button type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+      </div>
+      `;
+    }
+  }
+}
+
+function comentario(id1){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let mensaje = document.getElementById('coment').value;
+  let user1 = usuarios[usuActual];
+  let user2 = usuarios[listUser[id1].key];
+  let referencia = [];
+  let datos = [];
+  //console.log("User1: ", user1);
+  //console.log("User2: ", user2);
+  
+  firebase.database().ref('Chat')
+  .on('value', function(snapshot){
+    for(let llave in snapshot.val()){
+      //console.log(snapshot.val()[llave]);
+      if(snapshot.val()[llave].key1 == usuActual && snapshot.val()[llave].key2 == listUser[id1].key || snapshot.val()[llave].key2 == usuActual && snapshot.val()[llave].key1 == listUser[id1].key)
+      {
+        referencia.push(llave);
+        datos.push(snapshot.val()[llave]);
+      }
+    }
+  });
+
+  console.log("referencia: ", referencia[0]);
+  console.log("datos: ", datos);
+  console.log("datos1: ", usuActual);
+  console.log("datos2: ", listUser[id1].key);
+
+  if(datos[0].key1 == usuActual && datos[0].key2 == listUser[id1].key || datos[0].key2 == usuActual && datos[0].key1 == listUser[id1].key){
+    firebase.database().ref(`Chat/${referencia[0]}/comentarios`).push(
+      {
+        mensaje:mensaje,
+        key:usuActual,
+        imagen:user1.imagen
+     });
+   }else{
+    firebase.database().ref('Chat').push({
+      key1:usuActual,
+      nombre1:user1.nombre,
+      apellido1:user1.apellido,
+      imagen1:user1.imagen,
+      key2:listUser[id1].key,
+      nombre2:user2.nombre,
+      apellido2:user2.apellido,
+      imagen2:user2.imagen,
+      comentarios:[
+        {
+          mensaje:mensaje,
+          key:usuActual,
+          imagen:user1.imagen
+        }
+      ]
+    });
+   }
+   
 }

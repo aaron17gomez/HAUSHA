@@ -69,6 +69,12 @@
                   <div type="button" onclick="crearPropuesta();" class="btn btn-primary"><i class="far fa-plus-square iconosMenu"></i> Crear Propuesta</div>
                   <div type="button" onclick="reservacion();" class="btn btn-primary"><i class="fas fa-history iconosMenu"></i> Reservación</div>
                   <div type="button" onclick="misPropuestas();" class="btn btn-primary"><i class="fas fa-list iconosMenu"></i> Mis propuestas</div>
+                  <div type="button" onclick="chat();" class="btn btn-primary"><i class="fas fa-list iconosMenu"></i> Chat</div>
+                  <div id="chatDiv" style="color: white; display: none;">
+                    <ul id="chatListUser" style="list-style: none;">
+                      
+                    </ul>
+                  </div>
                   <div id="recancelada" type="button" onclick="reCanceladas();" class="btn btn-primary"><i class="far fa-trash-alt iconosMenu"></i><p> Reservaciones canceladas</p></div>
                 </div>
             </div>
@@ -183,14 +189,15 @@
     </footer>
 <!-- Footer -->
 
-      <script src="js/all.js"></script>
-      <script src="js/jquery-3.6.0.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="js/usuario.js"></script>
-      
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+  <script src="js/all.js"></script>
+  <script src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/usuario.js"></script>  
       
 </body>
 
