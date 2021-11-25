@@ -1002,116 +1002,25 @@ function guardarAdministrador(){
 
 function verUsuarios(){
 
-    document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
-    document.getElementById("contenedor-acciones").innerHTML = `
-    <div class="contenedorTabla">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-user-tab" data-bs-toggle="pill" data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="true">Usuarios</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-admins-tab" onclick = "verAdministadores()" data-bs-toggle="pill" data-bs-target="#pills-admins" type="button" role="tab" aria-controls="pills-admins" aria-selected="false">Administradores</button>
-                  </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                  
-                  <div class="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
-                    
+  document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
+  document.getElementById("contenedor-acciones").innerHTML = `
+  <div class="contenedorTabla">
+              <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="pills-user-tab" data-bs-toggle="pill" data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="true">Usuarios</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-admins-tab" onclick = "verAdministadores()" data-bs-toggle="pill" data-bs-target="#pills-admins" type="button" role="tab" aria-controls="pills-admins" aria-selected="false">Administradores</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
                 
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Id</th>
-                          <th>Nombre</th>
-                          <th>Apellido</th>
-                          <th>Nombre usuario</th>
-                          <th>Telefono</th>
-                          <th>Correo</th>
-                          <th>fecha cumpleaños</th>
-                          <th>Eliminar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-                        <tr>
-                          <th>1</th>
-                          <th>Lorem</th>
-                          <th>Lorem Apeli</th>
-                          <th>Lorem nombre usuario</th>
-                          <th>Apellido telefono</th>
-                          <th>correo</th>
-                          <th>cumple</th>
-                          <th><i onclick= "eliminarUsuario()" class="fas fa-trash-alt"></i></th>
-                        </tr>
-
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div class="tab-pane fade" id="pills-admins" role="tabpanel" aria-labelledby="pills-admins-tab">
+                <div class="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
                   
+              
                   <table class="table table-hover">
                     <thead>
-                        <tr>
+                      <tr>
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
@@ -1119,30 +1028,128 @@ function verUsuarios(){
                         <th>Telefono</th>
                         <th>Correo</th>
                         <th>fecha cumpleaños</th>
-                        </tr>
+                        <th>Eliminar</th>
+                      </tr>
                     </thead>
-
-                    <tbody>
-                       
+                    <tbody id="tabla-users">
 
                     </tbody>
-                  </table> 
-                  </div>
+                  </table>
+                </div>
+
+                <div class="tab-pane fade" id="pills-admins" role="tabpanel" aria-labelledby="pills-admins-tab">
+                
+                <table class="table table-hover">
+                  <thead>
+                      <tr>
+                      <th>Id</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Nombre usuario</th>
+                      <th>Telefono</th>
+                      <th>Correo</th>
+                      <th>fecha cumpleaños</th>
+                      </tr>
+                  </thead>
+
+                  <tbody id="table-admins">
+                     
+
+                  </tbody>
+                </table> 
                 </div>
               </div>
-    `;
-    
+            </div>
+  `;
+  listarUsuarios();
+}
 
+function listarUsuarios(){
+let keys = [];
+let contador = 0;
+for(const usu in usuarios){
+    const key = {
+      key:usu,
+      id: usuarios[usu].id,
+      nombre: usuarios[usu].nombre,
+      apellido: usuarios[usu].apellido,
+      nombreUsuario: usuarios[usu].nombreUsuario,
+      telefono: usuarios[usu].telefono,
+      correo: usuarios[usu].correo,
+      fecha: usuarios[usu].fecha,
+      identificador: usuarios[usu].identificador
+    }
+    keys.push(key);
+    contador++;
+}
+listUser = keys.filter(keys => keys.identificador == 1);
+document.getElementById('tabla-users').innerHTML = '';
+for(let i=0; i<listUser.length; i++){
+  let user = listUser[i];
+  document.getElementById('tabla-users').innerHTML +=
+  `
+    <tr>
+      <th>${user.id}</th>
+      <th>${user.nombre}</th>
+      <th>${user.apellido}</th>
+      <th>${user.nombreUsuario}</th>
+      <th>${user.telefono}</th>
+      <th>${user.correo}</th>
+      <th>${user.fecha}</th>
+      <th><i onclick="eliminarUsuario(${i})" class="fas fa-trash-alt"></i></th>
+    </tr>
+  `;
+}
+}
+
+function eliminarUsuario(id1){
+console.log("Llave", listUser[id1]);
+  axios({
+    method:'DELETE',
+    url:url + `?id=${listUser[id1].key}`,
+    responseType:'json'
+}).then(res=>{
+    console.log(res.data);
+    window.alert("Usuario eliminado");
+    axios({
+      method:'GET',
+      url:url,
+      responseType:'json'
+  }).then(res=>{
+      this.usuarios = res.data;
+      listarUsuarios();
+  }).catch(error=>{
+      console.error(error);
+  });
+}).catch(error=>{
+    console.error(error);
+});
 }
 
 function verAdministadores(){
-    // procedimientos para llenar la tabla
+let filtro = [];
+let contador = 0;
 
-    console.log(14);
+for(const usu in usuarios){
+    filtro.push(usuarios[usu]);
+    contador++;
 }
+const listUser = filtro.filter(usuarios => usuarios.identificador == 2);
 
-function eliminarUsuario(){
-    console.log(1888);
-    // eliminar usuario, conectar con la API
-    // actualizarTabla.
+document.getElementById('table-admins').innerHTML = '';
+for(let i=0; i<listUser.length; i++){
+  const user = listUser[i];
+  document.getElementById('table-admins').innerHTML +=
+  `
+    <tr>
+      <th>${user.id}</th>
+      <th>${user.nombre}</th>
+      <th>${user.apellido}</th>
+      <th>${user.nombreUsuario}</th>
+      <th>${user.telefono}</th>
+      <th>${user.correo}</th>
+      <th>${user.fecha}</th>
+    </tr>
+  `;
+}
 }

@@ -3,14 +3,24 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
 }else{
     llenarNavBar();
 }
+
 /*
 var basedatos = [
-  { "ciudad": "Olanchito", "lng": -86.56916, "lat": 15.48231 },
-  { "ciudad": "La Ceiba", "lng": -86.791031, "lat": 15.78371 },
-  { "ciudad": "Saba", "lng": -86.223953, "lat": 15.52137 },
-  { "ciudad": "San Pedro Sula", "lng": -88.024971, "lat": 15.50523 },
-  { "ciudad": "Tegucigalpa", "lng": -87.192139, "lat": 14.072275 },
-  { "ciudad": "Comayagua", "lng": -87.643066, "lat": 14.46023 }
+  { ciudad: "Olanchito", lng: -86.56916, lat: 15.48231 },
+  { ciudad: "La Ceiba", lng: -86.791031, lat: 15.78371 },
+  { ciudad: "Saba", lng: -86.223953, lat: 15.52137 },
+  { ciudad: "San Pedro Sula", lng: -88.024971, lat: 15.50523 },
+  { ciudad: "Tegucigalpa", lng: -87.192139, lat: 14.072275 },
+  { ciudad: "Comayagua", lng: -87.643066, lat: 14.46023 }
+];
+
+var baseFechas = [
+  { fechaInicia: "2021/10/10", fechaFinal: "2021/10/15"},
+  { fechaInicia: "2021/09/10", fechaFinal: "2021/09/15" },
+  { fechaInicia: "2021/08/10", fechaFinal: "2021/08/15" },
+  { fechaInicia: "2021/07/10", fechaFinal: "2021/07/15" },
+  { fechaInicia: "2021/06/10", fechaFinal: "2021/06/15" },
+  { fechaInicia: "2021/05/10", fechaFinal: "2021/05/15" }
 ];
 
 var catego = 
@@ -42,7 +52,7 @@ var categorias = [];
           descripcion:textosDePrueba[Math.floor(Math.random() * (5 - 1))],
           propuestas:[]
       };
-      for (let j=0;j<5;j++){//Generar 10 apps por categoria
+      for (let j=0;j<5;j++){//Generar 5 categorias
           let pre = (Math.random() * (500 - 1) + 1).toFixed(2);
           let propuesta = {
               codigo:contador,
@@ -50,6 +60,8 @@ var categorias = [];
               descripcion:textosDePrueba[Math.floor(Math.random() * (5 - 1))],
               calificacion:Math.floor(Math.random() * (5 - 1)) + 1,
               precio: pre,
+              fechaInicia:baseFechas[i].fechaInicia,
+              fechaFinal:baseFechas[i].fechaFinal,
               longitud:basedatos[i].lng,
               latitud:basedatos[i].lat,
               imagen:`img/propuestas/${catego[i].nombre}/${contador}.jpg`,
@@ -202,8 +214,6 @@ function mostrarBusqueda(contenido){
 
 function generarCategorias()
 {
-  sessionStorage.setItem('param1', null);
-  sessionStorage.setItem('param2', null);
     document.getElementById("eslogan").innerHTML = '';
     document.getElementById("eslogan").innerHTML += 
     `
@@ -217,11 +227,11 @@ function generarCategorias()
         <div  class="card-header" style="background-color: white;">
           <h3>Nuestras Propuestas</h3><hr>
           <div class="row form-group">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
-                  <input class="col-lg-3 ml-auto" type="date" placeholder="Salida">
+                  <input id="fechaInicial" class="col-lg-3 ml-auto" type="date" placeholder="Entrada">
+                  <input id="fechaFinal" class="col-lg-3 ml-auto" type="date" placeholder="Salida">
                   <select id="SeleccionarCategoria" class="col-lg-3 ml-auto" onchange="SeleccionarCategoria()">
                   </select>
-                  <button class="btn btn-primary col-lg-3 ml-auto" type="submit">Buscar</button>
+                  <button class="btn btn-primary col-lg-3 ml-auto" type="button" onclick="buscarFecha();">Buscar</button>
           </div>
         </div>
     </div>
@@ -274,6 +284,47 @@ function generarSelect(){
               `;
   }
   document.getElementById("SeleccionarCategoria").value = null;
+}
+
+function buscarFecha(){
+  let inicial = document.getElementById('fechaInicial').value;
+  let final = document.getElementById('fechaFinal').value;
+
+  document.getElementById("propuestas").innerHTML = '';
+  for(let j=0;j<categorias.length;j++){
+    for(let i=0; i<categorias[j].propuestas.length; i++){
+      let propu = categorias[j].propuestas[i];
+      if(propu.fechaInicia >= inicial && propu.fechaFinal <= final){
+        document.getElementById("propuestas").innerHTML +=
+      `
+          <div class="card">
+              <div class="card-body">
+                  <div class="row form-group">
+                      <div class="col-lg-8 ml-auto">
+                           <img id="izquierda" src="${propu.imagen}" alt="">
+                      </div>
+                      <div id="derecha" class="col-lg-4">
+                           <h3>HAUSHA ${propu.nombre}</h3>
+                           <p id="tex" class="card-title">${propu.descripcion}</p>
+                           <img src="img/icons-habitaciones/wifi.png" alt="">
+                           <img src="img/icons-habitaciones/tv.png" alt="">
+                           <img src="img/icons-habitaciones/bañera.png" alt="">
+                           <img src="img/icons-habitaciones/comida.jpg" alt="">
+                           <img src="img/icons-habitaciones/aprobado.png" alt="">
+                           <img src="img/icons-habitaciones/aprobado.png" alt=""><br>
+                           <div>
+                              <p>Desde</p>
+                              <h4>$${propu.precio}</h4>
+                              <button type="submit" onclick="informacion(${j},${i});" class="btn btn-primary">Mas informacion</button>
+                           </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+      }
+    }
+  }
 }
 
 function SeleccionarCategoria(){
