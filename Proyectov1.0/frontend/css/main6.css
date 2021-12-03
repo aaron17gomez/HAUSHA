@@ -2,7 +2,8 @@
     border-radius: 40px;  
 }
 body{
-    background: url(../img/personas.jpeg)repeat;
+    background: url(../img/fondonosotros.jpg);
+    background-size: cover;
 }
 .icons i{
     color: rgb(46, 46, 46);
