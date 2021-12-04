@@ -10,7 +10,14 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <div class="contenedor-carga" id="cont-carga">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">HAUSHA</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +64,7 @@
     </div>
   </nav>
 
-<div id="contenedor-cuerpo">
+<div id="contenedor-cuerpo" style="display: none;">
      <div id="eslogan">
        <h1>No Hay Nada Mejor Que El Hogar</h1>
      </div>
@@ -210,7 +217,7 @@
 </div>
         
 <!-- Footer -->
-<footer class="bg-light text-center text-black">
+<footer class="bg-light text-center text-black" id="footer">
   <!-- Grid container -->
   <div class="container p-4">
     <!-- Section: Social media -->

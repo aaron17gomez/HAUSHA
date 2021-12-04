@@ -39,7 +39,7 @@ function llenarNavBar(){
           <a class="nav-link active" aria-current="page" href="habitaciones.html">Propuestas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
+          <a class="nav-link disable" aria-current="page" href="#">Contáctanos</a>
         </li>
         <li class="nav-item">
           <button class="btn btn-outline-success" type="button" onclick="iniciar();">Iniciar Sesión</button>

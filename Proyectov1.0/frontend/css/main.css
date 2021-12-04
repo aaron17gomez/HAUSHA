@@ -140,3 +140,26 @@ body{
     height: 20px;
     align-items: center;
 }
+
+
+.contenedor-carga{
+    display: flex;
+    width: auto;
+    height: 100%;
+    background-color:#fff;
+    align-items: center;
+    justify-content: center;
+}
+
+#nav{
+    display: none;
+}
+
+#footer{
+    display:none;
+}
+
+#eslogan h1{
+    font-weight: bolder;
+    font-size: 3rem;
+}

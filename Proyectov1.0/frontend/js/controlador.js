@@ -4,6 +4,20 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
   llenarNavBar();
 }
 
+
+window.onload = function (){
+ document.getElementById('cont-carga').style.display = 'none';
+
+//  mostrar todos los div ocultos cuando todo esta cargado
+
+ 	document.getElementById("nav").style = 'display:block;';
+  document.getElementById("contenedor-cuerpo").style = 'display:block; !important';
+  document.getElementById("footer").style = 'display:block; !important';
+
+
+}
+
+
 /*
 var usuarios2 = [
     {
