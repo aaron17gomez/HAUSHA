@@ -4,18 +4,35 @@ if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
   llenarNavBar();
 }
 
+ 
+ //Javacript for video slider navigation
+ const btns = document.querySelectorAll(".nav-btn");
+ const slides = document.querySelectorAll(".video-slide");
+ const contents = document.querySelectorAll(".content");
 
-window.onload = function (){
- document.getElementById('cont-carga').style.display = 'none';
+ var sliderNav = function(manual){
+   btns.forEach((btn) => {
+     btn.classList.remove("active");
+   });
 
-//  mostrar todos los div ocultos cuando todo esta cargado
+   slides.forEach((slide) => {
+     slide.classList.remove("active");
+   });
 
- 	document.getElementById("nav").style = 'display:block;';
-  document.getElementById("contenedor-cuerpo").style = 'display:block; !important';
-  document.getElementById("footer").style = 'display:block; !important';
+   contents.forEach((content) => {
+     content.classList.remove("active");
+   });
 
+   btns[manual].classList.add("active");
+   slides[manual].classList.add("active");
+   contents[manual].classList.add("active");
+ }
 
-}
+ btns.forEach((btn, i) => {
+   btn.addEventListener("click", () => {
+     sliderNav(i);
+   });
+ });
 
 
 /*

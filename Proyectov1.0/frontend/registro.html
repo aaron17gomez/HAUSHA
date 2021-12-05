@@ -53,6 +53,9 @@
       </div>
     </div>
   </nav>
+  <div id="Mensaje">
+    
+  </div>
             <!--form area start-->
             <div class="form">
                 <!--login form start-->
@@ -61,7 +64,7 @@
                     <input id="txtcorreo" type='email'class='input-field'placeholder='Email' required >
                     <input id="txtcontrasena" type='password'class='input-field'placeholder='Password' required>
                     <button onclick="iniciarSesion();" type='submit'class='submit-btn'>Iniciar</button>
-                    <p class="options">No estas registrado?<a href="#" type="button" data-toggle="modal" data-target="#modalRegistro">Crear una cuenta</a></p>
+                    <p class="options">No estas registrado?<a href="#" type="button" onclick="vaciarModal()" data-toggle="modal" data-target="#modalRegistro">Crear una cuenta</a></p>
                 </form>
                 <!--login form end-->
             </div>
@@ -226,6 +229,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/inicio_sesion.js"></script>
 </body>

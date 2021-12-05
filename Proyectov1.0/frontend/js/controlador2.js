@@ -790,7 +790,7 @@ function llenarNavBarUsuario(){
               <a class="nav-link disabled" aria-current="page" href="habitaciones.html">Propuestas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="contactanos.html">Contáctanos</a>
+              <a class="nav-link active" aria-current="page" href="#">Contáctanos</a>
             </li>
             <li id="sesionIniciada" class="nav-item dropdown">
               

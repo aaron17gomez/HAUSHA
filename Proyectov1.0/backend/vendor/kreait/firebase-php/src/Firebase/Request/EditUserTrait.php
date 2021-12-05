@@ -16,43 +16,55 @@ use Kreait\Firebase\Value\Url;
  */
 trait EditUserTrait
 {
-    protected ?Uid $uid = null;
-    protected ?Email $email = null;
-    protected ?string $displayName = null;
-    protected ?bool $emailIsVerified = null;
-    protected ?PhoneNumber $phoneNumber = null;
-    protected ?Url $photoUrl = null;
-    protected ?bool $markAsEnabled = null;
-    protected ?bool $markAsDisabled = null;
-    protected ?ClearTextPassword $clearTextPassword = null;
+    /** @var Uid|null */
+    protected $uid;
+
+    /** @var Email|null */
+    protected $email;
+
+    /** @var string|null */
+    protected $displayName;
+
+    /** @var bool|null */
+    protected $emailIsVerified;
+
+    /** @var PhoneNumber|null */
+    protected $phoneNumber;
+
+    /** @var Url|null */
+    protected $photoUrl;
+
+    /** @var bool|null */
+    protected $markAsEnabled;
+
+    /** @var bool|null */
+    protected $markAsDisabled;
+
+    /** @var ClearTextPassword|null */
+    protected $clearTextPassword;
 
     /**
+     * @param self $request
      * @param array<string, mixed> $properties
      *
      * @throws InvalidArgumentException when invalid properties have been provided
-     *
-     * @return static
      */
-    protected static function withEditableProperties(self $request, array $properties)
+    protected static function withEditableProperties($request, array $properties): self
     {
         foreach ($properties as $key => $value) {
-            switch (\mb_strtolower((string) \preg_replace('/[^a-z]/i', '', $key))) {
+            switch (\mb_strtolower((string) \preg_replace('/[^a-z]/i', '', (string) $key))) {
                 case 'uid':
                 case 'localid':
                     $request = $request->withUid($value);
-
                     break;
                 case 'email':
                     $request = $request->withEmail($value);
-
                     break;
                 case 'unverifiedemail':
                     $request = $request->withUnverifiedEmail($value);
-
                     break;
                 case 'verifiedemail':
                     $request = $request->withVerifiedEmail($value);
-
                     break;
                 case 'emailverified':
                     if ($value === true) {
@@ -60,21 +72,17 @@ trait EditUserTrait
                     } elseif ($value === false) {
                         $request = $request->markEmailAsUnverified();
                     }
-
                     break;
                 case 'displayname':
                     $request = $request->withDisplayName($value);
-
                     break;
                 case 'phone':
                 case 'phonenumber':
                     $request = $request->withPhoneNumber($value);
-
                     break;
                 case 'photo':
                 case 'photourl':
                     $request = $request->withPhotoUrl($value);
-
                     break;
                 case 'disableuser':
                 case 'disabled':
@@ -84,7 +92,6 @@ trait EditUserTrait
                     } elseif ($value === false) {
                         $request = $request->markAsEnabled();
                     }
-
                     break;
                 case 'enableuser':
                 case 'enabled':
@@ -94,12 +101,10 @@ trait EditUserTrait
                     } elseif ($value === false) {
                         $request = $request->markAsDisabled();
                     }
-
                     break;
                 case 'password':
                 case 'cleartextpassword':
                     $request = $request->withClearTextPassword($value);
-
                     break;
             }
         }
@@ -109,6 +114,8 @@ trait EditUserTrait
 
     /**
      * @param Uid|mixed $uid
+     *
+     * @return static
      */
     public function withUid($uid): self
     {
@@ -120,6 +127,8 @@ trait EditUserTrait
 
     /**
      * @param Email|string $email
+     *
+     * @return static
      */
     public function withEmail($email): self
     {
@@ -143,6 +152,8 @@ trait EditUserTrait
 
     /**
      * @param Email|string $email
+     *
+     * @return static
      */
     public function withUnverifiedEmail($email): self
     {
@@ -153,6 +164,9 @@ trait EditUserTrait
         return $request;
     }
 
+    /**
+     * @return static
+     */
     public function withDisplayName(string $displayName): self
     {
         $request = clone $this;
@@ -187,6 +201,9 @@ trait EditUserTrait
         return $request;
     }
 
+    /**
+     * @return static
+     */
     public function markAsDisabled(): self
     {
         $request = clone $this;
@@ -196,6 +213,9 @@ trait EditUserTrait
         return $request;
     }
 
+    /**
+     * @return static
+     */
     public function markAsEnabled(): self
     {
         $request = clone $this;
@@ -205,6 +225,9 @@ trait EditUserTrait
         return $request;
     }
 
+    /**
+     * @return static
+     */
     public function markEmailAsVerified(): self
     {
         $request = clone $this;
@@ -213,6 +236,9 @@ trait EditUserTrait
         return $request;
     }
 
+    /**
+     * @return static
+     */
     public function markEmailAsUnverified(): self
     {
         $request = clone $this;
@@ -223,6 +249,8 @@ trait EditUserTrait
 
     /**
      * @param ClearTextPassword|string $clearTextPassword
+     *
+     * @return static
      */
     public function withClearTextPassword($clearTextPassword): self
     {
@@ -255,7 +283,9 @@ trait EditUserTrait
             'phoneNumber' => $this->phoneNumber,
             'photoUrl' => $this->photoUrl,
             'password' => $this->clearTextPassword,
-        ], static fn ($value) => $value !== null);
+        ], static function ($value) {
+            return $value !== null;
+        });
     }
 
     public function hasUid(): bool

@@ -148,3 +148,17 @@ body{
     padding-right: 5px;
     padding-bottom: 1px;
 }
+
+.closeAlert{
+    position: relative;
+    top: -2px;
+    line-height: 18px;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    cursor: pointer;
+}

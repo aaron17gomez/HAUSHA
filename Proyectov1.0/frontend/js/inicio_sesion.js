@@ -157,13 +157,37 @@ function crearUsuarioCliente(){
         }).then(res=>{
             console.log(res.data);
             obtenerUsuarios();
-            $("#modalRegistro .close").click()
-            window.alert("Usuario registrado con exito");
+            correcto();
+            $("#modalRegistro .close").click();
         }).catch(error=>{
             console.error(error);
         });
         }
     }
+}
+
+function correcto(){
+    document.getElementById("Mensaje").innerHTML = '';
+    document.getElementById("Mensaje").innerHTML +=
+    `
+    <div class="alert alert-success">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Exito!</strong>El usuario ha sido registrado con éxito.
+    </div>
+    `;
+}
+
+function vaciarModal(){
+    document.getElementById('nombre').value = '';
+    document.getElementById('apellido').value = '';
+    document.getElementById('correo').value = '';
+    document.getElementById('telefono').value = '';
+    document.getElementById('nombreUsuario').value = '';
+    document.getElementById('contrasena').value = '';
+    document.getElementById('fecha').value = '';
+    document.getElementById('lista-nacionalidad').value = '';
+    document.getElementById('lista-genero').value = '';
+    document.getElementById('lista-imagenes').value = '';
 }
 
 function llenarNavBar(){

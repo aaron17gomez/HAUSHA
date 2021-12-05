@@ -6,18 +6,16 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Rize\\' => array($vendorDir . '/rize/uri-template/src/Rize'),
     'Riverline\\MultiPartParser\\' => array($vendorDir . '/riverline/multipart-parser/src'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
-    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src', $vendorDir . '/psr/http-factory/src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Lcobucci\\JWT\\' => array($vendorDir . '/lcobucci/jwt/src'),
-    'Lcobucci\\Clock\\' => array($vendorDir . '/lcobucci/clock/src'),
     'Kreait\\Firebase\\JWT\\' => array($vendorDir . '/kreait/firebase-tokens/src/JWT'),
     'Kreait\\Firebase\\' => array($vendorDir . '/kreait/firebase-php/src/Firebase'),
     'Kreait\\Clock\\' => array($vendorDir . '/kreait/clock/src/Clock'),
