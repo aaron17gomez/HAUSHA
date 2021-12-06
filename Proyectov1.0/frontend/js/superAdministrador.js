@@ -1065,6 +1065,9 @@ function verUsuarios(){
   listarUsuarios();
 }
 
+var listUser = [];
+// var ListAdmins = []
+
 function listarUsuarios(){
 let keys = [];
 let contador = 0;
@@ -1083,7 +1086,7 @@ for(const usu in usuarios){
     keys.push(key);
     contador++;
 }
-listUser = keys.filter(keys => keys.identificador == 2);
+listUser = keys.filter(keys => keys.identificador == 1);
 document.getElementById('tabla-users').innerHTML = '';
 for(let i=0; i<listUser.length; i++){
   let user = listUser[i];
@@ -1136,8 +1139,7 @@ for(const usu in usuarios){
     filtro.push(usuarios[usu]);
     contador++;
 }
-const listUser = filtro.filter(usuarios => usuarios.identificador == 2);
-
+listUser = filtro.filter(usuarios => usuarios.identificador == 2);
 document.getElementById('table-admins').innerHTML = '';
 for(let i=0; i<listUser.length; i++){
   const user = listUser[i];
@@ -1151,7 +1153,7 @@ for(let i=0; i<listUser.length; i++){
       <th>${user.telefono}</th>
       <th>${user.correo}</th>
       <th>${user.fecha}</th>
-      <th><i onclick="eliminarAdministrador(${user.id})" class="fas fa-trash-alt"></i></th>
+      <th><i onclick="eliminarAdministrador(${i})" class="fas fa-trash-alt"></i></th>
     </tr>
   `;
 }
