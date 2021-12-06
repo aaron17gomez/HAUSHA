@@ -1049,6 +1049,7 @@ function verUsuarios(){
                       <th>Telefono</th>
                       <th>Correo</th>
                       <th>fecha cumpleaños</th>
+                      <th>Eliminar</th>
                       </tr>
                   </thead>
 
@@ -1082,7 +1083,7 @@ for(const usu in usuarios){
     keys.push(key);
     contador++;
 }
-listUser = keys.filter(keys => keys.identificador == 1);
+listUser = keys.filter(keys => keys.identificador == 2);
 document.getElementById('tabla-users').innerHTML = '';
 for(let i=0; i<listUser.length; i++){
   let user = listUser[i];
@@ -1096,31 +1097,32 @@ for(let i=0; i<listUser.length; i++){
       <th>${user.telefono}</th>
       <th>${user.correo}</th>
       <th>${user.fecha}</th>
-      <th><i onclick="eliminarUsuario(${i})" class="fas fa-trash-alt"></i></th>
+      <th><i onclick="eliminarAdministrador(${i})" class="fas fa-trash-alt"></i></th>
     </tr>
   `;
 }
-}
 
-function eliminarUsuario(id1){
-console.log("Llave", listUser[id1]);
+}
+//prueba yilian
+function eliminarAdministrador(id2){
+console.log("Llave", listUser[id2]);
   axios({
     method:'DELETE',
-    url:url + `?id=${listUser[id1].key}`,
+    url:url + `?id=${listUser[id2].key}`,
     responseType:'json'
 }).then(res=>{
     console.log(res.data);
-    window.alert("Usuario eliminado");
+    window.alert("Administrador eliminado");
     axios({
       method:'GET',
       url:url,
       responseType:'json'
-  }).then(res=>{
-      this.usuarios = res.data;
-      listarUsuarios();
-  }).catch(error=>{
-      console.error(error);
-  });
+    }).then(res=>{
+        this.administrador= res.data;
+        listarUsuarios();
+    }).catch(error=>{
+        console.error(error);
+    });
 }).catch(error=>{
     console.error(error);
 });
@@ -1149,6 +1151,7 @@ for(let i=0; i<listUser.length; i++){
       <th>${user.telefono}</th>
       <th>${user.correo}</th>
       <th>${user.fecha}</th>
+      <th><i onclick="eliminarAdministrador(${user.id})" class="fas fa-trash-alt"></i></th>
     </tr>
   `;
 }
