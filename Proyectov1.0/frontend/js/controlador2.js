@@ -424,7 +424,7 @@ function informacion(id1,id2){
                      <input id="cont-date" type="date" placeholder="Entrada">
                      <input id="cont-date" type="date" placeholder="Salida">
                      <input id="cont-date" type="number" placeholder="Adultos"><br><br>
-                     <button id="cont-date" onclick="crearReservacion(${id1},${id2});" type="submit" class="btn btn-primary">Revervar Ahora</button>
+                     <button id="cont-date" onclick="crearReservacion(${id1},${id2});" type="button" class="btn btn-primary">Revervar Ahora</button>
                     </div>
                 </div>
             </div>
@@ -552,7 +552,6 @@ function informacion(id1,id2){
       categorias = snapshot.val();
       comentariosFirebase(id1, id2);
     });
-
 }
 
 function comentariosFirebase(id1, id2){
@@ -598,7 +597,7 @@ function comentariosFirebase(id1, id2){
             <div class="comment-box">
               <div class="comment-head">
                 <h6 class="comment-name by-author"><a type="button" onclick="verPerfil(${i});">${comment.usuario}</a></h6>
-                <span>hace 12min</span>
+                <span>${comment.fecha}</span>
                 <div>
                   <i class="fas fa-reply"></i>
                 </div>
@@ -631,7 +630,7 @@ function meGusta(id1,id2){
   }
 }
 
-/*------------------- Esta funcion sirve para los comentarios --------------------*/
+/*------------------- Esta funcion sirve para los comentarios estaticos --------------------*/
 function Comentarios(id1,id2){
   let cateActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
   document.getElementById("ContenedorCliente").innerHTML = '';
@@ -673,7 +672,7 @@ function Comentarios(id1,id2){
                   <div class="comment-box">
                     <div class="comment-head">
                       <h6 class="comment-name by-author"><a type="button" onclick="verPerfil(${keys});">${comment.usuario}</a></h6>
-                      <span>hace 12min</span>
+                      <span>${comment.fecha}</span>
                       <div>
                         <i class="fas fa-reply"></i>
                       </div>
@@ -699,13 +698,29 @@ function verPerfil(id1){
 }
 
 function comentar(id1,id2){
+  let texto;
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   let cateActual = categorias[categoriaSeleccionada[id1]];
+
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var date = new Date();
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
   if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     const comentar = {
       calificacion:4,
       comentario:document.getElementById("comentario").value,
-      fecha:"09/12/2021",
+      fecha:"Fecha:"+fechaTiempo+" "+"Hora:"+hmmsTiempo,
       usuario:usuarios[usuActual].nombreUsuario,
       imagen:usuarios[usuActual].imagen,
       key:usuActual
@@ -743,7 +758,8 @@ function comentar(id1,id2){
           console.error(error);
       });
   }else{
-    window.alert("Inicie sesion primero");
+    texto = "Inicie sesion primero";
+    alerta(texto);
   } 
 }
 
@@ -833,6 +849,84 @@ function cerrarSesion(){
 }
 
 function crearReservacion(id1, id2){
+  let texto = "Solicitud enviada con exito, espere confirmacion";
+  let reservaActual = categorias[categoriaSeleccionada[id1]].propuestas[id2];
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
+  let notificacion = {
+    asunto:"Solicitud de reservacion",
+    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" quiere reservar la propuestas que tienes con nombre: "+
+    reservaActual.nombre +" y precio: "+ reservaActual.precio,
+    key:usuActual,
+    leido:false,
+    categoria:reservaActual.categoria,
+    idPropuesta:id2,
+    tiempo:"Fecha:"+fechaTiempo+" Hora:"+hmmsTiempo
+  }
+  let reser;
+    if(usuarios[reservaActual.codigoUsuario].reservacion){
+      reser = usuarios[reservaActual.codigoUsuario].reservacion;
+    }else{
+      reser = [];
+    }
+  let res;
+    if(usuarios[reservaActual.codigoUsuario].notificaciones == "Ninguna"){
+      res = [notificacion];
+    }else{
+      res = usuarios[reservaActual.codigoUsuario].notificaciones;
+      res.push(notificacion); 
+    }  
+
+    usuActualizado = {
+      id:usuarios[reservaActual.codigoUsuario].id,
+      nombre:usuarios[reservaActual.codigoUsuario].nombre,
+      apellido:usuarios[reservaActual.codigoUsuario].apellido,
+      correo:usuarios[reservaActual.codigoUsuario].correo,
+      telefono:usuarios[reservaActual.codigoUsuario].telefono,
+      nombreUsuario:usuarios[reservaActual.codigoUsuario].nombreUsuario,
+      contrasena:usuarios[reservaActual.codigoUsuario].contrasena,
+      fecha:usuarios[reservaActual.codigoUsuario].fecha,
+      imagen:usuarios[reservaActual.codigoUsuario].imagen,
+      nacionalidad:usuarios[reservaActual.codigoUsuario].nacionalidad,
+      genero:usuarios[reservaActual.codigoUsuario].genero,
+      identificador:usuarios[reservaActual.codigoUsuario].identificador,
+      propuestas:usuarios[reservaActual.codigoUsuario].propuestas,
+      reservacion:reser,
+      descripcion:usuarios[reservaActual.codigoUsuario].descripcion,
+      notificaciones:res,
+      cuentaVerificada:usuarios[reservaActual.codigoUsuario].cuentaVerificada,
+      pago:usuarios[reservaActual.codigoUsuario].pago
+    };
+      axios({
+        method:'PUT',
+        url:url1 + `?id=${reservaActual.codigoUsuario}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        generarCategorias();
+        correcto(texto);
+    }).catch(error=>{
+        console.error(error);
+    });
+  }
+
+/*
+function crearReservacion(id1, id2){
+  let texto;
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     if(!usuarios[usuActual].reservacion){
@@ -870,7 +964,10 @@ function crearReservacion(id1, id2){
         reservacion:[reserva],
         genero:usuarios[usuActual].genero,
         descripcion:usuarios[usuActual].descripcion,
-        nacionalidad:usuarios[usuActual].nacionalidad
+        nacionalidad:usuarios[usuActual].nacionalidad,
+        notificaciones:usuarios[usuActual].notificaciones,
+        cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+        pago:usuarios[usuActual].pago
       };
       
         axios({
@@ -880,19 +977,23 @@ function crearReservacion(id1, id2){
           data:usuActualizado
       }).then(res=>{
           console.log(res.data);
-          window.alert("Su reservación ha sido exitosa.");
+          texto = "Su reservación ha sido exitosa";
+          correcto(texto);
           obtenerCategorias();
           obtenerUsuarios();
       }).catch(error=>{
           console.error(error);
       });
     }else{
-      window.alert("Ya tiene una reservación");
+      texto = "Ya tiene una reservación";
+      informa(texto);
     }
   }else{
-    window.alert("Inicie sesion primero");
+    texto = "Inicie sesion primero";
+    alerta(texto);
   }
 }
+*/
 
 function llenarSelectPropuesta(){
   document.getElementById("selectPropuesta").innerHTML = '';
@@ -906,6 +1007,7 @@ function llenarSelectPropuesta(){
 }
 
 function crearPropuesta(){
+  let texto;
   if(sessionStorage.getItem('rolUsuarioActivo') == "true"){
     let key = document.getElementById("selectPropuesta").value;
     let cateActual = categorias[key].propuestas;
@@ -962,7 +1064,8 @@ function crearPropuesta(){
     }).then(res=>{
         console.log(res.data);
         agregarPropuesta(propuesta);
-        window.alert("Su propuesta ha sido agregada con exito.");
+        texto = "Su propuesta ha sido agregada con exito";
+        correcto(texto);
         obtenerCategorias();
         obtenerUsuarios();
         limpiarModal();
@@ -971,7 +1074,8 @@ function crearPropuesta(){
         console.error(error);
     });
   }else{
-    window.alert("Inicie sesion primero");
+    texto = "Inicie sesion primero";
+    alerta(texto);
   }
 }
 
@@ -1033,4 +1137,39 @@ function verReservacion(){
     <h3>Realiza una reservacion</h3>
     `;
   }
+}
+
+
+function informa(info){
+  let texto = info;
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-info">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Info!</strong>${texto}.
+  </div>
+  `;
+}
+
+function alerta(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-error" id="error">
+      <a class="closeAlert2" data-dismiss="alert">×</a>
+      <strong>Error! </strong> ${info}.
+  </div>
+  `;
+}
+
+function correcto(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-success">
+    <a class="closeAlert" data-dismiss="alert">×</a>
+    <strong>Exito!</strong>${info}.
+  </div>
+  `;
 }

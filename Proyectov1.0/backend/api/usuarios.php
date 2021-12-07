@@ -22,7 +22,10 @@
                 $_POST["reservacion"],
                 $_POST["identificador"],
                 $_POST["propuestas"],
-                $_POST["descripcion"]
+                $_POST["descripcion"],
+                $_POST["notificaciones"],
+                $_POST["cuentaVerificada"],
+                $_POST["pago"]
             );
             echo $usuario->crearUsuario($database->getDBUsuarios());
         break;
@@ -50,7 +53,10 @@
                 $_PUT["reservacion"],
                 $_PUT["identificador"],
                 $_PUT["propuestas"],
-                $_PUT["descripcion"]
+                $_PUT["descripcion"],
+                $_PUT["notificaciones"],
+                $_PUT["cuentaVerificada"],
+                $_PUT["pago"]
             );
             echo $usuario->actualizarUsuario($database->getDBUsuarios(),$_GET['id']);
         break;

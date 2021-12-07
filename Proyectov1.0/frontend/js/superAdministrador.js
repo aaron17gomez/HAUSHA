@@ -229,11 +229,14 @@ function editarPerfil(){
     document.getElementById("fecha").value = usuarios[usuActual].fecha;
     document.getElementById("correo").value = usuarios[usuActual].correo;
     document.getElementById("celular").value = usuarios[usuActual].telefono;
+    document.getElementById("descripcion").value = usuarios[usuActual].descripcion;
     document.getElementById("genero").value = usuarios[usuActual].genero;
     document.getElementById("nacionalidad").value = usuarios[usuActual].nacionalidad;
+    document.getElementById("contraseñaNueva").value = usuarios[usuActual].contrasena;
 }
 
 function actualizarPerfil(){
+  let texto = "Datos actualizados con exito";
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   let pro;
       if(usuarios[usuActual].propuestas){
@@ -263,7 +266,10 @@ function actualizarPerfil(){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:0
+    descripcion:document.getElementById("descripcion").value,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
   };
   
     axios({
@@ -273,8 +279,7 @@ function actualizarPerfil(){
       data:usuActualizado
   }).then(res=>{
       console.log(res.data);
-      window.alert("Datos actualizados");
-
+      correcto(texto);
       obtenerUsuarios();
   }).catch(error=>{
       console.error(error);
@@ -404,6 +409,7 @@ function cambiarPosicion(){
 }
 
 function Propuesta(){
+    let texto = "Su propuesta ha sido agregada con exito";
     let key = document.getElementById("selectPropuesta").value;
     let cateActual = categorias[key].propuestas;
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
@@ -453,7 +459,10 @@ function Propuesta(){
       propuestas:pro,
       genero:usuarios[usuActual].genero,
       nacionalidad:usuarios[usuActual].nacionalidad,
-      descripcion:usuarios[usuActual].descripcion
+      descripcion:usuarios[usuActual].descripcion,
+      notificaciones:usuarios[usuActual].notificaciones,
+      cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+      pago:usuarios[usuActual].pago
     };
     
       axios({
@@ -464,7 +473,7 @@ function Propuesta(){
     }).then(res=>{
         console.log(res.data);
         agregarPropuesta(propuesta);
-        window.alert("Su propuesta ha sido agregada con exito.");
+        correcto(texto);
         obtenerUsuarios();
         obtenerCategorias();
         bienvenida();
@@ -490,6 +499,7 @@ function agregarPropuesta(propuesta){
 }
 
 function reservacion(){
+  let texto = "No tienes reservaciones";
   document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].reservacion){
@@ -525,7 +535,7 @@ function reservacion(){
     </div>
     `;
   }else{
-    alert("No tienes reservaciones");
+    informacion(texto);
   }
 }
 
@@ -672,6 +682,7 @@ function masInformacion(){
 }
 
 function misPropuestas(){
+  let texto = "No tienes propuestas";
   document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].propuestas){
@@ -710,10 +721,9 @@ function misPropuestas(){
     }
   }else{
     document.getElementById("contenedor-acciones").innerHTML = '';
-    alert("No tienes propuestas");
+    informacion(texto);
   }
 }
-
 
 function verNotificaciones(){
   document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
@@ -727,32 +737,39 @@ function verNotificaciones(){
   </div>
   `;
   document.getElementById("form").innerHTML = '';
-  for(let i=0;i<usuarios[usuActual].descripcion.length;i++){
-    let usu = usuarios[usuActual].descripcion[i];
-    let leido;
-    if(usu.leido == false){
-      leido = `<i class="fas fa-envelope"></i>`;
-    }else{
-      leido = `<i class="fas fa-envelope-open-text"></i>`;
+  if(usuarios[usuActual].notificaciones != "Ninguna"){
+    for(let i=0;i<usuarios[usuActual].notificaciones.length;i++){
+      let usu = usuarios[usuActual].notificaciones[i];
+      let leido;
+      if(usu.leido == false){
+        leido = `<i class="fas fa-envelope"></i>`;
+      }else{
+        leido = `<i class="fas fa-envelope-open-text"></i>`;
+      }
+      document.getElementById("form").innerHTML += 
+       `
+               <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
+                <p id="iconos">
+                    ${leido}
+                </p>
+                <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
+                <p style="margin-left: auto;">22:05</p>
+                <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
+               </div><hr>
+       `;
     }
-    document.getElementById("form").innerHTML += 
-     `
-             <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
-              <p id="iconos">
-                  ${leido}
-              </p>
-              <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
-              <p style="margin-left: auto;">22:05</p>
-              <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
-             </div><hr>
-     `;
+  }else{
+      document.getElementById("form").innerHTML += 
+       `
+          <p><b>No tienes notificaciones</b></p>
+       `;
   }
 }
 
 function verMensaje(i){
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
-  let datos = usuarios[usuActual].descripcion[i];
-  let key = usuarios[usuActual].descripcion[i].key;
+  let datos = usuarios[usuActual].notificaciones[i];
+  let key = usuarios[usuActual].notificaciones[i].key;
   document.getElementById("contenedor-acciones").innerHTML = '';
   document.getElementById("contenedor-acciones").innerHTML +=
   `
@@ -781,7 +798,7 @@ function verMensaje(i){
     `;
   }
 
-  usuarios[usuActual].descripcion[i].leido = true;
+  usuarios[usuActual].notificaciones[i].leido = true;
 
   let pro;
       if(usuarios[usuActual].propuestas){
@@ -811,7 +828,10 @@ function verMensaje(i){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:usuarios[usuActual].descripcion
+    descripcion:usuarios[usuActual].descripcion,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
   };
   
     axios({
@@ -859,6 +879,7 @@ function validarCredenciales(pCorreo, pContraseña){
 }
 
 function validarRegistro(){
+  let texto;
   var nombre,apellido,correo,contrasena,fecha,imagen,nombreUsuario,telefono;
       nombre=document.getElementById('nombre').value,
       apellido=document.getElementById('apellido').value,
@@ -872,31 +893,39 @@ function validarRegistro(){
   expresion = /\w+@\w+\.+[a-z]/;
   
   if(nombre === "" || apellido === "" || correo==="" || telefono === "" || nombreUsuario == "" || contrasena === "" || fecha === "" || imagen === ""){
-      alert("todos los campo son obligatorios");
+    texto = "Todos los campo son obligatorios";
+    alerta(texto);
       return false;
   }
   else if(nombre.length>20){
-      alert("El nombre es muy largo");
+      texto = "El nombre es muy largo";
+      alerta(texto);
       return false;
   }
   else if(apellido.length>30){
-      alert("El apellido es muy largo");
+      texto = "El apellido es muy largo";
+      alerta(texto);
       return false;
   }else if(correo.length>40){
-      alert("El email es muy largo");
+      texto = "El email es muy largo";
+      alerta(texto);
       return false;
   }
   else if(!expresion.test(correo)){
-      alert("El email no es válido");
+      texto = "El email no es válido";
+      alerta(texto);
       return false;
   }else if(nombreUsuario.length>30 || contrasena.length>20){
-      alert("El nombre es muy largo");
+      texto = "El nombre de usuario es muy largo o la contraseña es muy larga";
+      alerta(texto);
       return false;
   }else if(telefono.length>10){
-      alert("El telefono es muy largo");
+      texto = "El telefono es muy largo";
+      alerta(texto);
       return false;
   }else if(isNaN(telefono)){
-      alert("El telefono ingresado no es un número");
+      texto = "El telefono ingresado no es un número";
+      alerta(texto);
       return false;
   }else{
       return true
@@ -948,6 +977,7 @@ function guardarAdministrador(){
   let mail = document.getElementById('correo').value;
     let contador = 0;
     let filtro = [];
+    let texto;
     for(const usu in usuarios){
         filtro.push(usuarios[usu]);
         contador++;
@@ -955,7 +985,8 @@ function guardarAdministrador(){
     const resultado = filtro.filter(usuarios => usuarios.correo == mail);
     console.log(resultado);
     if(resultado.length == 1){
-        window.alert("El correo que escribio ya existe");
+      texto = "El correo que escribio ya existe";
+        alerta(texto);
     }else{
         let estado = false;
         estado = validarRegistro();
@@ -975,8 +1006,11 @@ function guardarAdministrador(){
             imagen:document.getElementById('lista-imagenes').value,
             reservacion:[],
             propuestas:[],
-            identificador:2,
-            descripcion:"Ninguna"
+            identificador:"2",
+            descripcion:"Ninguna",
+            notificaciones:"Ninguna",
+            cuentaVerificada:true,
+            pago:"Ninguno"
         }
             axios({
             method:'POST',
@@ -986,8 +1020,8 @@ function guardarAdministrador(){
         }).then(res=>{
             console.log(res.data);
             obtenerUsuarios();
-            $("#modalRegistro .close").click()
-            window.alert("Administrador registrado con exito");
+            texto = "Administrador registrado con exito";
+            correcto(texto);
         }).catch(error=>{
             console.error(error);
         });
@@ -996,12 +1030,7 @@ function guardarAdministrador(){
 }
 
 /*--------------------------Fin Crear Administrador-------------------------------------------- */
-
-
-
-
 function verUsuarios(){
-
   document.getElementById("contenedor-acciones").classList.add('estilo-usuarios')
   document.getElementById("contenedor-acciones").innerHTML = `
   <div class="contenedorTabla">
@@ -1049,7 +1078,6 @@ function verUsuarios(){
                       <th>Telefono</th>
                       <th>Correo</th>
                       <th>fecha cumpleaños</th>
-                      <th>Eliminar</th>
                       </tr>
                   </thead>
 
@@ -1083,7 +1111,7 @@ for(const usu in usuarios){
     keys.push(key);
     contador++;
 }
-listUser = keys.filter(keys => keys.identificador == 2);
+listUser = keys.filter(keys => keys.identificador == 1);
 document.getElementById('tabla-users').innerHTML = '';
 for(let i=0; i<listUser.length; i++){
   let user = listUser[i];
@@ -1097,62 +1125,135 @@ for(let i=0; i<listUser.length; i++){
       <th>${user.telefono}</th>
       <th>${user.correo}</th>
       <th>${user.fecha}</th>
-      <th><i onclick="eliminarAdministrador(${i})" class="fas fa-trash-alt"></i></th>
+      <th><i onclick="eliminarUsuario(${i})" class="fas fa-trash-alt"></i></th>
     </tr>
   `;
 }
-
 }
-//prueba yilian
-function eliminarAdministrador(id2){
-console.log("Llave", listUser[id2]);
+
+function eliminarUsuario(id1){
+let texto = "Usuario eliminado";
+console.log("Llave", listUser[id1]);
   axios({
     method:'DELETE',
-    url:url + `?id=${listUser[id2].key}`,
+    url:url + `?id=${listUser[id1].key}`,
     responseType:'json'
 }).then(res=>{
     console.log(res.data);
-    window.alert("Administrador eliminado");
+    correcto(texto);
     axios({
       method:'GET',
       url:url,
       responseType:'json'
-    }).then(res=>{
-        this.administrador= res.data;
-        listarUsuarios();
-    }).catch(error=>{
-        console.error(error);
-    });
+  }).then(res=>{
+      this.usuarios = res.data;
+      listarUsuarios();
+  }).catch(error=>{
+      console.error(error);
+  });
 }).catch(error=>{
     console.error(error);
 });
 }
 
+var listAdmins = [];
+
 function verAdministadores(){
 let filtro = [];
+let keys = [];
 let contador = 0;
 
 for(const usu in usuarios){
-    filtro.push(usuarios[usu]);
-    contador++;
+  const key = {
+    key:usu,
+    id: usuarios[usu].id,
+    nombre: usuarios[usu].nombre,
+    apellido: usuarios[usu].apellido,
+    nombreUsuario: usuarios[usu].nombreUsuario,
+    telefono: usuarios[usu].telefono,
+    correo: usuarios[usu].correo,
+    fecha: usuarios[usu].fecha,
+    identificador: usuarios[usu].identificador
+  }
+  keys.push(key);
+  contador++;
 }
-const listUser = filtro.filter(usuarios => usuarios.identificador == 2);
+ listAdmins = keys.filter(keys => keys.identificador == 2);
 
 document.getElementById('table-admins').innerHTML = '';
-for(let i=0; i<listUser.length; i++){
-  const user = listUser[i];
+for(let i=0; i<listAdmins.length; i++){
+  const admin = listAdmins[i];
   document.getElementById('table-admins').innerHTML +=
   `
     <tr>
-      <th>${user.id}</th>
-      <th>${user.nombre}</th>
-      <th>${user.apellido}</th>
-      <th>${user.nombreUsuario}</th>
-      <th>${user.telefono}</th>
-      <th>${user.correo}</th>
-      <th>${user.fecha}</th>
-      <th><i onclick="eliminarAdministrador(${user.id})" class="fas fa-trash-alt"></i></th>
+      <th>${admin.id}</th>
+      <th>${admin.nombre}</th>
+      <th>${admin.apellido}</th>
+      <th>${admin.nombreUsuario}</th>
+      <th>${admin.telefono}</th>
+      <th>${admin.correo}</th>
+      <th>${admin.fecha}</th>
+      <th><i onclick="eliminarAdministrador(${i})" class="fas fa-trash-alt"></i></th>
     </tr>
   `;
 }
+}
+
+function eliminarAdministrador(id1){
+  let texto = "Administrador eliminado";
+  console.log("Llave", listAdmins[id1]);
+    axios({
+      method:'DELETE',
+      url:url + `?id=${listAdmins[id1].key}`,
+      responseType:'json'
+  }).then(res=>{
+      console.log(res.data);
+      correcto(texto);
+      axios({
+        method:'GET',
+        url:url,
+        responseType:'json'
+    }).then(res=>{
+        this.usuarios = res.data;
+        verAdministadores();
+    }).catch(error=>{
+        console.error(error);
+    });
+  }).catch(error=>{
+      console.error(error);
+  });
+  }
+
+function informacion(info){
+  let texto = info;
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-info">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Info!</strong>${texto}.
+  </div>
+  `;
+}
+
+function alerta(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-error" id="error">
+      <a class="closeAlert2" data-dismiss="alert">×</a>
+      <strong>Error! </strong> ${info}.
+  </div>
+  `;
+}
+
+function correcto(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-success">
+    <a class="closeAlert" data-dismiss="alert">×</a>
+    <strong>Exito!</strong>${info}.
+  </div>
+  `;
 }

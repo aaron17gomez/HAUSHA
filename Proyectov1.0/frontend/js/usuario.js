@@ -19,6 +19,7 @@ var basedatos = [
 
 var usuarios = [];
 var listUser = [];
+var datosNotificaciones;
 const url = '../../Proyectov1.0/backend/api/usuarios.php';
 function obtenerUsuarios(){
     axios({
@@ -249,6 +250,7 @@ function editarPerfil(){
 }
 
 function actualizarPerfil(){
+  let texto = "La informacion a sido actualizada con exito";
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   let pro;
       if(usuarios[usuActual].propuestas){
@@ -278,7 +280,10 @@ function actualizarPerfil(){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:document.getElementById("descripcion").value
+    descripcion:document.getElementById("descripcion").value,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
   };
   
     axios({
@@ -288,7 +293,7 @@ function actualizarPerfil(){
       data:usuActualizado
   }).then(res=>{
       console.log(res.data);
-      window.alert("Datos actualizados");
+      correcto(texto);
       obtenerUsuarios();
       mandarNotificacionPerfil();
   }).catch(error=>{
@@ -333,10 +338,10 @@ function mandarNotificacionPerfil(){
         reser = [];
       }
     let res;
-      if(resultado[i].descripcion == "Ninguna"){
+      if(resultado[i].notificaciones == "Ninguna"){
         res = [notificacion];
       }else{
-        res = resultado[i].descripcion;
+        res = resultado[i].notificaciones;
         res.push(notificacion);
   }
     usuActualizado = {
@@ -354,7 +359,10 @@ function mandarNotificacionPerfil(){
       identificador:resultado[i].identificador,
       propuestas:pro,
       reservacion:reser,
-      descripcion:res
+      descripcion:resultado[i].descripcion,
+      notificaciones:res,
+      cuentaVerificada:resultado[i].cuentaVerificada,
+      pago:resultado[i].pago
     };
       axios({
         method:'PUT',
@@ -491,6 +499,7 @@ function cambiarPosicion(){
 }
 
 function Propuesta(){
+    let texto = "Su propuesta ha sido agregada con exito";
     let key = document.getElementById("selectPropuesta").value;
     let cateActual = categorias[key].propuestas;
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
@@ -540,7 +549,10 @@ function Propuesta(){
       propuestas:pro,
       genero:usuarios[usuActual].genero,
       nacionalidad:usuarios[usuActual].nacionalidad,
-      descripcion:usuarios[usuActual].descripcion
+      descripcion:usuarios[usuActual].descripcion,
+      notificaciones:usuarios[usuActual].notificaciones,
+      cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+      pago:usuarios[usuActual].pago
     };
     
       axios({
@@ -551,7 +563,7 @@ function Propuesta(){
     }).then(res=>{
         console.log(res.data);
         agregarPropuesta(propuesta);
-        window.alert("Su propuesta ha sido agregada con exito.");
+        correcto(texto);
         obtenerUsuarios();
         obtenerCategorias();
         bienvenida();
@@ -592,11 +604,11 @@ function mandarNotificacionPropuesta(){
     for(const usu in usuarios){
         filtro.push(usuarios[usu]);
         contador++;
-        if(usuarios[usu].identificador == 2){
+        if(usuarios[usu].identificador != 1){
           key.push(usu); 
         }
     }
-  const resultado = filtro.filter(usuarios => usuarios.identificador == 2);
+  const resultado = filtro.filter(usuarios => usuarios.identificador != 1);
   console.log(resultado);
   console.log(key);
 
@@ -614,10 +626,10 @@ function mandarNotificacionPropuesta(){
         reser = [];
       }
     let res;
-      if(resultado[i].descripcion == "Ninguna"){
+      if(resultado[i].notificaciones == "Ninguna"){
         res = [notificacion];
       }else{
-        res = resultado[i].descripcion;
+        res = resultado[i].notificaciones;
         res.push(notificacion);
       }
 
@@ -636,7 +648,10 @@ function mandarNotificacionPropuesta(){
       identificador:resultado[i].identificador,
       propuestas:pro,
       reservacion:reser,
-      descripcion:res
+      descripcion:resultado[i].descripcion,
+      notificaciones:res,
+      cuentaVerificada:resultado[i].cuentaVerificada,
+      pago:resultado[i].pago
     };
       axios({
         method:'PUT',
@@ -652,6 +667,7 @@ function mandarNotificacionPropuesta(){
 }
 
 function reservacion(){
+  let texto = "No tienes reservaciones";
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].reservacion){
     let usu = usuarios[usuActual].reservacion[0];
@@ -686,7 +702,7 @@ function reservacion(){
     </div>
     `;
   }else{
-    alert("No tienes reservaciones");
+    informacion(texto);
   }
 }
 
@@ -833,6 +849,7 @@ function masInformacion(){
 }
 
 function misPropuestas(){
+  let texto = "No tienes propuestas";
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].propuestas){
     document.getElementById("contenedor-acciones").innerHTML = '';
@@ -869,7 +886,7 @@ function misPropuestas(){
         `;
     }
   }else{
-    alert("No tienes propuestas");
+    informacion(texto);
   }
 }
 
@@ -1017,7 +1034,7 @@ function llenarComentarios(datos){
                   ${comentarios.mensaje}
                   <span class="tiempo">
                       <i class="far fa-clock"></i>
-                      Hace 6 min
+                      Fecha:${comentarios.fecha}  Hora:${comentarios.hora}
                   </span>
               </div>
               <ul class="opciones-msj">
@@ -1046,7 +1063,7 @@ function llenarComentarios(datos){
                 ${comentarios.mensaje}
                 <span class="tiempo">
                     <i class="far fa-clock"></i>
-                    Hace 5 min
+                    Fecha:${comentarios.fecha}  Hora:${comentarios.hora}
                 </span>
             </div>
             <ul class="opciones-msj">
@@ -1089,13 +1106,28 @@ function comentario(id1){
   console.log("datos: ", datos);
   console.log("datos1: ", usuActual);
   console.log("datos2: ", listUser[id1].key);
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
 
   if(datos[0].key1 == usuActual && datos[0].key2 == listUser[id1].key || datos[0].key2 == usuActual && datos[0].key1 == listUser[id1].key){
     firebase.database().ref(`Chat/${referencia[0]}/comentarios`).push(
       {
         mensaje:mensaje,
         key:usuActual,
-        imagen:user1.imagen
+        imagen:user1.imagen,
+        fecha:fechaTiempo,
+        hora:hmmsTiempo
      });
    }else{
     firebase.database().ref('Chat').push({
@@ -1111,10 +1143,531 @@ function comentario(id1){
         {
           mensaje:mensaje,
           key:usuActual,
-          imagen:user1.imagen
+          imagen:user1.imagen,
+          fecha:fechaTiempo,
+          hora:hmmsTiempo
         }
       ]
     });
    }
    
+}
+
+function informacion(info){
+  let texto = info;
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-info">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Info!</strong>${texto}.
+  </div>
+  `;
+}
+
+function alerta(){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-error">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Error!</strong>This is a fatal error.
+  </div>
+  `;
+}
+
+function correcto(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-success">
+    <a class="closeAlert" data-dismiss="alert">×</a>
+    <strong>Exito!</strong>${info}.
+  </div>
+  `;
+}
+
+
+function verNotificaciones(){
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  firebase.database().ref('usuarios')
+  .on('value',function(snapshot){
+    usuarios = snapshot.val();
+    document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
+    document.getElementById("contenedor-acciones").innerHTML = '';
+    document.getElementById("contenedor-acciones").innerHTML +=
+    `
+    <div id="perfil">
+             <form id="form" class="form">
+             </div>
+    </div>
+    `;
+    document.getElementById("form").innerHTML = '';
+    if(usuarios[usuActual].notificaciones != "Ninguna"){
+      for(let i=0;i<usuarios[usuActual].notificaciones.length;i++){
+        let usu = usuarios[usuActual].notificaciones[i];
+        let leido;
+        if(usu.leido == false){
+          leido = `<i class="fas fa-envelope"></i>`;
+        }else{
+          leido = `<i class="fas fa-envelope-open-text"></i>`;
+        }
+        document.getElementById("form").innerHTML += 
+         `
+                 <div type="button" onclick="verMensaje(${i});" class="form-inline" style="padding: 5px 5px">
+                  <p id="iconos">
+                      ${leido}
+                  </p>
+                  <p><b>${usu.asunto} - ${usu.mensaje}</b></p>
+                  <p style="margin-left: auto;">22:05</p>
+                  <p><i class="far fa-trash-alt" type="button" onclick="eliminar(1" style ="color: red;"></i></p>
+                 </div><hr>
+         `;
+      }
+    }else{
+        document.getElementById("form").innerHTML += 
+         `
+            <p><b>No tienes notificaciones</b></p>
+         `;
+    }
+  });
+}
+
+function verMensaje(i){
+  datosNotificaciones = null;
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let datos = usuarios[usuActual].notificaciones[i];
+  datosNotificaciones = datos;
+  let key = usuarios[usuActual].notificaciones[i].key;
+  document.getElementById("contenedor-acciones").innerHTML = '';
+  document.getElementById("contenedor-acciones").innerHTML +=
+  `
+  <div id="perfil">
+           <form id="form" class="form">
+           </div>
+  </div>
+  `;
+  
+  if(datos.asunto == "Se acepto la reservacion"){
+    document.getElementById("form").innerHTML = '';
+    document.getElementById("form").innerHTML += 
+    `
+      <div class="form" style="padding: 5px 5px">
+       <p><b>${datos.mensaje}</b></p>
+       <p><b>${datos.tiempo}</b></p>
+       <div class="cont-botones">
+       <div id="but" type="button" onclick="confirmar()">Confirmar</div> 
+       <div id="but" type="button" onclick="rechazar()">Rechazar</div>
+       </div>
+      </div><hr>
+    `;
+  }
+  else if(datos.asunto == "Se rechazo la reservacion"){
+    document.getElementById("form").innerHTML = '';
+    document.getElementById("form").innerHTML += 
+    `
+      <div class="form" style="padding: 5px 5px">
+       <p><b>${datos.mensaje}</b></p>
+       <p><b>${datos.tiempo}</b></p>
+      </div><hr>
+    `;
+  }
+  else if(datos.asunto == "Se rechaza"){
+    document.getElementById("form").innerHTML = '';
+    document.getElementById("form").innerHTML += 
+    `
+      <div class="form" style="padding: 5px 5px">
+       <p><b>${datos.mensaje}</b></p>
+       <p><b>${datos.tiempo}</b></p>
+      </div><hr>
+    `;
+  }
+  else if(datos.asunto == "Se confirma"){
+    document.getElementById("form").innerHTML = '';
+    document.getElementById("form").innerHTML += 
+    `
+      <div class="form" style="padding: 5px 5px">
+       <p><b>${datos.mensaje}</b></p>
+       <p><b>${datos.tiempo}</b></p>
+      </div><hr>
+    `;
+  }else{
+    document.getElementById("form").innerHTML = '';
+    document.getElementById("form").innerHTML += 
+    `
+      <div class="form" style="padding: 5px 5px">
+       <p><b>El usuario ${usuarios[key].nombre} ${usuarios[key].apellido} hizo una ${datos.asunto} la imagen acontinuación es de tu propuesta.</b><br>
+       <img id="imagenNotificacion" src="${categorias[datos.categoria].propuestas[datos.idPropuesta].imagen}" alt=""><br>
+       <b>Deseas aceptar la solicitud de esta persona</b><br>
+       <input id="cuenta" type="number" placeholder="Numero de cuenta de banco">
+       <select id="select-cuenta">
+            <option value="Atlantida">Atlantida</option>
+            <option value="Occidente">Occidente</option>
+            <option value="Ficohsa">Ficohsa</option>
+       </select>
+       <div class="cont-botones">
+       <div id="but" type="button" onclick="aceptarReservacion()">Aceptar</div> 
+       <div id="but" type="button" onclick="rechazarReservacion()">Rechazar</div>
+       </div>
+       </p>
+       <p style="margin-left: auto;">${datos.tiempo}</p>
+      </div><hr>
+    `;
+  }
+
+  usuarios[usuActual].notificaciones[i].leido = true;
+
+  let pro;
+      if(usuarios[usuActual].propuestas){
+        pro = usuarios[usuActual].propuestas;
+      }else{
+        pro = [];
+      }
+  let reser;
+    if(usuarios[usuActual].reservacion){
+      reser = usuarios[usuActual].reservacion;
+    }else{
+      reser = [];
+    }
+
+  usuActualizado = {
+    id:usuarios[usuActual].id,
+    nombre:usuarios[usuActual].nombre,
+    apellido:usuarios[usuActual].apellido,
+    correo:usuarios[usuActual].correo,
+    telefono:usuarios[usuActual].telefono,
+    nombreUsuario:usuarios[usuActual].nombreUsuario,
+    contrasena:usuarios[usuActual].contrasena,
+    fecha:usuarios[usuActual].fecha,
+    imagen:usuarios[usuActual].imagen,
+    nacionalidad:usuarios[usuActual].nacionalidad,
+    genero:usuarios[usuActual].genero,
+    identificador:usuarios[usuActual].identificador,
+    propuestas:pro,
+    reservacion:reser,
+    descripcion:usuarios[usuActual].descripcion,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
+  };
+  
+    axios({
+      method:'PUT',
+      url:url + `?id=${usuActual}`,
+      responseType:'json',
+      data:usuActualizado
+  }).then(res=>{
+      console.log(res.data);
+      axios({
+          method:'GET',
+          url:url,
+          responseType:'json'
+      }).then(res=>{
+          this.usuarios = res.data;
+          console.log(usuarios);
+      }).catch(error=>{
+          console.error(error);
+      });
+  }).catch(error=>{
+      console.error(error);
+  });
+}
+
+function aceptarReservacion(){
+  let cuenta = document.getElementById("cuenta").value;
+  let selectCuenta = document.getElementById("select-cuenta").value;
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let propuestaInfo = categorias[datosNotificaciones.categoria].propuestas[datosNotificaciones.idPropuesta];
+  let notificacion = {
+    asunto:"Se acepto la reservacion",
+    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" acepto la solicitud que has hecho, el precio a pagar es: "+ propuestaInfo.precio
+    +". El numero de cuenta del banco "+selectCuenta+" al que tienes que ingresar el pago es el siguiente: "+cuenta+ ". Tienes 5 días apartir de hoy para hacer tu deposito o tu reservacion será cancelada.",
+    key:usuActual,
+    leido:false,
+    categoria:datosNotificaciones.categoria,
+    idPropuesta:datosNotificaciones.idPropuesta,
+    tiempo:"Fecha:"+fechaTiempo+" Hora:"+hmmsTiempo
+  }
+
+  let reser;
+    if(usuarios[datosNotificaciones.key].reservacion){
+      reser = usuarios[datosNotificaciones.key].reservacion;
+    }else{
+      reser = [];
+    }
+
+  let res;
+    if(usuarios[datosNotificaciones.key].notificaciones == "Ninguna"){
+      res = [notificacion];
+    }else{
+      res = usuarios[datosNotificaciones.key].notificaciones;
+      res.push(notificacion); 
+    }  
+
+    usuActualizado = {
+      id:usuarios[datosNotificaciones.key].id,
+      nombre:usuarios[datosNotificaciones.key].nombre,
+      apellido:usuarios[datosNotificaciones.key].apellido,
+      correo:usuarios[datosNotificaciones.key].correo,
+      telefono:usuarios[datosNotificaciones.key].telefono,
+      nombreUsuario:usuarios[datosNotificaciones.key].nombreUsuario,
+      contrasena:usuarios[datosNotificaciones.key].contrasena,
+      fecha:usuarios[datosNotificaciones.key].fecha,
+      imagen:usuarios[datosNotificaciones.key].imagen,
+      nacionalidad:usuarios[datosNotificaciones.key].nacionalidad,
+      genero:usuarios[datosNotificaciones.key].genero,
+      identificador:usuarios[datosNotificaciones.key].identificador,
+      propuestas:usuarios[datosNotificaciones.key].identificador,
+      reservacion:reser,
+      descripcion:usuarios[datosNotificaciones.key].descripcion,
+      notificaciones:res,
+      cuentaVerificada:usuarios[datosNotificaciones.key].cuentaVerificada,
+      pago:usuarios[datosNotificaciones.key].pago
+    };
+      axios({
+        method:'PUT',
+        url:url + `?id=${datosNotificaciones.key}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        verNotificaciones();
+    }).catch(error=>{
+        console.error(error);
+    });
+}
+
+function rechazarReservacion(){
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let propuestaInfo = categorias[datosNotificaciones.categoria].propuestas[datosNotificaciones.idPropuesta];
+  let notificacion = {
+    asunto:"Se rechazo la reservacion",
+    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" rechazo tu solicitud.",
+    key:usuActual,
+    leido:false,
+    categoria:datosNotificaciones.categoria,
+    idPropuesta:datosNotificaciones.idPropuesta,
+    tiempo:"Fecha:"+fechaTiempo+" Hora:"+hmmsTiempo
+  }
+
+  let reser;
+    if(usuarios[datosNotificaciones.key].reservacion){
+      reser = usuarios[datosNotificaciones.key].reservacion;
+    }else{
+      reser = [];
+    }
+
+  let res;
+    if(usuarios[datosNotificaciones.key].notificaciones == "Ninguna"){
+      res = [notificacion];
+    }else{
+      res = usuarios[datosNotificaciones.key].notificaciones;
+      res.push(notificacion); 
+    }  
+
+    usuActualizado = {
+      id:usuarios[datosNotificaciones.key].id,
+      nombre:usuarios[datosNotificaciones.key].nombre,
+      apellido:usuarios[datosNotificaciones.key].apellido,
+      correo:usuarios[datosNotificaciones.key].correo,
+      telefono:usuarios[datosNotificaciones.key].telefono,
+      nombreUsuario:usuarios[datosNotificaciones.key].nombreUsuario,
+      contrasena:usuarios[datosNotificaciones.key].contrasena,
+      fecha:usuarios[datosNotificaciones.key].fecha,
+      imagen:usuarios[datosNotificaciones.key].imagen,
+      nacionalidad:usuarios[datosNotificaciones.key].nacionalidad,
+      genero:usuarios[datosNotificaciones.key].genero,
+      identificador:usuarios[datosNotificaciones.key].identificador,
+      propuestas:usuarios[datosNotificaciones.key].identificador,
+      reservacion:reser,
+      descripcion:usuarios[datosNotificaciones.key].descripcion,
+      notificaciones:res,
+      cuentaVerificada:usuarios[datosNotificaciones.key].cuentaVerificada,
+      pago:usuarios[datosNotificaciones.key].pago
+    };
+      axios({
+        method:'PUT',
+        url:url + `?id=${datosNotificaciones.key}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        verNotificaciones();
+    }).catch(error=>{
+        console.error(error);
+    });
+}
+
+function confirmar(){
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let propuestaInfo = categorias[datosNotificaciones.categoria].propuestas[datosNotificaciones.idPropuesta];
+  let notificacion = {
+    asunto:"Se confirma",
+    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" confirma hacer el pago en los días establecidos.",
+    key:usuActual,
+    leido:false,
+    categoria:datosNotificaciones.categoria,
+    idPropuesta:datosNotificaciones.idPropuesta,
+    tiempo:"Fecha:"+fechaTiempo+" Hora:"+hmmsTiempo
+  }
+
+  let reser;
+    if(usuarios[datosNotificaciones.key].reservacion){
+      reser = usuarios[datosNotificaciones.key].reservacion;
+    }else{
+      reser = [];
+    }
+
+  let res;
+    if(usuarios[datosNotificaciones.key].notificaciones == "Ninguna"){
+      res = [notificacion];
+    }else{
+      res = usuarios[datosNotificaciones.key].notificaciones;
+      res.push(notificacion); 
+    }  
+
+    usuActualizado = {
+      id:usuarios[datosNotificaciones.key].id,
+      nombre:usuarios[datosNotificaciones.key].nombre,
+      apellido:usuarios[datosNotificaciones.key].apellido,
+      correo:usuarios[datosNotificaciones.key].correo,
+      telefono:usuarios[datosNotificaciones.key].telefono,
+      nombreUsuario:usuarios[datosNotificaciones.key].nombreUsuario,
+      contrasena:usuarios[datosNotificaciones.key].contrasena,
+      fecha:usuarios[datosNotificaciones.key].fecha,
+      imagen:usuarios[datosNotificaciones.key].imagen,
+      nacionalidad:usuarios[datosNotificaciones.key].nacionalidad,
+      genero:usuarios[datosNotificaciones.key].genero,
+      identificador:usuarios[datosNotificaciones.key].identificador,
+      propuestas:usuarios[datosNotificaciones.key].identificador,
+      reservacion:reser,
+      descripcion:usuarios[datosNotificaciones.key].descripcion,
+      notificaciones:res,
+      cuentaVerificada:usuarios[datosNotificaciones.key].cuentaVerificada,
+      pago:usuarios[datosNotificaciones.key].pago
+    };
+      axios({
+        method:'PUT',
+        url:url + `?id=${datosNotificaciones.key}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        verNotificaciones();
+    }).catch(error=>{
+        console.error(error);
+    });
+}
+
+function rechazar(){
+  //Para los dias meses y años
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var fechaTiempo = dd+"/"+mm+"/"+yyyy;
+
+  //Para las horas minutos y segundos
+  var horas = today.getHours();
+  var minutos = today.getMinutes() + 1; //January is 0!
+  var segundos = today.getSeconds();
+  var hmmsTiempo = horas+":"+minutos+":"+segundos;
+
+  let usuActual = sessionStorage.getItem('idUsuarioActivo');
+  let propuestaInfo = categorias[datosNotificaciones.categoria].propuestas[datosNotificaciones.idPropuesta];
+  let notificacion = {
+    asunto:"Se rechaza",
+    mensaje:"El usuario "+usuarios[usuActual].nombre+" "+usuarios[usuActual].apellido+" cancelo la solicitud.",
+    key:usuActual,
+    leido:false,
+    categoria:datosNotificaciones.categoria,
+    idPropuesta:datosNotificaciones.idPropuesta,
+    tiempo:"Fecha:"+fechaTiempo+" Hora:"+hmmsTiempo
+  }
+
+  let reser;
+    if(usuarios[datosNotificaciones.key].reservacion){
+      reser = usuarios[datosNotificaciones.key].reservacion;
+    }else{
+      reser = [];
+    }
+
+  let res;
+    if(usuarios[datosNotificaciones.key].notificaciones == "Ninguna"){
+      res = [notificacion];
+    }else{
+      res = usuarios[datosNotificaciones.key].notificaciones;
+      res.push(notificacion); 
+    }  
+
+    usuActualizado = {
+      id:usuarios[datosNotificaciones.key].id,
+      nombre:usuarios[datosNotificaciones.key].nombre,
+      apellido:usuarios[datosNotificaciones.key].apellido,
+      correo:usuarios[datosNotificaciones.key].correo,
+      telefono:usuarios[datosNotificaciones.key].telefono,
+      nombreUsuario:usuarios[datosNotificaciones.key].nombreUsuario,
+      contrasena:usuarios[datosNotificaciones.key].contrasena,
+      fecha:usuarios[datosNotificaciones.key].fecha,
+      imagen:usuarios[datosNotificaciones.key].imagen,
+      nacionalidad:usuarios[datosNotificaciones.key].nacionalidad,
+      genero:usuarios[datosNotificaciones.key].genero,
+      identificador:usuarios[datosNotificaciones.key].identificador,
+      propuestas:usuarios[datosNotificaciones.key].identificador,
+      reservacion:reser,
+      descripcion:usuarios[datosNotificaciones.key].descripcion,
+      notificaciones:res,
+      cuentaVerificada:usuarios[datosNotificaciones.key].cuentaVerificada,
+      pago:usuarios[datosNotificaciones.key].pago
+    };
+      axios({
+        method:'PUT',
+        url:url + `?id=${datosNotificaciones.key}`,
+        responseType:'json',
+        data:usuActualizado
+    }).then(res=>{
+        console.log(res.data);
+        verNotificaciones();
+    }).catch(error=>{
+        console.error(error);
+    });
 }

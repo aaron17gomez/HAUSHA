@@ -4,6 +4,15 @@
 body{
     background: url(../img/personas.jpeg)repeat;
 }
+.navbar-light .navbar-nav .nav-link.active:hover{
+    color: rgb(107, 201, 255);
+}
+.navbar-light .navbar-brand:hover{
+    color: rgb(107, 201, 255);
+}
+.navbar-light .navbar-nav .nav-link:hover{
+    color: rgb(107, 201, 255);
+}
 .icons i{
     color: rgb(46, 46, 46);
     font-size: 20px;

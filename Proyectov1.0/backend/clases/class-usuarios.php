@@ -16,6 +16,11 @@
         private $identificador;
         private $propuestas;
         private $descripcion;
+        private $notificaciones;
+        private $cuentaVerificada;
+        private $pago;
+
+
 
         public function __construct(
             $id,
@@ -32,7 +37,10 @@
             $reservacion,
             $identificador,
             $propuestas,
-            $descripcion
+            $descripcion,
+            $notificaciones,
+            $cuentaVerificada,
+            $pago
         ){
             $this->id = $id;
             $this->nombre = $nombre;
@@ -49,6 +57,9 @@
             $this->identificador = $identificador;
             $this->propuestas = $propuestas;
             $this->descripcion = $descripcion;
+            $this->notificaciones = $notificaciones;
+            $this->cuentaVerificada = $cuentaVerificada;
+            $this->pago = $pago;
         }
 
         /**
@@ -342,12 +353,69 @@
         *
         * @return  self
         */ 
-       public function setdescripcion($prodescripcionpuestas)
-       {
-              $this->descripcion = $descripcion;
+        public function setdescripcion($descripcion)
+        {
+               $this->descripcion = $descripcion;
+ 
+               return $this;
+        }
 
-              return $this;
-       }
+       /**
+        * Set the value of notificaciones
+        *
+        * @return  self
+        */ 
+        public function setnotificaciones($notificaciones)
+        {
+               $this->notificaciones = $notificaciones;
+ 
+               return $this;
+        }
+        /**
+         * Get the value of notificaciones
+         */ 
+         public function getnotificaciones()
+        {
+               return $this->notificaciones;
+        }
+
+        /**
+        * Set the value of cuentaVerificada
+        *
+        * @return  self
+        */ 
+        public function setcuentaVerificada($cuentaVerificada)
+        {
+               $this->cuentaVerificada = $cuentaVerificada;
+ 
+               return $this;
+        }
+        /**
+         * Get the value of cuentaVerificada
+         */ 
+         public function getcuentaVerificada()
+        {
+               return $this->cuentaVerificada;
+        }
+
+        /**
+        * Set the value of pago
+        *
+        * @return  self
+        */ 
+        public function setpago($pago)
+        {
+               $this->pago = $pago;
+ 
+               return $this;
+        }
+        /**
+         * Get the value of pago
+         */ 
+       public function getpago()
+        {
+               return $this->pago;
+        }
 
        public function __toString()
        {
@@ -372,15 +440,19 @@
                      'reservacion'=>$this->reservacion,
                      'identificador'=>$this->identificador,
                      'propuestas'=>$this->propuestas,
-                     'descripcion'=>$this->descripcion
+                     'descripcion'=>$this->descripcion,
+                     'notificaciones'=>$this->notificaciones,
+                     'cuentaVerificada'=>$this->cuentaVerificada,
+                     'pago'=>$this->pago
               ];
               $result = $db
                  ->push($usuarios);
                  
               if($result->getKey() != null)
-                 return '{"mensaje":"Registro almacenado","key":"'.$result->getKey().'"}';
+                 return '{"mensaje":"Registro almacenado","key":"'.$result->getKey().'"}'; 
               else
                  return '{"mensaje":"Error al guardar el registro"}';
+              
         }
        
         public static function obtenerUsuarios($db){
@@ -413,7 +485,10 @@
                      'reservacion'=>$this->reservacion,
                      'identificador'=>$this->identificador,
                      'propuestas'=>$this->propuestas,
-                     'descripcion'=>$this->descripcion
+                     'descripcion'=>$this->descripcion,
+                     'notificaciones'=>$this->notificaciones,
+                     'cuentaVerificada'=>$this->cuentaVerificada,
+                     'pago'=>$this->pago
                      
                ];
                $result = $db
@@ -424,6 +499,7 @@
                   return '{"mensaje":"Registro actualizado","key":"'.$result->getKey().'"}';
                else
                   return '{"mensaje":"Error al actualizar el registro"}';
+
         }
        
         public static function eliminarUsuario($db, $indice){

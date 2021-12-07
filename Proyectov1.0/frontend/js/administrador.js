@@ -149,6 +149,7 @@ function cerrarSesion(){
 }
 
 function editarPerfil(){
+  let texto = "Datos actualizados con exito";
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
     document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios');
     document.getElementById("contenedor-acciones").innerHTML = '';
@@ -244,11 +245,14 @@ function editarPerfil(){
     document.getElementById("fecha").value = usuarios[usuActual].fecha;
     document.getElementById("correo").value = usuarios[usuActual].correo;
     document.getElementById("celular").value = usuarios[usuActual].telefono;
+    document.getElementById("descripcion").value = usuarios[usuActual].descripcion;
     document.getElementById("genero").value = usuarios[usuActual].genero;
     document.getElementById("nacionalidad").value = usuarios[usuActual].nacionalidad;
+    document.getElementById("contraseñaNueva").value = usuarios[usuActual].contrasena;
 }
 
 function actualizarPerfil(){
+  let texto = "Perfil actualizado";
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   let pro;
       if(usuarios[usuActual].propuestas){
@@ -278,7 +282,10 @@ function actualizarPerfil(){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:0
+    descripcion:document.getElementById("descripcion").value,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
   };
   
     axios({
@@ -288,8 +295,7 @@ function actualizarPerfil(){
       data:usuActualizado
   }).then(res=>{
       console.log(res.data);
-      window.alert("Datos actualizados");
-
+      correcto(texto);
       obtenerUsuarios();
   }).catch(error=>{
       console.error(error);
@@ -419,6 +425,7 @@ function cambiarPosicion(){
 }
 
 function Propuesta(){
+    let texto = "Su propuesta ha sido agregada con exito";
     let key = document.getElementById("selectPropuesta").value;
     let cateActual = categorias[key].propuestas;
     let usuActual = sessionStorage.getItem('idUsuarioActivo');
@@ -468,7 +475,10 @@ function Propuesta(){
       propuestas:pro,
       genero:usuarios[usuActual].genero,
       nacionalidad:usuarios[usuActual].nacionalidad,
-      descripcion:usuarios[usuActual].descripcion
+      descripcion:usuarios[usuActual].descripcion,
+      notificaciones:usuarios[usuActual].notificaciones,
+      cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+      pago:usuarios[usuActual].pago
     };
     
       axios({
@@ -479,7 +489,7 @@ function Propuesta(){
     }).then(res=>{
         console.log(res.data);
         agregarPropuesta(propuesta);
-        window.alert("Su propuesta ha sido agregada con exito.");
+        correcto(texto);
         obtenerUsuarios();
         obtenerCategorias();
         bienvenida();
@@ -505,6 +515,7 @@ function agregarPropuesta(propuesta){
 }
 
 function reservacion(){
+  let texto = "No tienes reservaciones";
   document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].reservacion){
@@ -540,7 +551,7 @@ function reservacion(){
     </div>
     `;
   }else{
-    alert("No tienes reservaciones");
+    informacion(texto);
   }
 }
 
@@ -687,6 +698,7 @@ function masInformacion(){
 }
 
 function misPropuestas(){
+  let texto = "No tienes propuestas";
   document.getElementById("contenedor-acciones").classList.remove('estilo-usuarios')
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
   if(usuarios[usuActual].propuestas){
@@ -725,7 +737,7 @@ function misPropuestas(){
     }
   }else{
     document.getElementById("contenedor-acciones").innerHTML = '';
-    alert("No tienes propuestas");
+    informacion(texto);
   }
 }
 
@@ -745,9 +757,9 @@ function verNotificaciones(){
     </div>
     `;
     document.getElementById("form").innerHTML = '';
-    if(usuarios[usuActual].descripcion != "Ninguna"){
-      for(let i=0;i<usuarios[usuActual].descripcion.length;i++){
-        let usu = usuarios[usuActual].descripcion[i];
+    if(usuarios[usuActual].notificaciones != "Ninguna"){
+      for(let i=0;i<usuarios[usuActual].notificaciones.length;i++){
+        let usu = usuarios[usuActual].notificaciones[i];
         let leido;
         if(usu.leido == false){
           leido = `<i class="fas fa-envelope"></i>`;
@@ -777,8 +789,8 @@ function verNotificaciones(){
 
 function verMensaje(i){
   let usuActual = sessionStorage.getItem('idUsuarioActivo');
-  let datos = usuarios[usuActual].descripcion[i];
-  let key = usuarios[usuActual].descripcion[i].key;
+  let datos = usuarios[usuActual].notificaciones[i];
+  let key = usuarios[usuActual].notificaciones[i].key;
   document.getElementById("contenedor-acciones").innerHTML = '';
   document.getElementById("contenedor-acciones").innerHTML +=
   `
@@ -807,7 +819,7 @@ function verMensaje(i){
     `;
   }
 
-  usuarios[usuActual].descripcion[i].leido = true;
+  usuarios[usuActual].notificaciones[i].leido = true;
 
   let pro;
       if(usuarios[usuActual].propuestas){
@@ -837,7 +849,10 @@ function verMensaje(i){
     identificador:usuarios[usuActual].identificador,
     propuestas:pro,
     reservacion:reser,
-    descripcion:usuarios[usuActual].descripcion
+    descripcion:usuarios[usuActual].descripcion,
+    notificaciones:usuarios[usuActual].notificaciones,
+    cuentaVerificada:usuarios[usuActual].cuentaVerificada,
+    pago:usuarios[usuActual].pago
   };
   
     axios({
@@ -1014,4 +1029,38 @@ function verAdministadores(){
       </tr>
     `;
   }
+}
+
+function informacion(info){
+  let texto = info;
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-info">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Info!</strong>${texto}.
+  </div>
+  `;
+}
+
+function alerta(){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-error">
+      <a class="closeAlert" data-dismiss="alert">×</a>
+      <strong>Error!</strong>This is a fatal error.
+  </div>
+  `;
+}
+
+function correcto(info){
+  document.getElementById("Mensaje").innerHTML = '';
+  document.getElementById("Mensaje").innerHTML +=
+  `
+  <div class="alert alert-success">
+    <a class="closeAlert" data-dismiss="alert">×</a>
+    <strong>Exito!</strong>${info}.
+  </div>
+  `;
 }
