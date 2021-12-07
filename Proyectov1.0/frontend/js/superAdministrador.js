@@ -1093,6 +1093,9 @@ function verUsuarios(){
   listarUsuarios();
 }
 
+var listUser = [];
+// var ListAdmins = []
+
 function listarUsuarios(){
 let keys = [];
 let contador = 0;
@@ -1132,6 +1135,7 @@ for(let i=0; i<listUser.length; i++){
 }
 
 function eliminarUsuario(id1){
+<<<<<<< HEAD
 let texto = "Usuario eliminado";
 console.log("Llave", listUser[id1]);
   axios({
@@ -1256,4 +1260,101 @@ function correcto(info){
     <strong>Exito!</strong>${info}.
   </div>
   `;
+=======
+  console.log("Llave", listUser[id1]);
+
+  axios({
+      method:'DELETE',
+      url:url + `?id=${listUser[id1].key}`,
+      responseType:'json'
+  }).then(res=>{
+      console.log(res.data);
+      window.alert("Usuario eliminado");
+      axios({
+        method:'GET',
+        url:url,
+        responseType:'json'
+    }).then(res=>{
+        this.usuarios = res.data;
+        listarUsuarios();
+    }).catch(error=>{
+        console.error(error);
+    });
+  }).catch(error=>{
+      console.error(error);
+  });
+}
+
+//prueba yilian
+function eliminarAdministrador(id2){
+  // console.log(id2,14);
+  // console.log("Llave", listUser[id2]);
+
+  axios({
+      method:'DELETE',
+      url:url + `?id=${listUser[id2].key}`,
+      responseType:'json'
+  }).then(res=>{
+      console.log(res.data);
+      window.alert("Administrador eliminado");
+      axios({
+        method:'GET',
+        url:url,
+        responseType:'json'
+      }).then(res=>{
+          this.usuarios = res.data;
+          verAdministadores();
+      }).catch(error=>{
+          console.error(error);
+      });
+  }).catch(error=>{
+      console.error(error);
+  });
+
+}
+
+function verAdministadores(){
+  let filtro = [];
+  // let contador = 0;
+
+  // for(const usu in usuarios){
+  //     filtro.push(usuarios[usu]);
+  //     contador++;
+  // }
+  let keys = [];
+  let contador = 0;
+  for(const usu in usuarios){
+      const key = {
+        key:usu,
+        id: usuarios[usu].id,
+        nombre: usuarios[usu].nombre,
+        apellido: usuarios[usu].apellido,
+        nombreUsuario: usuarios[usu].nombreUsuario,
+        telefono: usuarios[usu].telefono,
+        correo: usuarios[usu].correo,
+        fecha: usuarios[usu].fecha,
+        identificador: usuarios[usu].identificador
+      }
+      keys.push(key);
+      contador++;
+  }
+  listUser = keys.filter(keys => keys.identificador == 2);
+  document.getElementById('table-admins').innerHTML = '';
+  for(let i=0; i<listUser.length; i++){
+    const user = listUser[i];
+    document.getElementById('table-admins').innerHTML +=
+    `
+      <tr>
+        <th>${user.id}</th>
+        <th>${user.nombre}</th>
+        <th>${user.apellido}</th>
+        <th>${user.nombreUsuario}</th>
+        <th>${user.telefono}</th>
+        <th>${user.correo}</th>
+        <th>${user.fecha}</th>
+        <th><i onclick="eliminarAdministrador(${i})" class="fas fa-trash-alt"></i></th>
+      </tr>
+    `;
+  }
+>>>>>>> 2215c9331a011bb773ed35ba628d73b702565ce7
 }
